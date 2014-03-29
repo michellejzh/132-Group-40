@@ -9,7 +9,7 @@ Functions in this file:
 
 		everything related to search
 			pass search results to the DOM for display
-			
+
 */
 
 //initiate the map
@@ -26,8 +26,9 @@ google.maps.event.addDomListener(window, 'load', initializeMap);
 
 //input: results of a search
 //output: places markers on the map corresponding to the coordinates of each result
+/*
 function placeMarker(searchResults) {
-	for (i=0; i=len(searchResults; i++)) {
+	for (int i=0; i=len(searchResults); i++) {
 		var point = convertToCoord(searchResults[i].address);
 		_map.setCenter(point);
 		var marker = new google.maps.Marker({
@@ -36,6 +37,7 @@ function placeMarker(searchResults) {
 		});
 	}
 }
+*/
 
 //convert address to coordinates
 function convertToCoord(address) {
