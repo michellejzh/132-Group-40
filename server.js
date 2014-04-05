@@ -1,29 +1,26 @@
-/*
+var express = require('express');
+var app = express();
+app.use(express.json());
+app.use(express.urlencoded());
 
-Table parameters:
-	name
-	address
-	productCapabilityIds
-		0 = none
-		1 = plants
-		2 = flowers
-		3 = plants & flowers
-		4 = orchids
-		5 = plants & orchids
-		6 = flowers & orchids
-                7 = plants & flowers & orchids
-	paymentTerms
-		1 = none specified
-		2 = CC preferred
-		3 = CC required
-		4 = invoice
-	leadTime
-		1 = none specified
-		2 = same day
-		3 = next day
-		4 = 2+ days
-	rates
-		% in decimal format
-	delivery
-		in dollar$
-		
+//chatroom DB
+var anyDB = require('any-db');
+var conn = anyDB.createConnection('sqlite3://vendors.db');
+
+//==============SEARCH PAGE==============//
+app.get('*', function(request, response){
+    response.render('search-results.html');
+    var q = conn.query('SELECT * FROM vendors');
+    q.on('row', function(row) {
+    	response.send(row.name+", "+row.address);
+    });
+});
+
+//==============RESULTS PAGE==============//
+
+
+
+//============VENDOR LIST PAGE============//
+
+
+//============VENDOR EDIT PAGE============//
