@@ -2,19 +2,25 @@ var express = require('express');
 var app = express();
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(require('connect-multiparty')());
 
 //chatroom DB
 var anyDB = require('any-db');
 var conn = anyDB.createConnection('sqlite3://vendors.db');
 
 //==============SEARCH PAGE==============//
-app.get('/*', function(request, response){
-    response.render('search-results.html');
-    var q = conn.query('SELECT * FROM vendors');
-    q.on('row', function(row) {
-    	response.send(row.name+", "+row.address);
+app.get('*', function(request, response){
+    console.log('- Request received:', request.method, request.url);
+    //response.render('search-results.html');
+    conn.query('SELECT * FROM vendors')
+    .on('row', function(row) {
+    	response.write(row.name+", "+row.address);
+    	response.end();
     });
+});
+
+
+app.listen(8080, function(){
+    console.log(' - Server listening on port 8080');
 });
 
 //==============RESULTS PAGE==============//
