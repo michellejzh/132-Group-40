@@ -52,7 +52,3 @@ function centerMarker() {
 	//is centered on the map
 
 }
-
-function test() {
-	alert("it works!");
-}
