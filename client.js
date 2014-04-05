@@ -9,7 +9,6 @@ Functions in this file:
 
 		everything related to search
 			pass search results to the DOM for display
-
 */
 
 //initiate the map
@@ -23,6 +22,10 @@ function initializeMap() {
 }
 
 google.maps.event.addDomListener(window, 'load', initializeMap);
+
+function returnResults() {
+	//add clients to the list of id="results-list"
+}
 
 //input: results of a search
 //output: places markers on the map corresponding to the coordinates of each result
