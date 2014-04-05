@@ -9,11 +9,18 @@ var conn = anyDB.createConnection('sqlite3://vendors.db');
 
 //==============SEARCH PAGE==============//
 app.get('*', function(request, response){
-    response.render('search-results.html');
-    var q = conn.query('SELECT * FROM vendors');
-    q.on('row', function(row) {
-    	response.send(row.name+", "+row.address);
+    console.log('- Request received:', request.method, request.url);
+    //response.render('search-results.html');
+    conn.query('SELECT * FROM vendors')
+    .on('row', function(row) {
+    	response.write(row.name+", "+row.address);
+    	response.end();
     });
+});
+
+
+app.listen(8080, function(){
+    console.log(' - Server listening on port 8080');
 });
 
 //==============RESULTS PAGE==============//
