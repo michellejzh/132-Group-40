@@ -2,24 +2,44 @@
 <html>
 	<head>
 		<title SearchPage></title>
-		<link rel="stylesheet" href="SearchPage.css" type="text/css"/>
+		<link rel='stylesheet' href='SearchPage.css' type='text/css'/>
 	</head>
 
 	<body>
-		<div id="navigation">
-			<ul id ="items">
-			<li id="Company_Name"><a href='#'>COMPANY</a></li>
-			<li id="Vendor_list"><a href='#'>VENDOR LIST</a></li>
+		<div id='navigation'>
+			<ul id ='Items'>
+			<li id='Company_Name'><a href='#'>COMPANY</a></li>
+			<li id='Vendor_list'><a href='#'>VENDOR LIST</a></li>
 			</ul>
 		</div>
 
 		<div id="content">
 			<form>
-				addressLine1: <input type='text' name="addressLine1"><br>
+				addressLine1: <input type='text' name='addressLine1'><br>
+				addressLine2: <input type='text' name='addressLine2'><br>
 				city: <input type='text' name='city'><br>
 				state: <input type='text' name='state'><br>
 				zipcode: <input type='text' name='zipcode'><br>
-					
+				paymentTerms: <input type='text' name='paymentTerms'><br>
+				<select name='productCapabilityIds'>
+					<option value='O'>O</option>
+					<option value='1'>1</option>
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+					<option value='4'>4</option>
+					<option value='5'>5</option>
+					<option value='6'>6</option>
+					<option value='7'>7</option>
+				</select>
+				<select name='leadTime'>
+					<option value='1'>1</option>
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+					<option value='4'>4</option>
+				</select>
+
+				submit: <input type='submit'>
+
 			</form>
 		</div>
 	</body>
