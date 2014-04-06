@@ -8,7 +8,7 @@ var anyDB = require('any-db');
 var conn = anyDB.createConnection('sqlite3://Database/vendors.db');
 
 //==============SEARCH PAGE==============//
-app.get('*', function(request, response){
+app.get('/othertest', function(request, response){
     console.log('- Request received:', request.method, request.url);
     //response.render('search-results.html');
     conn.query('SELECT * FROM vendors')
@@ -27,10 +27,15 @@ app.listen(8080, function(){
 
 app.get('/test.json', function(request, response){
     var list = [];
-    var q = conn.query('SELECT DISTINCT vendorName FROM vendors');
+    console.log("ahhhhh");
+    var q = conn.query('SELECT * FROM vendors');
+    console.log("selecting vendor names");
+    console.log(q);
     q.on('row', function(row){
+    	console.log("is it here");
+    	console.log(row);
         var vendorName = row.vendorName;
-        list.push({vendorName: vendorName});
+        list.push({row: row});
     });
     q.on('end', function(){
         response.json(list);
