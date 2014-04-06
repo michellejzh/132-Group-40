@@ -25,6 +25,8 @@ google.maps.event.addDomListener(window, 'load', initializeMap);
 
 function returnResults() {
 	//add clients to the list of id="results-list"
+	//load info from a json table that has received results from the DB
+	//add id to each li?
 }
 
 //input: results of a search
@@ -42,13 +44,18 @@ function placeMarker(searchResults) {
 }
 */
 
+function selectVendor(vendor) {
+	alert("selecting a vendor!");
+}
+
 //convert address to coordinates
+	//or other search function?
 function convertToCoord(address) {
 	//		#TO DO
 }
 
 function centerMarker() {
-	//navigate so that the selected business (from sidebar)
+	//navigate so that the selected client (from sidebar)
 	//is centered on the map
 
 }
