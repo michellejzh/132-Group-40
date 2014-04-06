@@ -8,8 +8,8 @@ conn.query('CREATE TABLE vendors (primaryKey INTEGER, name TEXT, address TEXT, c
       console.log('Made table!');
     });
 
-vendorer('vendors.csv', function(region) {
-  conn.query('INSERT INTO vendors VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)', [region.primaryKey, region.names, region.address, region.city, region.state, region.zipcode, region.phone, region.email, region.website, region.productCapabilityId, region.paymentTerms, region.leadTime, region.rate, region.deliveryFee])
+vendorer('vendors.csv', function(vendor) {
+  conn.query('INSERT INTO vendors VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)', [vendor.primaryKey, vendor.vendorName, vendor.address, vendor.city, vendor.state, vendor.zipcode, vendor.phone, vendor.email, vendor.website, vendor.productCapabilityId, vendor.paymentTerms, vendor.leadTime, vendor.rate, vendor.deliveryFee])
     .on('error', console.error);
 });
 

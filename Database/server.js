@@ -5,7 +5,7 @@ app.use(express.urlencoded());
 
 //chatroom DB
 var anyDB = require('any-db');
-var conn = anyDB.createConnection('sqlite3://Database/vendors.db');
+var conn = anyDB.createConnection('sqlite3://vendors.db');
 
 //==============SEARCH PAGE==============//
 app.get('*', function(request, response){
@@ -13,7 +13,7 @@ app.get('*', function(request, response){
     //response.render('search-results.html');
     conn.query('SELECT * FROM vendors')
     .on('row', function(row) {
-    	response.write(row.name+", "+row.address);
+    	response.write(row.names+", "+row.address);
     	response.end();
     });
 });
@@ -22,21 +22,6 @@ app.get('*', function(request, response){
 app.listen(8080, function(){
     console.log(' - Server listening on port 8080');
 });
-
-//================JSON TEST===============//
-
-app.get('/test.json', function(request, response){
-    var list = [];
-    var q = conn.query('SELECT DISTINCT vendorName FROM vendors');
-    q.on('row', function(row){
-        var vendorName = row.vendorName;
-        list.push({vendorName: vendorName});
-    });
-    q.on('end', function(){
-        response.json(list);
-    });
-});
-
 
 //==============RESULTS PAGE==============//
 
