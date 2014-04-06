@@ -1,50 +1,50 @@
-PRIMARY KEY,name,address,city,state,zipcode,phone,email,website,productCapabilityId,paymentTerms,leadTime,rate,deliveryFee
-1,WinstonFlowers,131 Newbury Street,Boston,massachusetts,02116,800-457-4901,a@gmail.com,a.com,0,1,2,0.15,9.99
-2,WinstonFlowers,176 Federal Street,Boston,massachusetts,02110,800-457-4901,b@gmail.com,b.com,1,2,3,0.51,5.12
-3,WinstonFlowers,32 Main Street,Concord,massachusetts,01742,800-457-4901,b@gmail.com,a.com,2,3,1,0.67,7.52
-4,WinstonFlowers,8 Main Street,Hingam,massachusetts,02043,800-457-4901,b@gmail.com,b.com,3,4,2,0.82,8.88
-5,WinstonFlowers,11 Florence Street,Newton,massachusetts,02459,800-457-4901,b@gmail.com,a.com,4,1,3,0.98,1.23
-6,WinstonFlowers,31 Central Street,Wellesley,massachusetts,02481,800-457-4901,b@gmail.com,b.com,5,2,4,0.99,5.55
-7,WinstonFlowers,382 Greenwich Ave,Greenwich,Connecticut,06830,800-457-4901,b@gmail.com,a.com,6,3,4,0.41,9.99
-8,Ricky's Flower Market,238 Washington Street,Somerville,massachusetts,02143,617-628-7569,b@gmail.com,b.com,7,4,1,0.52,5.12
-9,Bow Street Flowers,108 Beacon Street,Somerville,massachusetts,02143,617-492-0080,b@gmail.com,a.com,0,1,1,0.63,7.52
-10,Brattle Square Flowers,31 Brattle Street,Cambridge,massachusetts,02138,617-876-9839,b@gmail.com,b.com,1,2,2,0.64,8.88
-11,Petali Flowers,92 Mount Auburn Street,Cambridge,massachusetts,02138,617-492-3600,b@gmail.com,a.com,2,3,3,0.15,1.23
-12,West Elm,160 Brookline Avenue,Boston,massachusetts,02215,617-450-9500,b@gmail.com,b.com,3,4,4,0.51,5.55
-13,Niche Urban Garden Supply,619 Tremont Street,Boston,massachusetts,02118,857-753-4294,b@gmail.com,a.com,4,1,4,0.67,9.99
-14,Marc Hall Objekt,531 Albany Street,Boston,massachusetts,02118,617-391-6236,b@gmail.com,b.com,5,2,1,0.82,5.12
-15,Lotus Designs Flower Shop,977 Tremont Street,Boston,massachusetts,02120,617-262-7031,b@gmail.com,a.com,6,3,1,0.98,7.52
-16,San Francisco Florist,120 Howard Street,San Francisco,California,94105,415-778-6400,b@gmail.com,b.com,7,4,2,0.99,8.88
-17,Fillmore Florist,1880 Fillmore Street,San Francisco,California,94115,415-929-5200,b@gmail.com,a.com,0,1,3,0.41,1.23
-18,Christine's Flowers,250 Montgomery Street,San Francisco,California,94104,415-989-5450,b@gmail.com,b.com,1,2,4,0.52,5.55
-19,San Francisco Floral Exchange,298 Market Street,San Francisco,California,94111,415-398-9888,b@gmail.com,a.com,2,3,1,0.63,9.99
-20,Mandy Scott Flowers,1738 Union Street,San Francisco,California,94123,415-441-3758,b@gmail.com,a.com,3,4,4,0.64,5.12
-21,Church Street Flowers,212 Church Street,San Francisco,California,94114,415-553-7762,b@gmail.com,a.com,4,1,2,0.15,7.52
-22,Rossi & Rovetti Flowers,333 3rd Street #201,San Francisco,California,94107,415-543-4400,b@gmail.com,a.com,5,2,3,0.51,8.88
-23,San Francisco Flower Mart,640 Brannan Street,San Francisco,California,94107,415-392-7944,b@gmail.com,a.com,6,3,4,0.67,1.23
-24,Farmgirl Flowers,640 Brannan Street,San Francisco,California,94107,415-602-2939,b@gmail.com,a.com,7,4,1,0.82,5.55
-25,Fuji Florist,1900 Warburton Ave,Santa Clara,California,95050,408-248-3594,b@gmail.com,a.com,0,1,1,0.98,9.99
-26,Mills the Florist,235 University Ave,Palo Alto,California,94301,650-326-3443,b@gmail.com,a.com,1,2,2,0.99,5.12
-27,Avenue Florist,347 S California Ave,Palo Alto,California,94306,650-322-5585,b@gmail.com,a.com,2,3,3,0.41,7.52
-28,Colorburst Flowers,540 Bryant Street,Palo Alto,California,94301,650-322-8201,b@gmail.com,a.com,3,4,1,0.52,8.88
-29,Redwood City Florist,440 Woodside Road,Redwood City,California,94061,650-366-3881,b@gmail.com,a.com,4,1,2,0.63,1.23
-30,Village Flower Shop,2237 El Camino Real,Palo Alto,California,94306,650-328-5992,b@gmail.com,a.com,5,2,3,0.64,5.55
-31,Fleur de Lis,811 Castro Street,Mountain View,California,94041,650-968-0220,b@gmail.com,a.com,6,3,4,0.15,9.99
-32,Check the Florist,342 Public Street,Providence,Rhode Island,02905,401-331-8984,b@gmail.com,a.com,7,4,2,0.51,5.12
-33,Frey Florist,50 Radcliffe Avenue,Providence,Rhode Island,02908,401-521-3539,b@gmail.com,a.com,0,1,1,0.67,7.52
-34,A New Leaf,135 Gano Street,Providence,Rhode Island,02906,401-351-4330,b@gmail.com,a.com,1,2,4,0.82,8.88
-35,Studio 539 Flowers,174 Wickenden Street,Providence,Rhode Island,02903,401-454-4400,b@gmail.com,a.com,2,3,1,0.98,1.23
-36,Twigs,233 Main Street,East Greenwich,Rhode Island,02818,401-398-8833,b@gmail.com,a.com,3,4,2,0.99,5.55
-37,Golden Gate Studios,2003 Broad Street,Cranston,Rhode Island,02905,401-461-2299,b@gmail.com,a.com,4,1,4,0.41,9.99
-38,Hudson Florist,741 Bergen Avenue,Jersey City,New Jersey,07306,201-433-2658,b@gmail.com,a.com,5,2,3,0.52,5.12
-39,Ariston Florist,110 W 17th Street,New York,New York,10011,212-929-4226,b@gmail.com,a.com,6,3,3,0.63,7.52
-40,John Street Florist,100 William Street,New York,New York,10038,212-809-3360,b@gmail.com,a.com,7,4,3,0.64,8.88
-41,Big Apple Florist,228 E 45th Street,New York,New York,10017,212-687-3434,b@gmail.com,a.com,0,1,1,0.15,1.23
-42,Langdon Florist,62 Reade Street,New York,New York,10007,212-962-4370,b@gmail.com,a.com,1,2,2,0.51,5.55
-43,StarBright Floral Design,150 W 28th Street #201,New York,New York,10001,800-520-8999,b@gmail.com,a.com,2,3,3,0.67,9.99
-44,Rose Red & Lavender,653 Metropolitan Ave,Brooklyn,New York,11211,718-486-3569,b@gmail.com,a.com,3,4,4,0.82,5.12
-45,Jerome Florists,1379 Madison Ave,New York,New York,10128,212-289-1677,b@gmail.com,a.com,4,1,1,0.98,7.52
-46,Matles Florist,329 W 57th Street,New York,New York,10019,212-246-1181,b@gmail.com,a.com,5,2,1,0.99,8.88
-47,New York Plaza Florist,1166 America Avenue,New York,New York,10036,212-968-0032,b@gmail.com,a.com,6,3,4,0.41,1.23
-48,Fulton Florist,1368 Fulton Ave,Brooklyn,New York,11216,718-306-9025,b@gmail.com,a.com,7,4,3,0.52,5.55
-49,Flowers On First,1072 1st Ave,New York,New York,10022,212-758-3005,b@gmail.com,a.com,0,1,2,0.63,6.23
+"""primaryKey""",''name'',''address'',''city'',''state'',''zipcode'',''phone'',''email'',''website'',''productCapabilityId'',''paymentTerms'',''leadTime'',''rate'',''deliveryFee''
+1,''WinstonFlowers'',''131 Newbury Street'',''Boston'',''massachusetts'',''02116'',''800-457-4901'',''a@gmail.com'',''a.com'',0,1,2,0.15,9.99
+2,''WinstonFlowers'',''176 Federal Street'',''Boston'',''massachusetts'',''02110'',''800-457-4901'',''b@gmail.com'',''b.com'',1,2,3,0.51,5.12
+3,''WinstonFlowers'',''32 Main Street'',''Concord'',''massachusetts'',''01742'',''800-457-4901'',''b@gmail.com'',''a.com'',2,3,1,0.67,7.52
+4,''WinstonFlowers'',''8 Main Street'',''Hingam'',''massachusetts'',''02043'',''800-457-4901'',''b@gmail.com'',''b.com'',3,4,2,0.82,8.88
+5,''WinstonFlowers'',''11 Florence Street'',''Newton'',''massachusetts'',''02459'',''800-457-4901'',''b@gmail.com'',''a.com'',4,1,3,0.98,1.23
+6,''WinstonFlowers'',''31 Central Street'',''Wellesley'',''massachusetts'',''02481'',''800-457-4901'',''b@gmail.com'',''b.com'',5,2,4,0.99,5.55
+7,''WinstonFlowers'',''382 Greenwich Ave'',''Greenwich'',''Connecticut'',''06830'',''800-457-4901'',''b@gmail.com'',''a.com'',6,3,4,0.41,9.99
+8,''Ricky's Flower Market'',''238 Washington Street'',''Somerville'',''massachusetts'',''02143'',''617-628-7569'',''b@gmail.com'',''b.com'',7,4,1,0.52,5.12
+9,''Bow Street Flowers'',''108 Beacon Street'',''Somerville'',''massachusetts'',''02143'',''617-492-0080'',''b@gmail.com'',''a.com'',0,1,1,0.63,7.52
+10,''Brattle Square Flowers'',''31 Brattle Street'',''Cambridge'',''massachusetts'',''02138'',''617-876-9839'',''b@gmail.com'',''b.com'',1,2,2,0.64,8.88
+11,''Petali Flowers'',''92 Mount Auburn Street'',''Cambridge'',''massachusetts'',''02138'',''617-492-3600'',''b@gmail.com'',''a.com'',2,3,3,0.15,1.23
+12,''West Elm'',''160 Brookline Avenue'',''Boston'',''massachusetts'',''02215'',''617-450-9500'',''b@gmail.com'',''b.com'',3,4,4,0.51,5.55
+13,''Niche Urban Garden Supply'',''619 Tremont Street'',''Boston'',''massachusetts'',''02118'',''857-753-4294'',''b@gmail.com'',''a.com'',4,1,4,0.67,9.99
+14,''Marc Hall Objekt'',''531 Albany Street'',''Boston'',''massachusetts'',''02118'',''617-391-6236'',''b@gmail.com'',''b.com'',5,2,1,0.82,5.12
+15,''Lotus Designs Flower Shop'',''977 Tremont Street'',''Boston'',''massachusetts'',''02120'',''617-262-7031'',''b@gmail.com'',''a.com'',6,3,1,0.98,7.52
+16,''San Francisco Florist'',''120 Howard Street'',''San Francisco'',''California'',''94105'',''415-778-6400'',''b@gmail.com'',''b.com'',7,4,2,0.99,8.88
+17,''Fillmore Florist'',''1880 Fillmore Street'',''San Francisco'',''California'',''94115'',''415-929-5200'',''b@gmail.com'',''a.com'',0,1,3,0.41,1.23
+18,''Christine's Flowers'',''250 Montgomery Street'',''San Francisco'',''California'',''94104'',''415-989-5450'',''b@gmail.com'',''b.com'',1,2,4,0.52,5.55
+19,''San Francisco Floral Exchange'',''298 Market Street'',''San Francisco'',''California'',''94111'',''415-398-9888'',''b@gmail.com'',''a.com'',2,3,1,0.63,9.99
+20,''Mandy Scott Flowers'',''1738 Union Street'',''San Francisco'',''California'',''94123'',''415-441-3758'',''b@gmail.com'',''a.com'',3,4,4,0.64,5.12
+21,''Church Street Flowers'',''212 Church Street'',''San Francisco'',''California'',''94114'',''415-553-7762'',''b@gmail.com'',''a.com'',4,1,2,0.15,7.52
+22,''Rossi & Rovetti Flowers'',''333 3rd Street #201'',''San Francisco'',''California'',''94107'',''415-543-4400'',''b@gmail.com'',''a.com'',5,2,3,0.51,8.88
+23,''San Francisco Flower Mart'',''640 Brannan Street'',''San Francisco'',''California'',''94107'',''415-392-7944'',''b@gmail.com'',''a.com'',6,3,4,0.67,1.23
+24,''Farmgirl Flowers'',''640 Brannan Street'',''San Francisco'',''California'',''94107'',''415-602-2939'',''b@gmail.com'',''a.com'',7,4,1,0.82,5.55
+25,''Fuji Florist'',''1900 Warburton Ave'',''Santa Clara'',''California'',''95050'',''408-248-3594'',''b@gmail.com'',''a.com'',0,1,1,0.98,9.99
+26,''Mills the Florist'',''235 University Ave'',''Palo Alto'',''California'',''94301'',''650-326-3443'',''b@gmail.com'',''a.com'',1,2,2,0.99,5.12
+27,''Avenue Florist'',''347 S California Ave'',''Palo Alto'',''California'',''94306'',''650-322-5585'',''b@gmail.com'',''a.com'',2,3,3,0.41,7.52
+28,''Colorburst Flowers'',''540 Bryant Street'',''Palo Alto'',''California'',''94301'',''650-322-8201'',''b@gmail.com'',''a.com'',3,4,1,0.52,8.88
+29,''Redwood City Florist'',''440 Woodside Road'',''Redwood City'',''California'',''94061'',''650-366-3881'',''b@gmail.com'',''a.com'',4,1,2,0.63,1.23
+30,''Village Flower Shop'',''2237 El Camino Real'',''Palo Alto'',''California'',''94306'',''650-328-5992'',''b@gmail.com'',''a.com'',5,2,3,0.64,5.55
+31,''Fleur de Lis'',''811 Castro Street'',''Mountain View'',''California'',''94041'',''650-968-0220'',''b@gmail.com'',''a.com'',6,3,4,0.15,9.99
+32,''Check the Florist'',''342 Public Street'',''Providence'',''Rhode Island'',''02905'',''401-331-8984'',''b@gmail.com'',''a.com'',7,4,2,0.51,5.12
+33,''Frey Florist'',''50 Radcliffe Avenue'',''Providence'',''Rhode Island'',''02908'',''401-521-3539'',''b@gmail.com'',''a.com'',0,1,1,0.67,7.52
+34,''A New Leaf'',''135 Gano Street'',''Providence'',''Rhode Island'',''02906'',''401-351-4330'',''b@gmail.com'',''a.com'',1,2,4,0.82,8.88
+35,''Studio 539 Flowers'',''174 Wickenden Street'',''Providence'',''Rhode Island'',''02903'',''401-454-4400'',''b@gmail.com'',''a.com'',2,3,1,0.98,1.23
+36,''Twigs'',''233 Main Street'',''East Greenwich'',''Rhode Island'',''02818'',''401-398-8833'',''b@gmail.com'',''a.com'',3,4,2,0.99,5.55
+37,''Golden Gate Studios'',''2003 Broad Street'',''Cranston'',''Rhode Island'',''02905'',''401-461-2299'',''b@gmail.com'',''a.com'',4,1,4,0.41,9.99
+38,''Hudson Florist'',''741 Bergen Avenue'',''Jersey City'',''New Jersey'',''07306'',''201-433-2658'',''b@gmail.com'',''a.com'',5,2,3,0.52,5.12
+39,''Ariston Florist'',''110 W 17th Street'',''New York'',''New York'',''10011'',''212-929-4226'',''b@gmail.com'',''a.com'',6,3,3,0.63,7.52
+40,''John Street Florist'',''100 William Street'',''New York'',''New York'',''10038'',''212-809-3360'',''b@gmail.com'',''a.com'',7,4,3,0.64,8.88
+41,''Big Apple Florist'',''228 E 45th Street'',''New York'',''New York'',''10017'',''212-687-3434'',''b@gmail.com'',''a.com'',0,1,1,0.15,1.23
+42,''Langdon Florist'',''62 Reade Street'',''New York'',''New York'',''10007'',''212-962-4370'',''b@gmail.com'',''a.com'',1,2,2,0.51,5.55
+43,''StarBright Floral Design'',''150 W 28th Street #201'',''New York'',''New York'',''10001'',''800-520-8999'',''b@gmail.com'',''a.com'',2,3,3,0.67,9.99
+44,''Rose Red & Lavender'',''653 Metropolitan Ave'',''Brooklyn'',''New York'',''11211'',''718-486-3569'',''b@gmail.com'',''a.com'',3,4,4,0.82,5.12
+45,''Jerome Florists'',''1379 Madison Ave'',''New York'',''New York'',''10128'',''212-289-1677'',''b@gmail.com'',''a.com'',4,1,1,0.98,7.52
+46,''Matles Florist'',''329 W 57th Street'',''New York'',''New York'',''10019'',''212-246-1181'',''b@gmail.com'',''a.com'',5,2,1,0.99,8.88
+47,''New York Plaza Florist'',''1166 America Avenue'',''New York'',''New York'',''10036'',''212-968-0032'',''b@gmail.com'',''a.com'',6,3,4,0.41,1.23
+48,''Fulton Florist'',''1368 Fulton Ave'',''Brooklyn'',''New York'',''11216'',''718-306-9025'',''b@gmail.com'',''a.com'',7,4,3,0.52,5.55
+49,''Flowers On First'',''1072 1st Ave'',''New York'',''New York'',''10022'',''212-758-3005'',''b@gmail.com'',''a.com'',0,1,2,0.63,6.23
