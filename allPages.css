@@ -1,5 +1,5 @@
 html{
-	background-image:url(http://media-cache-ec0.pinimg.com/736x/aa/48/a0/aa48a0822d32f7dcc9616fff1e2330ee.jpg);
+	background-image:url(http://vkreesphotography.com/wp-content/uploads/2013/07/HBlomExperimentFlowers9FW.jpg);
 	width:800px;
 }
 
@@ -15,6 +15,10 @@ body{
 	text-decoration:none;
 	text-align:left;
 	display:inline-block;
+}
+
+#navigation ul{
+	list-style:none;
 }
 
 #Company_Name{
