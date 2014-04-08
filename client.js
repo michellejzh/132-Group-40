@@ -1,3 +1,7 @@
+var engines = require('consolidate');
+app.engine('html', engines.hogan); // tell Express to run .html files through Hogan
+app.set('views', __dirname + '/templates'); // tell Express where to find templates
+
 /*
 Functions in this file:
 	initializeMap - creates the map on page load
