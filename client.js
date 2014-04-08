@@ -11,6 +11,22 @@ Functions in this file:
 			pass search results to the DOM for display
 */
 
+//TO DO~~~~~~~~~~~~~~~~~~~~~~~~~
+function validateForm() {
+    var form = document.getElementById("roomName-form");
+        form.addEventListener('submit', function(e) {
+            if (this.roomName.value.length==0) {
+                document.getElementById("roomName-err").style.display = "block";
+                e.preventDefault();
+            }
+            else {
+                document.getElementById("roomName-err").style.display = "none";
+                e.preventDefault();
+                window.location.assign(document.URL+"/messages/"+this.roomName.value);
+            }
+        });
+}
+
 //initiate the map
 function initializeMap() {
 	var mapOptions = {
@@ -24,9 +40,28 @@ function initializeMap() {
 google.maps.event.addDomListener(window, 'load', initializeMap);
 
 function returnResults() {
-	//add clients to the list of id="results-list"
-	//load info from a json table that has received results from the DB
-	//add id to each li?
+	console.log('about to find JSON');
+	//get the results to return
+	//THIS MEANS: REPLACE SEARCH.JSON WITH EACH SEARCH
+	/*var request = new XMLHttpRequest();
+    request.open('GET', '/search.json', true);
+    request.addEventListener('load', function(e){
+    	console.log(request.status);
+        if (request.status == 200) {
+            var content = request.responseText;
+            var data = JSON.parse(content);
+            console.log(data);
+        }
+    }, false);*/
+	
+    //add them to the DOM
+	var ul = document.getElementById("results-list");
+	var li = document.createElement('li');
+	var id = Math.random(150000); //id of the client
+	li.setAttribute('id', id);
+	li.innerHTML = '<a href="../resultsPage.html"><div id="icon">icon goes here</div><div id="details"><div id="name">Vendor Name<br></div><div id="address">123 Address St., Providence RI 02912<br></div><div id="desc">some details about the vendor some details about the vendor some details about the vendor<br></div></div></a>';
+	ul.appendChild(li);
+
 }
 
 //input: results of a search
@@ -46,6 +81,9 @@ function placeMarker(searchResults) {
 
 function selectVendor(vendor) {
 	alert("selecting a vendor!");
+	//need to make fields for vendors
+	//var vendorID = vendor.ID
+	//window.location.assign("./vendor/"+vendorID);
 }
 
 //convert address to coordinates

@@ -8,30 +8,42 @@
 }
 
 #results {
-	border: 10px;
-	border-color: red;
+	border: 2px solid black;
 	display: visible;
 	height: 400px;
-	width: 500px;
+	width: 270px;
 	position: absolute;
-	left: 400px;
+	left: 410px;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
 
+#name {
+	font-size: 14pt;
+}
 ul {
 	list-style-type: none;
+	position: relative;
+	left: -40px;
+	top: -15px;
 }
 
-#icon {
+li {
+	border-bottom: 2px solid black;
 	position: inline;
-}
-
-#details {
-	border: 2px solid black;
-	position: inline;
-	top: 10px;
-	left: 110px;
-	width: 200px;
+	width: 260px;
 	height: 110px;
+}
+
+
+a:link {
+	text-decoration:none;
+	color: black;
+}
+a:visited {
+	text-decoration:none;
+	color: black;
+}
+a:hover {
+	color: gray;
 }
