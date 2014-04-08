@@ -20,7 +20,7 @@ function initializeMap() {
 
 	//deal with applicable vendors
 	var vendorList = filterList(getVendors());
-	addVendorsToPage(vendorList);
+	addVendorsToPage(map, vendorList);
 }
 
 google.maps.event.addDomListener(window, 'load', initializeMap);
@@ -32,17 +32,22 @@ Adds vendors to the page by:
 
 vendorList - a JSON object of the applicable vendors
 */
-function addVendorsToPage(vendorList){
+function addVendorsToPage(map, vendorList){
 	var length = vendorList.length;
 	for (int i = 0; i < length; i++){
 		var vendor = vendorList[i];
 		addResultToList(vendor);
-		addMarker(getAddress(vendor));
+		addMarker(getAddress(map, vendor));
 	}
 
 }
 
+/*
+Returns the distance between the client and vendor address.
 
+clientAdress - the client's address as a string
+vendorAddress - the vendor's address as a string
+*/
 function calcDistance(clientAddress, vendorAddress) {
   service.getDistanceMatrix(
     {
@@ -112,6 +117,10 @@ function getVendors(){
 
 /*
 Returns a JSON object of vendors within x miles from origin
+
+vendors - the complete JSON list of vendors
+distance - the number representing the minimum distance required
+originAddress - a string representing the address of the origin
 */
 function filterList(vendors, distance, originAddress){
 	var filteredList = [];
@@ -155,6 +164,11 @@ function returnResults() {
     }, false);
 }*/
 
+/*
+Adds a vendor to a HTML list
+
+data - a JSON of the vendor
+*/
 function addResultToList(data) {
 	//for (i=0; i<data.length; i++) {
 	    //char to add: name, address, short desc, 
@@ -172,7 +186,11 @@ function addResultToList(data) {
 	//}
 }
 
-function addMarker(currAddress) {
+/*
+Adds a marker on the google map at the given address. 
+currAddress - a string representing an address
+*/
+function addMarker(map, currAddress) {
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			var marker = new google.maps.Marker({
