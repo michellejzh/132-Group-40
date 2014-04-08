@@ -15,7 +15,7 @@ var fields = {
 	10: 'paymentTerms',
 	11: 'leadTime',
 	12: 'rate',
-	13: 'deliveryFee',
+	13: 'deliveryFee'
 };
 var transformers = {
 	'productCapabilityId': parseFloat,

@@ -1,0 +1,65 @@
+html{
+	background-image:url(http://vkreesphotography.com/wp-content/uploads/2013/07/HBlomExperimentFlowers9FW.jpg);
+	background-size: 100% auto;
+	background-repeat:no-repeat;
+}
+
+body{
+	font-family: Helvetica;
+	min-width:400px;
+	max-width:400px;
+}
+
+#navigation{
+	position:fixed-relative;
+	list-style:none;
+	text-decoration:none;
+	text-align:left;
+	display:inline-block;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+#navigation ul{
+	list-style:none;
+}
+
+#navigation a{
+	text-align: center;
+}
+
+#Company_Name{
+	background-color: white;
+	height:30px;
+	float:left;
+	position:absolute;
+	margin-left: -40px;
+}
+
+#Company_Name a{
+	color:black;
+	font-size: 30px;
+}
+
+#Vendor_list{
+	height:30px;
+	float:right;
+	margin-right: -800px;
+}
+
+#Vendor_list a{
+	color:white;
+	font-size: 18px;
+}
+
+#navigation a{
+	display:inline-block;
+	text-decoration:none;
+	list-style:none;
+}
+
+#content{
+	width:800px;
+	margin-left: auto;
+	margin-right: auto;
+}

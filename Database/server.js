@@ -8,12 +8,12 @@ var anyDB = require('any-db');
 var conn = anyDB.createConnection('sqlite3://vendors.db');
 
 //==============SEARCH PAGE==============//
-app.get('*', function(request, response){
+app.get('/', function(request, response){
     console.log('- Request received:', request.method, request.url);
     //response.render('search-results.html');
-    conn.query('SELECT * FROM vendors')
+    conn.query('SELECT name FROM vendors')
     .on('row', function(row) {
-    	response.write(row.names+", "+row.address);
+    	response.write(row.vendorName);
     	response.end();
     });
 });
