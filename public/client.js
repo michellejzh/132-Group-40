@@ -1,10 +1,15 @@
-//initiate the map
+// id for the map canvas
+var mapID = "map-canvas";
+
+/*
+initializee the map
+*/
 function initializeMap() {
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
 		zoom: 15
 	};
-	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	map = new google.maps.Map($('#' + mapID)[0], mapOptions);
 	geocoder = new google.maps.Geocoder();
 	service = new google.maps.DistanceMatrixService();
 }
