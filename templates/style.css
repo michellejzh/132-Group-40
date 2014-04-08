@@ -3,5 +3,35 @@
 	border-color: red;
 	display: visible;
 	height: 400px;
-	width: 600px;
+	width: 400px;
+	position: absolute;
+}
+
+#results {
+	border: 10px;
+	border-color: red;
+	display: visible;
+	height: 400px;
+	width: 500px;
+	position: absolute;
+	left: 400px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+ul {
+	list-style-type: none;
+}
+
+#icon {
+	position: inline;
+}
+
+#details {
+	border: 2px solid black;
+	position: inline;
+	top: 10px;
+	left: 110px;
+	width: 200px;
+	height: 110px;
 }
