@@ -1,49 +1,33 @@
-/*
-Functions in this file:
-	initializeMap - creates the map on page load
-	placeMarker - places a marker on the map corresponding to a vendor
-	centerMarker - center a certain marker, called when you click on a vendor's info
-
-	Some to do:
-		should we have a seperate file for map JS and field/search JS?
-
-		everything related to search
-			pass search results to the DOM for display
-*/
-
-//TO DO~~~~~~~~~~~~~~~~~~~~~~~~~
-function validateForm() {
-    var form = document.getElementById("roomName-form");
-        form.addEventListener('submit', function(e) {
-            if (this.roomName.value.length==0) {
-                document.getElementById("roomName-err").style.display = "block";
-                e.preventDefault();
-            }
-            else {
-                document.getElementById("roomName-err").style.display = "none";
-                e.preventDefault();
-                window.location.assign(document.URL+"/messages/"+this.roomName.value);
-            }
-        });
-}
-
 //initiate the map
 function initializeMap() {
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
 		zoom: 16
 	};
-	var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-	console.log("there should be a new map now");
+	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+	geocoder = new google.maps.Geocoder();
 }
 
 google.maps.event.addDomListener(window, 'load', initializeMap);
 
+function moveMapCenter() {
+	console.log(document.vendorAddress);
+	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			map.setCenter(results[0].geometry.location);
+		} 
+		else {
+			alert("Geocode was not successful for the following reason: " + status);
+		}
+	});
+}
+
+//needs to be broken into helper methods
 function returnResults() {
 	console.log('about to find JSON');
 	//get the results to return
 	//THIS MEANS: REPLACE SEARCH.JSON WITH EACH SEARCH
-	/*var request = new XMLHttpRequest();
+	var request = new XMLHttpRequest();
     request.open('GET', '/search.json', true);
     request.addEventListener('load', function(e){
     	console.log(request.status);
@@ -52,16 +36,32 @@ function returnResults() {
             var data = JSON.parse(content);
             console.log(data);
         }
-    }, false);*/
+    }, false);
 	
+    //char to add: name, address, short desc, 
+    var currAddress = "256 Thayer St Providence RI 02906";
+
     //add them to the DOM
 	var ul = document.getElementById("results-list");
 	var li = document.createElement('li');
 	var id = Math.random(150000); //id of the client
 	li.setAttribute('id', id);
-	li.innerHTML = '<a href="../resultsPage.html"><div id="icon">icon goes here</div><div id="details"><div id="name">Vendor Name<br></div><div id="address">123 Address St., Providence RI 02912<br></div><div id="desc">some details about the vendor some details about the vendor some details about the vendor<br></div></div></a>';
+	li.setAttribute('onclick', "document.vendorAddress='Skúlagata 28, 101 Reykjavík, Iceland'; moveMapCenter();");
+	li.innerHTML = '<div id="icon">icon goes here</div><div id="details"><div id="name">Vendor Name<br></div><div id="address">Skúlagata 28, 101 Reykjavík, Iceland<br></div><div id="desc">some details about the vendor some details about the vendor some details about the vendor<br></div></div>';
 	ul.appendChild(li);
 
+	//add a marker
+	geocoder.geocode( { 'address': currAddress}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			var marker = new google.maps.Marker({
+				map: map,
+				position: results[0].geometry.location
+			});
+		} 
+		else {
+			alert("Geocode was not successful for the following reason: " + status);
+		}
+	});
 }
 
 //input: results of a search
@@ -86,14 +86,18 @@ function selectVendor(vendor) {
 	//window.location.assign("./vendor/"+vendorID);
 }
 
-//convert address to coordinates
-	//or other search function?
-function convertToCoord(address) {
-	//		#TO DO
-}
-
-function centerMarker() {
-	//navigate so that the selected client (from sidebar)
-	//is centered on the map
-
+//TO DO~~~~~~~~~~~~~~~~~~~~~~~~~
+function validateForm() {
+    var form = document.getElementById("roomName-form");
+        form.addEventListener('submit', function(e) {
+            if (this.roomName.value.length==0) {
+                document.getElementById("roomName-err").style.display = "block";
+                e.preventDefault();
+            }
+            else {
+                document.getElementById("roomName-err").style.display = "none";
+                e.preventDefault();
+                window.location.assign(document.URL+"/messages/"+this.roomName.value);
+            }
+        });
 }
