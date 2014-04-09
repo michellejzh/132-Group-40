@@ -57,6 +57,11 @@ app.get('/test.json', function(request, response){
 });
 
 //==============RESULTS PAGE==============//
+
+app.post('/search-results', function(request, response){
+    response.render('searchResults.html');
+});
+
 app.get('/search-results', function(request, response){
     response.render('searchResults.html');
 });
@@ -67,4 +72,8 @@ app.get('/search-page', function(request, response){
 
 app.get('/main', function(request, response){
     response.render('main.html');
+});
+
+app.get('*', function(request, response){
+	reponse.render('main.html');
 });
