@@ -14,14 +14,21 @@ function getParam(name){
       return decodeURIComponent(name[1]);
 }
 
+/*
+Returns a string of the address by parsing the URL parameters.
+*/
+function getAdress(){
+	var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
+	return address.replace(new RegExp("\\+", 'g'), " ")
+}
+
 //console.log(urlParam('state'));
 /*
 initializes the map
 */
 function initializeMap() {
 	var distance = getParam('distance');
-	var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
-	address = address.replace(new RegExp("\\+", 'g'), " ")
+	var address = getAddress();
 	
 	//paints map
 	var mapOptions = {

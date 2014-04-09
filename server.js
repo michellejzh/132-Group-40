@@ -44,6 +44,7 @@ app.get('/search.json', function(request, response){
 
 
 app.get('/test.json', function(request, response){
+    response.setHeader("Access-Control-Allow-Origin", "*");
     var list = [];
     console.log("Querying /test.json");
     var q = conn.query('SELECT * FROM vendors');
