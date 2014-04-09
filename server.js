@@ -22,22 +22,19 @@ app.listen(8080, function(){
 
 //================JSON GET AND POST===============//
 
-//TO DO
 app.get('/search.json', function(request, response){
-    /*
-    var messages = [];
-    var q = conn.query('SELECT * FROM messages WHERE roomID=$1', [request.params.roomID]);
-    //should I be putting things in a list here?
-    //problem: it stops working because it doesn't like rows
+    var vendorList = [];
+    var q = conn.query('SELECT * FROM vendors');
+    console.log("selecting vendors");
     q.on('row', function(row){
-        var nickname = row.nickname;
-        var message = row.message;
-        messages.push({nickname: nickname, message: message});
+        console.log("are we here");
+        var address = row.address + row.city + row.zipcode + row.state;
+        vendorList.push({address: address, phone: row.phone, vendorName: row.vendorName});
     });
+
     q.on('end', function(){
-        response.json(messages);
+        response.json(vendorList)
     });
-*/
 });
 
 /*
