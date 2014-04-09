@@ -2,12 +2,13 @@ html{
 	background-image:url(http://vkreesphotography.com/wp-content/uploads/2013/07/HBlomExperimentFlowers9FW.jpg);
 	background-size: 100% auto;
 	background-repeat:no-repeat;
+	height:auto;
+	min-width: 1000px;
+	min-height: 385px;
 }
 
 body{
 	font-family: Helvetica;
-	min-width:400px;
-	max-width:400px;
 }
 
 #navigation{
@@ -26,40 +27,41 @@ body{
 
 #navigation a{
 	text-align: center;
+	display:inline-block;
+	text-decoration:none;
+	list-style:none;
 }
 
 #Company_Name{
-	background-color: white;
 	height:30px;
 	float:left;
 	position:absolute;
 	margin-left: -40px;
+	font-family: Times;
 }
 
 #Company_Name a{
-	color:black;
+	color:white;
 	font-size: 30px;
 }
 
 #Vendor_list{
 	height:30px;
 	float:right;
-	margin-right: -800px;
 }
 
 #Vendor_list a{
 	color:white;
-	font-size: 18px;
-}
-
-#navigation a{
-	display:inline-block;
-	text-decoration:none;
-	list-style:none;
+	font-size: 15px;
 }
 
 #content{
-	width:800px;
-	margin-left: auto;
-	margin-right: auto;
+	display: block;
+	position: relative;
+	height:20%;
+	width:60%;
+	margin: 0 auto;
+	border:2px solid silver;
+	border-style: groove;
+	border-radius:10px;
 }

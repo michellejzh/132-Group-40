@@ -1,8 +1,12 @@
 #content{
-	font-size: 25px;
+	font-size: 18px;
 	font-weight: bold;
-	color: black;
-	background-color: white;
-	width:800px;
+	color: white;
+	background-color: rgba(255, 255, 255, 0.2);
 	text-align: center;
+}
+
+legend{
+	font-size: 20px;
+	font-weight: none;
 }
