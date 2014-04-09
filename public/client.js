@@ -98,9 +98,8 @@ function renderVendors(map, vendorList){
 	for (var i = 0; i < length; i++){
 		var vendor = vendorList[i];
 		addResultToList(vendor);
-		addMarker(map, vendor);
+		//addMarker(map, vendor);
 	}
-
 }
 
 /*
@@ -114,12 +113,33 @@ function addResultToList(vendor) {
     var address = getAddress(vendor);
     var phone = vendor.phone;
 
-    //add them to the DOM
-	var ul = document.getElementById("results-list");
-	var li = document.createElement('li');
-	li.setAttribute('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
-	li.innerHTML = '<div id="icon">[icon goes here]</div><div id="details"><div id="name">'+vendorName+'<br></div><div id="address">'+address+'<br></div><div id="phone">'+phone+'<br></div></div>';
-	ul.appendChild(li);
+    //create DOM elements
+    var $li = $("<li>", {
+    	class: 'vendorLi',
+    });
+	$li.attr('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
+    var $details = $("<div>", {
+    	class: 'details'
+    });
+    var $name = $("<div>", {
+    	class: 'name'
+    	//text: vendorName
+    });
+    var $address = $("<div>", {
+    	class: 'address'
+    //	text: address
+    });
+    var $phone = $("<div>", {
+    	class: 'phone'
+    	//text: phone
+    });
+
+    // add DOM elements to page
+    $details.append(name);
+    $details.append(address);
+    $details.append(phone);
+    $li.append($details);
+    $("#" + resultsListID).append($li);
 }
 
 /*
