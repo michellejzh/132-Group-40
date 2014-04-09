@@ -22,9 +22,6 @@ var service = new google.maps.DistanceMatrixService();
 // Minimum distance for vendors
 var distance = 0;
 
-// A vendor
-var vendor = null;
-
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
 })
@@ -72,8 +69,6 @@ function loadVendors(map){
 	var request = new XMLHttpRequest();
 	var address = getAddressFromURL();
 
-	var testOrigin = "115 Waterman St, Providence, RI 02912";
-
 	// get vendors
 	request.addEventListener('load', function(e){
 		console.log("blah");
@@ -81,7 +76,7 @@ function loadVendors(map){
 	        // do something with the loaded content
 	        var content = request.responseText;
 			var data = JSON.parse(content);
-			renderVendors(limit(data), testOrigin);
+			renderVendors(limit(data), address);
 	    } else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
@@ -221,7 +216,7 @@ function renderFilteredVendor(clientAddress, vendor) {
 
 		    //convert to miles
 		    totalDist *= 0.000621371;
-		    
+		    console.log(totalDist);
 		    // add if passes filter
 		    if (filter(totalDist)){
 				addResultToList(vendor);
