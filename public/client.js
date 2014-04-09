@@ -1,6 +1,7 @@
 /*
 TODO
 1. edit database to match what mike sent over.
+2. cache locations so that geolocation thing doesn't send too many queries
 */
 
 // id for the map canvas
@@ -11,6 +12,21 @@ var resultsListID = "results-list";
 
 // link to the server
 var serverURL = "http://localhost:8080/search.json";
+
+// geocoder
+var geocoder = new google.maps.Geocoder();
+
+// distance matrix service
+var service = new google.maps.DistanceMatrixService();
+
+// list of filtered results
+var filteredList = [];
+
+// Minimum distance for vendors
+var distance = 0;
+
+// A vendor
+var vendor = null;
 
 /*
 Gets the parameter of the URL as a string
@@ -30,13 +46,10 @@ function getAddressFromURL(){
 	return address.replace(new RegExp("\\+", 'g'), " ")
 }
 
-//console.log(urlParam('state'));
 /*
 initializes the map
 */
 function initializeMap() {
-	var distance = getParam('distance');
-	var address = getAddressFromURL();
 	
 	//paints map
 	var mapOptions = {
@@ -44,8 +57,6 @@ function initializeMap() {
 		zoom: 15
 	};
 	map = new google.maps.Map($('#' + mapID)[0], mapOptions);
-	geocoder = new google.maps.Geocoder();
-	service = new google.maps.DistanceMatrixService();
 
 	//deal with applicable vendors
 	loadVendors(map);
@@ -58,6 +69,10 @@ Gets a JSON object of vendors from the server
 */
 function loadVendors(map){
 	var request = new XMLHttpRequest();
+	distance = getParam('distance');
+	var address = getAddressFromURL();
+
+	var testOrigin = "115 Waterman St, Providence, RI 02912";
 
 	// get vendors
 	request.addEventListener('load', function(e){
@@ -66,7 +81,9 @@ function loadVendors(map){
 	        // do something with the loaded content
 	        var content = request.responseText;
 			var data = JSON.parse(content);
-			renderVendors(map, data);
+			filterList(limit(data), testOrigin);
+			console.log(filteredList);
+			renderVendors(map, filteredList);
 	    } else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
@@ -85,6 +102,18 @@ function loadVendors(map){
 }
 
 /*
+TODO: THIS FUNCTION SHOULD EVENTUALLY BE DELETED
+*/
+function limit(vendorList){
+	var length = 10;
+	var toRet = [];
+	for (var i = 0; i < length; i++){
+		toRet.push(vendorList[i]);
+	}
+	return toRet;
+}
+
+/*
 Adds vendors to the page by:
 1. editing the contents of the results list
 2. adding a marker
@@ -94,11 +123,12 @@ vendorList - a JSON object of the applicable vendors
 */
 function renderVendors(map, vendorList){
 	var length = vendorList.length;
-
 	for (var i = 0; i < length; i++){
 		var vendor = vendorList[i];
+
+		// deal with rendering
 		addResultToList(vendor);
-		//addMarker(map, vendor);
+		addMarker(map, getAddress(vendor));
 	}
 }
 
@@ -108,7 +138,6 @@ Adds a vendor to a HTML list
 data - a JSON of a single vendor
 */
 function addResultToList(vendor) {
-	console.log('here');
     var vendorName = vendor.name;
     var address = getAddress(vendor);
     var phone = vendor.phone;
@@ -122,16 +151,16 @@ function addResultToList(vendor) {
     	class: 'details'
     });
     var $name = $("<div>", {
-    	class: 'name'
-    	//text: vendorName
+    	class: 'name',
+    	text: vendorName
     });
     var $address = $("<div>", {
-    	class: 'address'
-    //	text: address
+    	class: 'address',
+    	text: address
     });
     var $phone = $("<div>", {
-    	class: 'phone'
-    	//text: phone
+    	class: 'phone',
+    	text: phone
     });
 
     // add DOM elements to page
@@ -151,60 +180,9 @@ function addMarker(map, currAddress) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			var marker = new google.maps.Marker({
 				map: map,
-				position: results[0].geometry.location
+				position: results[0].geometry.location,
+    			animation: google.maps.Animation.DROP
 			});
-		} 
-		else {
-			alert("Geocode was not successful for the following reason: " + status);
-		}
-	});
-}
-
-/*
-Returns the distance between the client and vendor address.
-
-clientAdress - the client's address as a string
-vendorAddress - the vendor's address as a string
-*/
-function calcDistance(clientAddress, vendorAddress) {
-  service.getDistanceMatrix(
-    {
-      origins: [clientAddress, vendorAddress],
-      destinations: [clientAddress, vendorAddress],
-      travelMode: google.maps.TravelMode.DRIVING,
-      unitSystem: google.maps.UnitSystem.IMPERIAL,
-      avoidHighways: false,
-      avoidTolls: false
-    }, callback);
-}
-
-function callback(response, status) {
-	if (status != google.maps.DistanceMatrixStatus.OK) {
-    	alert('Error was: ' + status);
-	} 
-	else {
-		var origins = response.originAddresses;
-    	var destinations = response.destinationAddresses;
-    	var totalDist = 0;
-		for (var i = 0; i < origins.length; i++) {
-    		var results = response.rows[i].elements;
-    		addMarker(origins[i], false);
-	      	for (var j = 0; j < results.length; j++) {
-				totalDist = totalDist + results[j].distance.value;
-	      	}
-	    }
-	    //convert to miles
-	    totalDist = 0.000621371*totalDist
-	    alert(totalDist+" miles");
-	}
-}
-
-
-function moveMapCenter() {
-	console.log(document.vendorAddress);
-	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-			map.setCenter(results[0].geometry.location);
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
@@ -219,18 +197,77 @@ vendors - the complete JSON list of vendors
 distance - the number representing the minimum distance required
 originAddress - a string representing the address of the origin
 */
-function filterList(vendors, distance, originAddress){
-	var filteredList = [];
+function filterList(vendors, originAddress){
 	var vendorsLength = vendors.length;
 
 	for (var i = 0; i < vendorsLength; i++){
-		var vendor = venders[i];
-		if (calcDistance(originAddress, getAddress(vendor)) < distance){
-			filteredList.push(vendor);
-		}
+		vendor = vendors[i];
+		calcDistance(originAddress, vendor);
 	}
+}
 
-	return filteredList;
+/*
+Returns the distance between the client and vendor address.
+
+clientAdress - the client's address as a string
+distance - the number representing the minimum distance required
+filteredList - list of vendors matching the query
+vendor - JSON object representing vendor
+*/
+function calcDistance(clientAddress, vendor) {
+	var vendorAddress = getAddress(vendor);
+	service.getDistanceMatrix(
+    {
+      origins: [clientAddress, vendorAddress],
+      destinations: [clientAddress, vendorAddress],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.IMPERIAL,
+      avoidHighways: false,
+      avoidTolls: false
+    }, distanceCallback);
+
+
+	filteredList.push(vendor);
+}
+
+/*
+Determines whether or not a vendor is within the given distance.
+If so, it is added to the filteredList
+*/
+function distanceCallback(response, status) {
+	if (status != google.maps.DistanceMatrixStatus.OK) {
+    	alert('Error was: ' + status);
+	} else {
+		var origins = response.originAddresses;
+    	var destinations = response.destinationAddresses;
+    	var totalDist = 0;
+		for (var i = 0; i < origins.length; i++) {
+    		var results = response.rows[i].elements;
+	      	for (var j = 0; j < results.length; j++) {
+				totalDist = totalDist + results[j].distance.value;
+	      	}
+	    }
+	    //convert to miles
+	    totalDist = 0.000621371*totalDist;
+	    if (totalDist < distance){
+	    	//TODO FIGURE THIS OUT
+	    }
+	}
+}
+
+/*
+Moves the map to the center of the address clicked
+*/
+function moveMapCenter() {
+	console.log("you clicked on the address: " + document.vendorAddress);
+	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			map.setCenter(results[0].geometry.location);
+		} 
+		else {
+			alert("Geocode was not successful for the following reason: " + status);
+		}
+	});
 }
 
 /*
@@ -238,25 +275,6 @@ Given a JSON object of a vendor, returns the vendor's address as a string
 */
 function getAddress(vendor){
 	return vendor.addressLine1 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
-}
-
-
-//needs to be broken into helper methods
-function returnResults() {
-	//get the results to return
-	//THIS MEANS: REPLACE SEARCH.JSON WITH EACH SEARCH
-		//do we need search IDs?
-	var request = new XMLHttpRequest();
-    request.open('GET', '/search.json', true);
-    request.addEventListener('load', function(e){
-    	console.log(request.status);
-        if (request.status == 200) {
-            var content = request.responseText;
-            var data = JSON.parse(content);
-            console.log(data);
-            addResultsToList(data);
-        }
-    }, false);
 }
 
 //TO DO~~~~~~~~~~~~~~~~~~~~~~~~~
