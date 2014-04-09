@@ -4,8 +4,15 @@ var mapID = "map-canvas";
 // id for resulsts list id
 var resultsListID = "results-list";
 
+// use to get the url parameters
+var urlParam = function(name){
+    var results = new RegExp('[\\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+    return results[1] || 0;
+}
+
+console.log(urlParam('state'));
 /*
-initializee the map
+initializes the map
 */
 function initializeMap() {
 	//paints map
@@ -33,7 +40,7 @@ vendorList - a JSON object of the applicable vendors
 */
 function addVendorsToPage(map, vendorList){
 	var length = vendorList.length;
-	for (i = 0; i < length; i++) {
+	for (var i = 0; i < length; i++){
 		var vendor = vendorList[i];
 		addResultToList(vendor);
 		addMarker(getAddress(map, vendor));
@@ -127,7 +134,11 @@ function filterList(vendors, distance, originAddress){
 	var filteredList = [];
 	var vendorsLength = vendors.length;
 
+<<<<<<< HEAD
+	for (var i = 0; i < vendorsLength; i++){
+=======
 	for (i = 0; i < vendorsLength; i++){
+>>>>>>> d88d99d08d20013daad5d7040ad53aadb8a60b2e
 		var vendor = venders[i];
 		if (calcDistance(originAddress, getAddress(vendor)) < distance){
 			filteredList.push(vendor);
