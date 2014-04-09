@@ -1,12 +1,48 @@
-#content{
-	font-size: 18px;
-	font-weight: bold;
-	color: white;
-	background-color: rgba(255, 255, 255, 0.2);
-	text-align: center;
+legend{
+	font-size: 25px;
+	font-weight: none;
+	color: #151B54;
 }
 
-legend{
-	font-size: 20px;
-	font-weight: none;
+input{
+	color: #151B54;
+	padding-left: 10px;
 }
+
+#content{
+	background-color: rgba(255, 255, 255, 0.5);
+	padding-left: 20px;
+	color: #151B54;
+
+}
+
+
+#order{
+	margin-left:50px;
+	color: #151B54;
+	font-size: 18px;
+	font-weight: bold;
+
+}
+
+#product{
+	margin-left:50px;
+	color: #151B54;
+	font-size: 18px;
+	font-weight: bold;
+
+}
+
+#delivery{
+	margin-left:50px;
+	color: #151B54;
+	font-size: 18px;
+	font-weight: bold;
+
+}
+
+#submit{
+	text-align:center;
+	font-size: 18px;
+}
+
