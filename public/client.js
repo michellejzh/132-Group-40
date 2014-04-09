@@ -134,11 +134,7 @@ function filterList(vendors, distance, originAddress){
 	var filteredList = [];
 	var vendorsLength = vendors.length;
 
-<<<<<<< HEAD
 	for (var i = 0; i < vendorsLength; i++){
-=======
-	for (i = 0; i < vendorsLength; i++){
->>>>>>> d88d99d08d20013daad5d7040ad53aadb8a60b2e
 		var vendor = venders[i];
 		if (calcDistance(originAddress, getAddress(vendor)) < distance){
 			filteredList.push(vendor);
