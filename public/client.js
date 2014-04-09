@@ -19,20 +19,15 @@ var geocoder = new google.maps.Geocoder();
 // distance matrix service
 var service = new google.maps.DistanceMatrixService();
 
-// list of filtered results
-var filteredList = [];
-
 // Minimum distance for vendors
 var distance = 0;
 
 // A vendor
 var vendor = null;
 
-var count = 0;
-
-var filteredCount = 0;
-
-var ready = false;
+$(document).ready(function(){
+	distance = parseInt(getParam('distance'));
+})
 
 /*
 Gets the parameter of the URL as a string
@@ -75,7 +70,6 @@ Gets a JSON object of vendors from the server
 */
 function loadVendors(map){
 	var request = new XMLHttpRequest();
-	distance = parseInt(getParam('distance'));
 	var address = getAddressFromURL();
 
 	var testOrigin = "115 Waterman St, Providence, RI 02912";
@@ -87,7 +81,7 @@ function loadVendors(map){
 	        // do something with the loaded content
 	        var content = request.responseText;
 			var data = JSON.parse(content);
-			filterList(limit(data), testOrigin);
+			renderVendors(limit(data), testOrigin);
 	    } else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
@@ -115,25 +109,6 @@ function limit(vendorList){
 		toRet.push(vendorList[i]);
 	}
 	return toRet;
-}
-
-/*
-Adds vendors to the page by:
-1. editing the contents of the results list
-2. adding a marker
-
-map - 
-vendorList - a JSON object of the applicable vendors
-*/
-function renderVendors(map, vendorList){
-	var length = vendorList.length;
-	for (var i = 0; i < length; i++){
-		var vendor = vendorList[i];
-
-		// deal with rendering
-		addResultToList(vendor);
-		addMarker(map, getAddress(vendor));
-	}
 }
 
 /*
@@ -195,33 +170,30 @@ function addMarker(map, currAddress) {
 }
 
 /*
-Returns a JSON object of vendors within x miles from origin
+Renders filtered vendors on page
 
 vendors - the complete JSON list of vendors
-distance - the number representing the minimum distance required
 originAddress - a string representing the address of the origin
 */
-function filterList(vendors, originAddress){
+function renderVendors(vendors, originAddress){
 	var vendorsLength = vendors.length;
 
 	for (var i = 0; i < vendorsLength; i++){
 		vendor = vendors[i];
-		calcDistance(originAddress, vendor);
-		count += 1;
+		renderFilteredVendor(originAddress, vendor);
 	}
-
-	ready = true;
 }
 
 /*
-Returns the distance between the client and vendor address.
+Renders vendor if:
+1. vendor is within distance radius
+2. TODO: vendor mathces flower types
+3. TODO: vendor matches lead time
 
 clientAdress - the client's address as a string
-distance - the number representing the minimum distance required
-filteredList - list of vendors matching the query
 vendor - JSON object representing vendor
 */
-function calcDistance(clientAddress, vendor) {
+function renderFilteredVendor(clientAddress, vendor) {
 	var vendorAddress = getAddress(vendor);
 	service.getDistanceMatrix(
     {
@@ -235,6 +207,8 @@ function calcDistance(clientAddress, vendor) {
     	if (status != google.maps.DistanceMatrixStatus.OK) {
     		alert('Error was: ' + status);
 		} else {
+
+			//get distance
 			var origins = response.originAddresses;
 	    	var destinations = response.destinationAddresses;
 	    	var totalDist = 0;
@@ -246,43 +220,24 @@ function calcDistance(clientAddress, vendor) {
 		    }
 		    //convert to miles
 		    totalDist = 0.000621371*totalDist;
-		    if (totalDist < distance){
-		   		console.log(totalDist + " " + distance);
-		    	console.log(vendor);
-		    	filteredList.push(vendor);
-		    }
-		    filteredCount += 1
-		}
 
-		if (ready && filteredCount === count){
-			renderVendors(map, filteredList);
+		    // add if passes filter
+		    if (filter(totalDist)){
+				addResultToList(vendor);
+				addMarker(map, getAddress(vendor));
+		    }
 		}
     });
 }
 
 /*
-Determines whether or not a vendor is within the given distance.
-If so, it is added to the filteredList
+Returns true if the vendor passes the filter/matches the user's query. 
+Returns false otherwise
+
+vendorDistance - distance between origin and vendor
 */
-function distanceCallback(response, status) {
-	if (status != google.maps.DistanceMatrixStatus.OK) {
-    	alert('Error was: ' + status);
-	} else {
-		var origins = response.originAddresses;
-    	var destinations = response.destinationAddresses;
-    	var totalDist = 0;
-		for (var i = 0; i < origins.length; i++) {
-    		var results = response.rows[i].elements;
-	      	for (var j = 0; j < results.length; j++) {
-				totalDist = totalDist + results[j].distance.value;
-	      	}
-	    }
-	    //convert to miles
-	    totalDist = 0.000621371*totalDist;
-	    if (totalDist < distance){
-	    	//TODO FIGURE THIS OUT
-	    }
-	}
+function filter(vendorDistance){
+	return vendorDistance < distance;
 }
 
 /*
