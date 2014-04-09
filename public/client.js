@@ -4,17 +4,24 @@ var mapID = "map-canvas";
 // id for resulsts list id
 var resultsListID = "results-list";
 
-// use to get the url parameters
-var urlParam = function(name){
-    var results = new RegExp('[\\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
-    return results[1] || 0;
+/*
+Gets the parameter of the URL as a string
+
+name - the string representing the name of the parameter you want to retrieve
+*/
+function getParam(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
 }
 
-console.log(urlParam('state'));
+//console.log(urlParam('state'));
 /*
 initializes the map
 */
 function initializeMap() {
+	var distance = getParam('distance');
+	var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
+
 	//paints map
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
@@ -25,7 +32,7 @@ function initializeMap() {
 	service = new google.maps.DistanceMatrixService();
 
 	//deal with applicable vendors
-	//var vendorList = filterList(getVendors());
+	var vendorList = getVendors();//filterList(getVendors(), distance, address);
 	//addVendorsToPage(map, vendorList);
 }
 
@@ -104,17 +111,23 @@ function moveMapCenter() {
 Gets a JSON object of vendors from the server
 */
 function getVendors(){
+	var vendorList = [];
 	var request = new XMLHttpRequest();
     request.open('GET', '/test.json', true);
-    console.log(request);
 	request.addEventListener('load', function(e){
+		console.log(request);
 	    if (request.status == 200) {
 	        // do something with the loaded content
 	        var content = request.responseText;
 			var data = JSON.parse(content);
-            console.log(data);
-            addResultsToList(data);
+		//	console.log(data);
+			for (var i = 0; i < data.length; i++){
+				vendorList.push(data[i]);
+			}
 
+			//console.log(vendorList);
+
+			return vendorList;
 	    } else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
