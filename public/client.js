@@ -21,7 +21,8 @@ initializes the map
 function initializeMap() {
 	var distance = getParam('distance');
 	var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
-	console.log(address);
+	address = address.replace(new RegExp("\\+", 'g'), " ")
+	
 	//paints map
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
