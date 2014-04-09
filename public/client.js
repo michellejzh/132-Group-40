@@ -197,8 +197,8 @@ function renderFilteredVendor(clientAddress, vendor) {
 	var vendorAddress = getAddress(vendor);
 	service.getDistanceMatrix(
     {
-      origins: [clientAddress, vendorAddress],
-      destinations: [clientAddress, vendorAddress],
+      origins: [clientAddress],
+      destinations: [vendorAddress],
       travelMode: google.maps.TravelMode.DRIVING,
       unitSystem: google.maps.UnitSystem.IMPERIAL,
       avoidHighways: false,
@@ -211,16 +211,17 @@ function renderFilteredVendor(clientAddress, vendor) {
 			//get distance
 			var origins = response.originAddresses;
 	    	var destinations = response.destinationAddresses;
-	    	var totalDist = 0;
+	    	var totalDist = 0.0;
 			for (var i = 0; i < origins.length; i++) {
 	    		var results = response.rows[i].elements;
 		      	for (var j = 0; j < results.length; j++) {
 					totalDist = totalDist + results[j].distance.value;
 		      	}
 		    }
-		    //convert to miles
-		    totalDist = 0.000621371*totalDist;
 
+		    //convert to miles
+		    totalDist *= 0.000621371;
+		    
 		    // add if passes filter
 		    if (filter(totalDist)){
 				addResultToList(vendor);
