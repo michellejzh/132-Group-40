@@ -1,8 +1,10 @@
+//
 var express = require('express');
 var app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 
+//connect to vendor database
 var anyDB = require('any-db');
 var conn = anyDB.createConnection('sqlite3://Database/vendors.db');
 
