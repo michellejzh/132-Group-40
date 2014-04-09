@@ -3,7 +3,7 @@
 	<head>
 		<title SearchPage></title>
 		<link rel='stylesheet' href='searchPage.css' type='text/css'/>
-		<link rel='stylesheet' href='allPages.css' type='text/css'/>
+		<link rel='stylesheet' href='public/allPages.css' type='text/css'/>
 	</head>
 
 	<body>
@@ -23,22 +23,17 @@
 				State: <input type='text' name='state'><br>
 				Zipcode: <input type='text' name='zipcode'><br>
 				Payment Type: <input type='text' name='paymentTerms'><br>
-				Product Capability: <select name='productCapabilityIds'>
-					<option value='O'>None</option>
-					<option value='1'>Plants</option>
-					<option value='2'>Flowers</option>
-					<option value='3'>Plants & Flowers</option>
-					<option value='4'>Orchids</option>
-					<option value='5'>Plants & Orchids</option>
-					<option value='6'>Flowers & Orchids</option>
-					<option value='7'>Plants & Flowers & Orchids</option>
-				</select> <br>
-				Delivery Time: <select name='leadTime'>
-					<option value='1'>None Specified</option>
-					<option value='2'>Same Day</option>
-					<option value='3'>Next Day</option>
-					<option value='4'>2+ Days</option>
-				</select> <br>
+				<legend>Product Capability</legend>
+				<input type='checkbox' name='Product Capability' value='0'> None <br>
+				<input type='checkbox' name='Product Capability' value='0'> Plants <br>
+				<input type='checkbox' name='Product Capability' value='0'> Flowers <br>
+				<input type='checkbox' name='Product Capability' value='0'> Orchids <br> 
+
+				<legend>Delivery Time</legend>
+				<input type='checkbox' name='Delivery Time' value='0'> None Specified <br>
+				<input type='checkbox' name='Delivery Time' value='0'> Same Day <br>
+				<input type='checkbox' name='Delivery Time' value='0'> Next Day <br>
+				<input type='checkbox' name='Delivery Time' value='0'> 2+ Days <br>
 				<input type='submit'>
 			</form>
 		</div>
