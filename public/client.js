@@ -1,8 +1,16 @@
+/*
+TODO
+1. edit database to match what mike sent over.
+*/
+
 // id for the map canvas
 var mapID = "map-canvas";
 
 // id for resulsts list id
 var resultsListID = "results-list";
+
+// link to the server
+var serverURL = "http://localhost:8080/search.json";
 
 /*
 Gets the parameter of the URL as a string
@@ -17,7 +25,7 @@ function getParam(name){
 /*
 Returns a string of the address by parsing the URL parameters.
 */
-function getAdress(){
+function getAddressFromURL(){
 	var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
 	return address.replace(new RegExp("\\+", 'g'), " ")
 }
@@ -28,7 +36,7 @@ initializes the map
 */
 function initializeMap() {
 	var distance = getParam('distance');
-	var address = getAddress();
+	var address = getAddressFromURL();
 	
 	//paints map
 	var mapOptions = {
@@ -124,7 +132,7 @@ function getVendors(){
 	request.addEventListener('load', function(e){
 		console.log("blah");
 	    if (request.status == 200) {
-	    	alert("aha!");
+	    	/*alert("aha!");
 	        // do something with the loaded content
 	        var content = request.responseText;
 			var data = JSON.parse(content);
@@ -135,7 +143,7 @@ function getVendors(){
 
 			//console.log(vendorList);
 
-			return vendorList;
+			return vendorList;*/
 	    } else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
@@ -146,8 +154,7 @@ function getVendors(){
 		console.log('error');
 	}, false);
 
-	console.log("test");
-	request.open('GET', "localhost:8080/search.json", true);
+	request.open('GET', serverURL, true);
 	request.send();
 }
 
@@ -176,7 +183,7 @@ function filterList(vendors, distance, originAddress){
 Given a JSON object of a vendor, returns the vendor's address as a string
 */
 function getAddress(vendor){
-	return vendor.address1 + " " + vendor.address2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
+	return vendor.addressLine1 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
 
 
