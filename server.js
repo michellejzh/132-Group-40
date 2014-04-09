@@ -32,7 +32,7 @@ app.get('/search.json', function(request, response){
         vendorList.push(
             {addressLine1: row.address, 
             city: row.city, 
-            zipcode: row.zipcode, 
+            zip: row.zipcode, 
             state: row.state, 
             phone: row.phone, 
             name: row.vendorName});
