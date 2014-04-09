@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title SearchPage></title>
+		<link rel='stylesheet' href='../public/searchPage.css' type='text/css'/>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<link rel='stylesheet' href='../public/allPages.css' type='text/css'/>
+	</head>
+
+	<body>
+		<div id='navigation'>
+			<ul id ='Items'>
+			<li id='Company_Name'><a href='#'>COMPANY</a></li>
+			<li id='Vendor_list'><a href='#'>Vendor List</a></li>
+			</ul>
+		</div>
+
+		<div id='content'>
+			<form id="queryVendorForm" action="search-results" method="POST">
+				<legend> Order Information </legend>
+				<div id='order'>
+				Street Address (line 1): <input type='text' name='addressLine1'><br>
+				Street Address (line 2): <input type='text' name='addressLine2'><br>
+				City: <input type='text' name='city'><br>
+				State: <input type='text' name='state'><br>
+				Zipcode: <input type='text' name='zipcode'><br>
+				Distance (in miles): <input type='text' name='distance'></br>
+			</div>
+
+				<legend>Product Capability</legend>
+				<div id ='product'>
+				<input type='checkbox' name='Product Capability' value='0'> Plants <br>
+				<input type='checkbox' name='Product Capability' value='0'> Flowers <br>
+				<input type='checkbox' name='Product Capability' value='0'> Orchids <br> 
+			</div>
+
+				<legend>Lead Time</legend>
+				<div id='delivery'>
+				<input type='radio' name='Delivery Time' value='0'> None Specified <br>
+				<input type='radio' name='Delivery Time' value='0'> Same Day <br>
+				<input type='radio' name='Delivery Time' value='0'> Next Day <br>
+				<input type='radio' name='Delivery Time' value='0'> 2+ Days <br>
+			</div>
+
+				<legend>Payment Terms</legend>
+				<div id='payment'>
+				<input type='radio' name='Payment Terms' value='0'> None Specified <br>
+				<input type='radio' name='Payment Terms' value='0'> CC Preferred <br>
+				<input type='radio' name='Payment Terms' value='0'> CC Required <br>
+				<input type='radio' name='Payment Terms' value='0'> Invoice <br>
+			</div>
+				<div id='submit'>
+				<input type='submit'>
+			</div>
+			</form>
+		</div>
+	</body>
+</html>
