@@ -28,6 +28,12 @@ var distance = 0;
 // A vendor
 var vendor = null;
 
+var count = 0;
+
+var filteredCount = 0;
+
+var ready = false;
+
 /*
 Gets the parameter of the URL as a string
 
@@ -69,7 +75,7 @@ Gets a JSON object of vendors from the server
 */
 function loadVendors(map){
 	var request = new XMLHttpRequest();
-	distance = getParam('distance');
+	distance = parseInt(getParam('distance'));
 	var address = getAddressFromURL();
 
 	var testOrigin = "115 Waterman St, Providence, RI 02912";
@@ -82,8 +88,6 @@ function loadVendors(map){
 	        var content = request.responseText;
 			var data = JSON.parse(content);
 			filterList(limit(data), testOrigin);
-			console.log(filteredList);
-			renderVendors(map, filteredList);
 	    } else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
@@ -203,7 +207,10 @@ function filterList(vendors, originAddress){
 	for (var i = 0; i < vendorsLength; i++){
 		vendor = vendors[i];
 		calcDistance(originAddress, vendor);
+		count += 1;
 	}
+
+	ready = true;
 }
 
 /*
@@ -224,10 +231,33 @@ function calcDistance(clientAddress, vendor) {
       unitSystem: google.maps.UnitSystem.IMPERIAL,
       avoidHighways: false,
       avoidTolls: false
-    }, distanceCallback);
+    }, function(response, status){
+    	if (status != google.maps.DistanceMatrixStatus.OK) {
+    		alert('Error was: ' + status);
+		} else {
+			var origins = response.originAddresses;
+	    	var destinations = response.destinationAddresses;
+	    	var totalDist = 0;
+			for (var i = 0; i < origins.length; i++) {
+	    		var results = response.rows[i].elements;
+		      	for (var j = 0; j < results.length; j++) {
+					totalDist = totalDist + results[j].distance.value;
+		      	}
+		    }
+		    //convert to miles
+		    totalDist = 0.000621371*totalDist;
+		    if (totalDist < distance){
+		   		console.log(totalDist + " " + distance);
+		    	console.log(vendor);
+		    	filteredList.push(vendor);
+		    }
+		    filteredCount += 1
+		}
 
-
-	filteredList.push(vendor);
+		if (ready && filteredCount === count){
+			renderVendors(map, filteredList);
+		}
+    });
 }
 
 /*
