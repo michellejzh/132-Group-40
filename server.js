@@ -23,6 +23,7 @@ app.listen(8080, function(){
 //================JSON GET AND POST===============//
 
 app.get('/search.json', function(request, response){
+    response.setHeader("Access-Control-Allow-Origin", "*");
     var vendorList = [];
     var q = conn.query('SELECT * FROM vendors');
     console.log("selecting vendors");
@@ -50,17 +51,11 @@ Executes when the user runs a query.
 Reponds with a JSON object where the first object is the address the user
 the querying and the following addresses are addresses in the database
 */
-app.get('/search.json', function(request, response){
-    /*
-    var address1 = request.param('addressLine1');
-    var address2 = request.param('addressLine2');
-    var city = request.param('city');
-    var zip = request.param('zip');
-    var state = request.param('state');
-    var distance = request.param('distance'); 
-
-    var referenceAddress = vendor(address1, address2, city, state, zip, "");*/
-
+/*app.get('/search.json', function(request, response){
+    
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+    response.setHeader("Access-Control-Allow-Origin", "*");
     var vendorList = [];
 
     var q = conn.query("SELECT * FROM vendors");
@@ -78,7 +73,7 @@ app.get('/search.json', function(request, response){
         response.json(vendorList)
     });
 
-});
+});*/
 
 //================JSON TEST===============//
 
