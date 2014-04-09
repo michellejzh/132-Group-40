@@ -41,6 +41,14 @@ input{
 
 }
 
+#payment{
+	margin-left:50px;
+	color: #151B54;
+	font-size: 18px;
+	font-weight: bold;
+
+}
+
 #submit{
 	text-align:center;
 	font-size: 18px;
