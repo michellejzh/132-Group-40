@@ -40,8 +40,46 @@ app.get('/search.json', function(request, response){
 */
 });
 
-//TO DO
-app.post('/search.json', function(request, response){
+/*
+constructs a vendor object
+*/
+function vendor(address1, address2, city, state, zip, name){
+    return {address1: address1, address2: address2, city: city, state: state, zip: zip, name: name};
+}
+
+/*
+Executes when the user runs a query.
+
+Reponds with a JSON object where the first object is the address the user
+the querying and the following addresses are addresses in the database
+*/
+app.get('/search.json', function(request, response){
+    var address1 = request.param('addressLine1');
+    var address2 = request.param('addressLine2');
+    var city = request.param('city');
+    var zip = request.param('zip');
+    var state = request.param('state');
+    var distance = request.param('distance'); 
+
+    var referenceAddress = vendor(address1, address2, city, state, zip, "");
+
+    var vendorList = [referenceAddress];
+
+    var q = conn.query("SELECT * FROM vendors");
+
+    q.on('row', function(row){
+        vendorList.push(address(row.address1,
+                        row.address2,
+                        row.city,
+                        row.zip,
+                        row.state,
+                        row.name});
+    });
+
+    q.on('end', function(){
+        response.json(list);
+    });
+
     //do we need search IDs?
     /*
     var roomID = request.params.roomID;
