@@ -119,7 +119,7 @@ function getVendors(){
 	}, false);
 
 	console.log("test");
-	request.open('GET', '/test.json', true);
+	request.open('GET', '/search.json', true);
 	request.send();
 }
 
@@ -173,23 +173,23 @@ function returnResults() {
 /*
 Adds a vendor to a HTML list
 
-data - a JSON of the vendor
+data - a JSON of the search results
 */
-function addResultToList(data) {
-	//for (i=0; i<data.length; i++) {
+function addResultsToList(data) {
+	for (i=0; i<data.length; i++) {
 	    //char to add: name, address, short desc, 
-	    var currAddress = "256 Thayer St Providence RI 02906";
+	    var vendorName = data[i].vendorName;
+	    //var address = data[i].address+", "+data[i].row.city+", "+data[i].row.state+" "+data[i].row.zipcode;
+	    var address = data[i].address;
+	    var phone = data[i].phone;
 
-	//TO DO: JUST APPENDS SAME THING
 	    //add them to the DOM
-		var ul = document.getElementById(resultsListID);
+		var ul = document.getElementById("results-list");
 		var li = document.createElement('li');
-		var id = Math.random(150000); //id of the client
-		li.setAttribute('id', id);
-		li.setAttribute('onclick', "document.vendorAddress='Skúlagata 28, 101 Reykjavík, Iceland'; moveMapCenter();");
-		li.innerHTML = '<div id="icon">icon goes here</div><div id="details"><div id="name">Vendor Name<br></div><div id="address">Skúlagata 28, 101 Reykjavík, Iceland<br></div><div id="desc">some details about the vendor some details about the vendor some details about the vendor<br></div></div>';
+		li.setAttribute('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
+		li.innerHTML = '<div id="icon">[icon goes here]</div><div id="details"><div id="name">'+vendorName+'<br></div><div id="address">'+address+'<br></div><div id="phone">'+phone+'<br></div></div>';
 		ul.appendChild(li);
-	//}
+	}
 }
 
 /*
