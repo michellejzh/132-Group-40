@@ -98,10 +98,10 @@ Gets a JSON object of vendors from the server
 */
 function getVendors(){
 	var request = new XMLHttpRequest();
-    request.open('GET', '/test.json', true);
-    console.log(request);
 	request.addEventListener('load', function(e){
+		console.log("blah");
 	    if (request.status == 200) {
+	    	alert("aha!");
 	        // do something with the loaded content
 	        var content = request.responseText;
 			var data = JSON.parse(content);
@@ -114,6 +114,13 @@ function getVendors(){
 	        console.log('oops');
 	    }
 	}, false);
+	request.addEventListener('error', function(e){
+		console.log('error');
+	}, false);
+
+	console.log("test");
+	request.open('GET', '/test.json', true);
+	request.send();
 }
 
 /*
