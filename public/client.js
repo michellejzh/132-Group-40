@@ -15,7 +15,6 @@ console.log(urlParam('state'));
 initializes the map
 */
 function initializeMap() {
-
 	//paints map
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
@@ -26,8 +25,8 @@ function initializeMap() {
 	service = new google.maps.DistanceMatrixService();
 
 	//deal with applicable vendors
-	var vendorList = filterList(getVendors());
-	addVendorsToPage(map, vendorList);
+	//var vendorList = filterList(getVendors());
+	//addVendorsToPage(map, vendorList);
 }
 
 google.maps.event.addDomListener(window, 'load', initializeMap);
@@ -106,14 +105,16 @@ Gets a JSON object of vendors from the server
 */
 function getVendors(){
 	var request = new XMLHttpRequest();
-    request.open('GET', '/search.json', true);
-
+    request.open('GET', '/test.json', true);
+    console.log(request);
 	request.addEventListener('load', function(e){
 	    if (request.status == 200) {
 	        // do something with the loaded content
 	        var content = request.responseText;
+			var data = JSON.parse(content);
+            console.log(data);
+            addResultsToList(data);
 
-	        return JSON.parse(content);
 	    } else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
@@ -133,7 +134,11 @@ function filterList(vendors, distance, originAddress){
 	var filteredList = [];
 	var vendorsLength = vendors.length;
 
+<<<<<<< HEAD
 	for (var i = 0; i < vendorsLength; i++){
+=======
+	for (i = 0; i < vendorsLength; i++){
+>>>>>>> d88d99d08d20013daad5d7040ad53aadb8a60b2e
 		var vendor = venders[i];
 		if (calcDistance(originAddress, getAddress(vendor)) < distance){
 			filteredList.push(vendor);
@@ -150,11 +155,9 @@ function getAddress(vendor){
 	return vendor.address1 + " " + vendor.address2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
 
-/*
+
 //needs to be broken into helper methods
 function returnResults() {
-	addResultsToList();
-
 	//get the results to return
 	//THIS MEANS: REPLACE SEARCH.JSON WITH EACH SEARCH
 		//do we need search IDs?
@@ -169,7 +172,7 @@ function returnResults() {
             addResultsToList(data);
         }
     }, false);
-}*/
+}
 
 /*
 Adds a vendor to a HTML list
