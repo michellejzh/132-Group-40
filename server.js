@@ -54,6 +54,7 @@ Reponds with a JSON object where the first object is the address the user
 the querying and the following addresses are addresses in the database
 */
 app.get('/search.json', function(request, response){
+    /*
     var address1 = request.param('addressLine1');
     var address2 = request.param('addressLine2');
     var city = request.param('city');
@@ -61,23 +62,23 @@ app.get('/search.json', function(request, response){
     var state = request.param('state');
     var distance = request.param('distance'); 
 
-    var referenceAddress = vendor(address1, address2, city, state, zip, "");
+    var referenceAddress = vendor(address1, address2, city, state, zip, "");*/
 
-    var vendorList = [referenceAddress];
+    var vendorList = [];
 
     var q = conn.query("SELECT * FROM vendors");
 
     q.on('row', function(row){
-        vendorList.push(address(row.address1,
-                        row.address2,
+        vendorList.push(address(row.address,
                         row.city,
-                        row.zip,
-                        row.state,
-                        row.name});
+                        row.zipcode,
+                        row.state),
+                        row.vendorName,
+                        row.phone)
     });
 
     q.on('end', function(){
-        response.json(list);
+        response.json(vendorList)
     });
 
 });
