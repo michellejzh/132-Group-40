@@ -80,18 +80,6 @@ app.get('/search.json', function(request, response){
         response.json(list);
     });
 
-    //do we need search IDs?
-    /*
-    var roomID = request.params.roomID;
-    var nickname = request.body.nickname;
-    var message = request.body.message;   // 'Baby baby baby ohhhhh'
-    var roomName = request.body.roomName; // 'Justin'
-    var time = request.body.time;
-    var q = conn.query('INSERT INTO messages VALUES ($1, $2, $3, $4, $5)', [roomID, roomName, nickname, message, time]);
-    // post everything to the database, then...
-    q.on('end', function(){
-        response.redirect('/room/' + roomID + "/" + roomName);
-    });*/
 });
 
 //================JSON TEST===============//
