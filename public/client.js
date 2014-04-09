@@ -140,7 +140,7 @@ function getVendors(){
 	}, false);
 
 	console.log("test");
-	request.open('GET', '/search.json', true);
+	request.open('GET', "localhost:8080/search.json", true);
 	request.send();
 }
 
