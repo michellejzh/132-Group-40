@@ -5,34 +5,50 @@ var serverURL = "http://localhost:8080/search.json";
 var vendorsID = "vendorList";
 
 $(document).ready(function(){
-	var vendorJSON = getVendors();
-	console.log(vendorJSON);
-	renderVendors(vendorJSON);
+	renderVendors();
 });
 
 /*
 Adds the vendors to the list in the HTML page
 */
-function renderVendors(vendorJSON){
+function renderVendorList(vendorJSON){
 	var length = vendorJSON.length;
 	var $vendorList = $('#' + vendorsID);
 
 	for (var i = 0; i < length; i++){
 		var vendor = vendorJSON[i];
-		/*var $tweetBodyP = $('<span>', {
-			class: 'tweet_body',
-			text: $tweet.text
+
+		// create relevant DOM objects
+		var $li = $('<li>', {
+			class: 'vendorLi'
 		});
-		$vendorList.append($li);*/
+		var $name = $('<div>', {
+			class: 'vendorName',
+			text: vendor.name
+		});
+		var $phone = $('<div>', {
+			class: 'vendorPhone',
+			text: vendor.phone
+		});
+		var $address = $('<div>', {
+			class: 'vendorAddress',
+			text: vendor.addressLine1 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip
+		});
+
+		// adds DOM objects to page
+		$li.append($name);
+		$li.append($phone);
+		$li.append($address);
+		$vendorList.append($li);
 	}
 }
 
 /*
-Gets a list of vendors from the server.
+Gets a list of vendors from the server and renders it on the page
 
 Returns a JSON object of all the vendors
 */
-function getVendors(vendorJSON){
+function renderVendors(vendorJSON){
 	var request = new XMLHttpRequest();
 
 	// eventlistener that gets the vendors when loaded
@@ -40,6 +56,7 @@ function getVendors(vendorJSON){
         if (request.status == 200) {
             var content = request.responseText;
             var data = JSON.parse(content);
+            renderVendorList(data);
         } else {
         	console.log("FUCK");
         }
