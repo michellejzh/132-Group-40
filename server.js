@@ -29,8 +29,13 @@ app.get('/search.json', function(request, response){
     console.log("selecting vendors");
     q.on('row', function(row){
         console.log("are we here");
-        var address = row.address + row.city + row.zipcode + row.state;
-        vendorList.push({address: address, phone: row.phone, vendorName: row.vendorName});
+        vendorList.push(
+            {addressLine1: row.address, 
+            city: row.city, 
+            zipcode: row.zipcode, 
+            state: row.state, 
+            phone: row.phone, 
+            name: row.vendorName});
     });
 
     q.on('end', function(){
