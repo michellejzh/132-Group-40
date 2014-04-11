@@ -20,16 +20,17 @@
 
 			<form id="queryVendorForm" action="searchResults.html" method="get">
 				<div id='order'>
-				Street Address (line 1): <input type='text' name='addressLine1'><br>
-				Street Address (line 2): <input type='text' name='addressLine2'><br>
-				City: <input type='text' name='city'><br>
-				State: <input type='text' name='state'><br>
-				Zipcode: <input type='text' name='zipcode'><br>
+				Street Address (line 1): <input type='text' name='addressLine1' ><br>
+				Street Address (line 2): <input type='text' name='addressLine2' ><br>
+				City: <input type='text' name='city' ><br>
+				State: <input type='text' name='state' ><br>
+				Zipcode: <input type='text' name='zipcode' ><br>
 				Distance (in miles): <input type='text' name='distance'></br>
 			</div>
 
 				<div id ='product'>
 				<legend>Product Capability</legend>
+				<input type='checkbox' name='Product Capability' value='0'> None Specified <br>
 				<input type='checkbox' name='Product Capability' value='0'> Plants <br>
 				<input type='checkbox' name='Product Capability' value='0'> Flowers <br>
 				<input type='checkbox' name='Product Capability' value='0'> Orchids <br> 
@@ -37,18 +38,18 @@
 
 				<div id='delivery'>
 				<legend>Lead Time</legend>
-				<input type='radio' name='Delivery Time' value='0'> None Specified <br>
-				<input type='radio' name='Delivery Time' value='0'> Same Day <br>
-				<input type='radio' name='Delivery Time' value='0'> Next Day <br>
-				<input type='radio' name='Delivery Time' value='0'> 2+ Days <br>
+				<input type='checkbox' name='Delivery Time' value='0'> None Specified <br>
+				<input type='checkbox' name='Delivery Time' value='0'> Same Day <br>
+				<input type='checkbox' name='Delivery Time' value='0'> Next Day <br>
+				<input type='checkbox' name='Delivery Time' value='0'> 2+ Days <br>
 			</div>
 
 				<div id='payment'>
 				<legend>Payment Terms</legend>
-				<input type='radio' name='Payment Terms' value='0'> None Specified <br>
-				<input type='radio' name='Payment Terms' value='0'> CC Preferred <br>
-				<input type='radio' name='Payment Terms' value='0'> CC Required <br>
-				<input type='radio' name='Payment Terms' value='0'> Invoice <br>
+				<input type='checkbox' name='Payment Terms' value='0'> None Specified <br>
+				<input type='checkbox' name='Payment Terms' value='0'> CC Preferred <br>
+				<input type='checkbox' name='Payment Terms' value='0'> CC Required <br>
+				<input type='checkbox' name='Payment Terms' value='0'> Invoice <br>
 			</div>
 				<div id='submit'>
 				<input type='submit'>
