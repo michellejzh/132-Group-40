@@ -2,20 +2,21 @@
 	border: 10px;
 	border-color: red;
 	display: visible;
-	height: 400px;
-	width: 400px;
+	height: 80%;
+	width: 50%;
 	position: absolute;
 }
 
 #results {
-	border: 2px solid black;
+	border: 2px solid white;
 	display: visible;
 	height: 400px;
 	width: 270px;
 	position: absolute;
-	left: 410px;
+	left: 60%;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	color:white;
 }
 
 #name {
@@ -29,8 +30,8 @@ ul {
 }
 
 li {
-	border-bottom: 2px solid black;
-	position: inline;
+/*	border-bottom: 2px solid white;
+*/	position: inline;
 	width: 260px;
 	height: 110px;
 }
@@ -38,11 +39,11 @@ li {
 
 a:link {
 	text-decoration:none;
-	color: black;
+	color: white;
 }
 a:visited {
 	text-decoration:none;
-	color: black;
+	color: blue;
 }
 a:hover {
 	color: gray;
