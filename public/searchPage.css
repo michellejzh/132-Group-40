@@ -1,5 +1,5 @@
 legend{
-	font-size: 25px;
+	font-size: 18px;
 	font-weight: none;
 	color: #151B54;
 }
@@ -16,41 +16,52 @@ input{
 
 }
 
-
 #order{
 	margin-left:50px;
 	color: #151B54;
 	font-size: 18px;
-	font-weight: bold;
 
 }
 
 #product{
-	margin-left:50px;
+	margin-left:18px;
 	color: #151B54;
 	font-size: 18px;
-	font-weight: bold;
-
 }
 
 #delivery{
-	margin-left:50px;
+	padding-top: 18px;
+	margin-left:20px;
 	color: #151B54;
 	font-size: 18px;
-	font-weight: bold;
-
+	float:left;
+	display: inline-block;
 }
 
 #payment{
-	margin-left:50px;
+	padding-top: 18px;
 	color: #151B54;
 	font-size: 18px;
-	font-weight: bold;
+	float:right;
+	display: inline-block;
 
 }
 
 #submit{
 	text-align:center;
-	font-size: 18px;
+	font-size: 20px;
+	display: block;
+	clear:both;
+}
+
+#content{
+	display: block;
+	position: relative;
+	height:20%;
+	width:60%;
+	margin: 0 auto;
+	border:2px solid silver;
+	border-style: groove;
+	border-radius:10px;
 }
 
