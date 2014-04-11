@@ -10,32 +10,42 @@
 #results {
 	border: 2px solid white;
 	display: visible;
-	height: 400px;
-	width: 270px;
+	height: 80%;
+	width: 30%;
 	position: absolute;
 	left: 60%;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	color:white;
+	background-color: rgba(255, 255, 255, 0.5);
+	padding-left: 20px;
+	color: #151B54;
+	margin: 0 auto;
+	border:2px solid silver;
+	border-style: groove;
+	border-radius:10px;
 }
 
 #name {
 	font-size: 14pt;
 }
-ul {
+
+#results-list ul {
+	margin-left: -80px;
+}
+
+ul{
 	list-style-type: none;
 	position: relative;
-	left: -40px;
-	top: -15px;
 }
 
-li {
-/*	border-bottom: 2px solid white;
-*/	position: inline;
-	width: 260px;
-	height: 110px;
+.vendorLi{
+	border-bottom: 2px solid silver;
+	position: inline;
+	width: 100%;
+	height: 180%;
+	margin-left: auto;
+	margin-right: auto;
 }
-
 
 a:link {
 	text-decoration:none;
@@ -48,3 +58,4 @@ a:visited {
 a:hover {
 	color: gray;
 }
+
