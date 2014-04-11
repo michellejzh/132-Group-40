@@ -13,10 +13,16 @@
 
 .vendorLi {
 	position:inline;
-	background-color: rgba(255, 255, 255, 0.5);
 	color: #151B54;
+	text-decoration: none;
+	list-style: none;
+	width:92%;
+	border-radius:10px;
+	border-style: groove;
+}
 
-
+.vendorName{
+	background-color: rgba(255, 255, 255, 0.5);
 }
 
 .vendorPhone{
