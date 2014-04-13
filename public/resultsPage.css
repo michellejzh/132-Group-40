@@ -1,0 +1,61 @@
+#map-canvas {
+	border: 10px;
+	border-color: red;
+	display: visible;
+	height: 80%;
+	width: 60%;
+	position: absolute;
+}
+
+#results {
+	border: 2px solid white;
+	display: visible;
+	height: 80%;
+	width: 30%;
+	position: absolute;
+	left: 65%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	background-color: rgba(255, 255, 255, 0.5);
+	padding-left: 20px;
+	color: #151B54;
+	margin: 0 auto;
+	border:2px solid silver;
+	border-style: groove;
+	border-radius:10px;
+}
+
+.name {
+	font-weight: bold;
+}
+
+#results-list ul {
+	margin-left: -80px;
+}
+
+ul{
+	list-style-type: none;
+	position: relative;
+}
+
+.vendorLi{
+	border-bottom: 2px solid silver;
+	position: inline;
+	width: 120%;
+/*	margin-left: auto;
+	margin-right: auto;*/
+	margin-left:-50px;
+}
+
+a:link {
+	text-decoration:none;
+	color: white;
+}
+a:visited {
+	text-decoration:none;
+	color: blue;
+}
+a:hover {
+	color: silver;
+}
+

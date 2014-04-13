@@ -28,6 +28,7 @@ app.get('/search.json', function(request, response){
     var q = conn.query('SELECT * FROM vendors');
     console.log("'Select * From Vendors' being queried");
     q.on('row', function(row){
+        console.log(row);
         vendorList.push(
             {addressLine1: row.address, 
             city: row.city, 
@@ -35,6 +36,36 @@ app.get('/search.json', function(request, response){
             state: row.state, 
             phone: row.phone, 
             name: row.vendorName});
+    });
+
+    q.on('end', function(){
+        response.json(vendorList)
+    });
+});
+
+//might want this to just be every search
+app.get('/profile/:vendorName.json', function(request, response){
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    var vendorList = [];
+    var vendorName = request.params.vendorName;
+    var q = conn.query('SELECT * FROM vendors WHERE vendorName='+vendorName);
+    console.log("'Select * from vendors where vendor name is "+vendorName+" being queried");
+    q.on('row', function(row){
+        console.log(row);
+        vendorList.push(
+            {addressLine1: row.address, 
+            city: row.city, 
+            zip: row.zipcode, 
+            state: row.state, 
+            phone: row.phone, 
+            name: row.vendorName,
+            email: row.email,
+            website: row.website,
+            capID: row.productCapabilityId,
+            payment: row.paymentTerms,
+            lead: row.leadTime,
+            rate: row.rate,
+            deliveryFee: row.deliveryFee});
     });
 
     q.on('end', function(){

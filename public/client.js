@@ -71,7 +71,6 @@ function loadVendors(map){
 
 	// get vendors
 	request.addEventListener('load', function(e){
-		console.log("blah");
 	    if (request.status == 200) {
 	        // do something with the loaded content
 	        var content = request.responseText;
@@ -119,15 +118,17 @@ function addResultToList(vendor) {
     //create DOM elements
     var $li = $("<li>", {
     	class: 'vendorLi',
+    	//id: generateID()
     });
-	$li.attr('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
     var $details = $("<div>", {
     	class: 'details'
     });
+    //TO DO: THESE DIVS ARE NOT BEING ADDED
     var $name = $("<div>", {
     	class: 'name',
     	text: vendorName
     });
+    console.log(vendorName)
     var $address = $("<div>", {
     	class: 'address',
     	text: address
@@ -136,11 +137,25 @@ function addResultToList(vendor) {
     	class: 'phone',
     	text: phone
     });
-
+    var $profile = $("<button>", {
+    	class: 'profile',
+    	text: "View profile"
+    });
+    var $map = $("<button>", {
+    	class: 'map',
+    	text: "Find on map"
+    });
+    $profile.attr('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
+    $map.attr('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
     // add DOM elements to page
-    $details.append(name);
-    $details.append(address);
-    $details.append(phone);
+    //console.log(name);
+    $details.append($name);
+    $details.append($address);
+    $details.append($phone);
+    $details.append($profile);
+    $details.append($map);
+    //console.log("li div:");
+    //console.log($li);
     $li.append($details);
     $("#" + resultsListID).append($li);
 }
@@ -182,7 +197,7 @@ function renderVendors(vendors, originAddress){
 /*
 Renders vendor if:
 1. vendor is within distance radius
-2. TODO: vendor mathces flower types
+2. TODO: vendor matches flower types
 3. TODO: vendor matches lead time
 
 clientAdress - the client's address as a string
@@ -202,7 +217,6 @@ function renderFilteredVendor(clientAddress, vendor) {
     	if (status != google.maps.DistanceMatrixStatus.OK) {
     		alert('Error was: ' + status);
 		} else {
-
 			//get distance
 			var origins = response.originAddresses;
 	    	var destinations = response.destinationAddresses;
