@@ -112,7 +112,8 @@ data - a JSON of a single vendor
 */
 function addResultToList(vendor) {
     var vendorName = vendor.name;
-    var address = getAddress(vendor);
+    var address1 = vendor.addressLine1;
+    var address2 = getAddressLine2(vendor);
     var phone = vendor.phone;
     var id = vendor.primaryKey;
 
@@ -128,9 +129,13 @@ function addResultToList(vendor) {
     	class: 'name',
     	text: vendorName
     });
-    var $address = $("<div>", {
+    var $address1 = $("<div>", {
     	class: 'address',
-    	text: address
+    	text: address1
+    });
+    var $address2 = $("<div>", {
+    	class: 'address',
+    	text: address2
     });
     var $phone = $("<div>", {
     	class: 'phone',
@@ -146,10 +151,11 @@ function addResultToList(vendor) {
     });
     var newURL = window.location.pathname+"../../clientProfile.html";
     $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
-    $map.attr('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
+    $map.attr('onclick', "document.vendorAddress='"+address1+" "+address2+"'; moveMapCenter();");
     // add DOM elements to page
     $details.append($name);
-    $details.append($address);
+    $details.append($address1);
+    $details.append($address2);
     $details.append($phone);
     $details.append($profile);
     $details.append($map);
@@ -267,6 +273,10 @@ Given a JSON object of a vendor, returns the vendor's address as a string
 */
 function getAddress(vendor){
 	return vendor.addressLine1 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
+}
+
+function getAddressLine2(vendor){
+	return vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
 
 //TO DO~~~~~~~~~~~~~~~~~~~~~~~~~

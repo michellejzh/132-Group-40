@@ -8,6 +8,9 @@ $(document).ready(function(){
 	renderVendors();
 });
 
+
+var newURL = window.location.pathname+"../../clientProfile.html";
+
 /*
 Adds the vendors to the list in the HTML page
 */
@@ -39,6 +42,7 @@ function renderVendorList(vendorJSON){
 		$li.append($name);
 		$li.append($phone);
 		$li.append($address);
+		$li.attr('onclick', "window.location.assign('"+newURL+"?id="+vendor.primaryKey+"'); loadProfile()");
 		$vendorList.append($li);
 	}
 }
