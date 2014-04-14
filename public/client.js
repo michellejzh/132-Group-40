@@ -48,7 +48,6 @@ function getAddressFromURL(){
 initializes the map
 */
 function initializeMap() {
-	
 	//paints map
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
@@ -85,12 +84,89 @@ function loadVendors(map){
 
 	// deal with errors
 	request.addEventListener('error', function(e){
-		console.log('error');
+		alert('Error: failed to connect to server');
 	}, false);
 
 	// initiate connection
 	request.open('GET', serverURL, true);
 	request.send();
+}
+
+function loadProfile(){
+	console.log("called loadProfile");
+	var request = new XMLHttpRequest();
+	var profileURL = "http://localhost:8080/profile/"+document.vendorID+".json";
+
+	// get vendors
+	request.addEventListener('load', function(e){
+	    if (request.status == 200) {
+	        // do something with the loaded content
+	        var content = request.responseText;
+			var data = JSON.parse(content);
+	    	renderProfile(data);
+	    } else {
+	        // something went wrong, check the request status
+	        // hint: 403 means Forbidden, maybe you forgot your username?
+	        console.log('oops');
+	    }
+	}, false);
+
+	// deal with errors
+	request.addEventListener('error', function(e){
+		alert('Error: failed to connect to server');
+	}, false);
+
+	// initiate connection
+	request.open('GET', profileURL, true);
+	request.send();
+
+}
+
+function renderProfile(vendor) {
+	//TO DO: make this puttable on the page
+	console.log(vendor);
+	alert("yesp");
+
+	var vendorName = vendor.name;
+    var address = getAddress(vendor);
+    var phone = vendor.phone;
+    var email = vendor.email;
+    var website = vendor.website;
+    var capability = vendor.capID;
+    var payment = vendor.payment;
+    var lead = vendor.lead;
+    var rate = vendor.rate;
+    var deliveryFee = vendor.deliveryFee;
+
+
+    console.log(email);
+    //create DOM elements
+    var $name = $("<div>", {
+    	class: 'name',
+    	text: vendorName
+    });
+    var $address = $("<div>", {
+    	class: 'address',
+    	text: address
+    });
+    var $phone = $("<div>", {
+    	class: 'phone',
+    	text: phone
+    });
+    var $profile = $("<button>", {
+    	class: 'profile',
+    	text: "View profile"
+    });
+    var $map = $("<button>", {
+    	class: 'map',
+    	text: "Find on map"
+    });
+    // add DOM elements to page
+    $content.append($name);
+    $content.append($address);
+    $content.append($phone);
+    $content.append($profile);
+    $content.append($map);
 }
 
 /*
@@ -114,6 +190,7 @@ function addResultToList(vendor) {
     var vendorName = vendor.name;
     var address = getAddress(vendor);
     var phone = vendor.phone;
+    var id = vendor.primaryKey;
 
     //create DOM elements
     var $li = $("<li>", {
@@ -123,12 +200,10 @@ function addResultToList(vendor) {
     var $details = $("<div>", {
     	class: 'details'
     });
-    //TO DO: THESE DIVS ARE NOT BEING ADDED
     var $name = $("<div>", {
     	class: 'name',
     	text: vendorName
     });
-    console.log(vendorName)
     var $address = $("<div>", {
     	class: 'address',
     	text: address
@@ -145,17 +220,15 @@ function addResultToList(vendor) {
     	class: 'map',
     	text: "Find on map"
     });
-    $profile.attr('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
+    var newURL = window.location.pathname+"../../clientProfile.html";
+    $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
     $map.attr('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
     // add DOM elements to page
-    //console.log(name);
     $details.append($name);
     $details.append($address);
     $details.append($phone);
     $details.append($profile);
     $details.append($map);
-    //console.log("li div:");
-    //console.log($li);
     $li.append($details);
     $("#" + resultsListID).append($li);
 }

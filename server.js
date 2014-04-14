@@ -30,26 +30,26 @@ app.get('/search.json', function(request, response){
     q.on('row', function(row){
         console.log(row);
         vendorList.push(
-            {addressLine1: row.address, 
+            {primaryKey: row.primaryKey,
+            addressLine1: row.address, 
             city: row.city, 
             zip: row.zipcode, 
             state: row.state, 
             phone: row.phone, 
             name: row.vendorName});
     });
-
     q.on('end', function(){
         response.json(vendorList)
     });
 });
 
 //might want this to just be every search
-app.get('/profile/:vendorName.json', function(request, response){
+app.get('/profile/:id.json', function(request, response){
     response.setHeader("Access-Control-Allow-Origin", "*");
     var vendorList = [];
-    var vendorName = request.params.vendorName;
-    var q = conn.query('SELECT * FROM vendors WHERE vendorName='+vendorName);
-    console.log("'Select * from vendors where vendor name is "+vendorName+" being queried");
+    var id = request.params.id;
+    var q = conn.query('SELECT * FROM vendors WHERE primaryKey=$1', [id]);
+    console.log("'Select * from vendors where id is "+id+" being queried");
     q.on('row', function(row){
         console.log(row);
         vendorList.push(
@@ -73,7 +73,7 @@ app.get('/profile/:vendorName.json', function(request, response){
     });
 });
 
-
+/*
 app.get('/test.json', function(request, response){
     response.setHeader("Access-Control-Allow-Origin", "*");
     var list = [];
@@ -87,4 +87,4 @@ app.get('/test.json', function(request, response){
         response.json(list);
     });
 });
-
+*/
