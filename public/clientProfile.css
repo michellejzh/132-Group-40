@@ -1,0 +1,22 @@
+#content {
+	background-color: rgba(255, 255, 255, 0.5);
+	color: #151B54;
+	display: block;
+	position: relative;
+	height:20%;
+	width:50%;
+	margin: 0 auto;
+	border:2px solid silver;
+	border-style: groove;
+	border-radius:10px;
+}
+
+#name {
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+#profile {
+	width: 90%;
+	margin: 0 auto
+}
