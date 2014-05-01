@@ -8,8 +8,12 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script type="text/javascript" src="../public/client.js"></script>
+		<script type='text/javascript' src='../public/clientProfile.js'></script>
+		<script type="text/javascript" src="../public/angular-functions.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
 		<link rel="stylesheet" type="text/css" href="../public/allPages.css" />
 		<link rel="stylesheet" type="text/css" href="../public/resultsPage.css" />
+		<link rel="stylesheet" type="text/css" href="../public/clientProfile.css" />
 	</head>
 
 	<body>
@@ -21,15 +25,64 @@
 			</ul>
 		</div>
 		<br>
-		<div id="map-canvas">
+
+<!--trying some stuff with angular-->
+	<div ng-app='ModalDemo'>
+	  <div ng-controller='MyCtrl'>
+	    <button ng-click='toggleModal()'>Open Modal Dialog</button>
+	    <modal-dialog show='modalShown' width='400px' height='60%'>
+	    <div id='profile-div' onload="loadProfile();">
+			<div id='content'>
+			<table id='profile'>
+				<tr>
+					<td>
+						<div id='non-table'>
+							<div id="name"></div>
+							<div id="address"></div><br>
+							<div id="phone">Phone: </div>
+							<div id="email">Email: </div>
+							<div id="website">Website: </div>
+						</div>
+						<td>
+						<table border="1">
+							<tr>
+								<td>Product Capability</td>
+								<td id="prodCap"></td>
+							</tr>
+							<tr>
+								<td>Payment Method</td>
+								<td id="payment"></td>
+							</tr>
+							<tr>
+								<td>Lead Time</td>
+								<td id="leadTime"></td>
+							</tr>
+							<tr>
+								<td>Rate</td>
+								<td id="rate"></td>
+							</tr>
+							<tr>
+								<td>Delivery Fee</td>
+								<td id="deliveryFee"></td>
+							</tr>
+						</table>
+						</td>
+					</td>
+				</tr>
+			</table>
 		</div>
+	    </modal-dialog>
+	  </div>
+	</div>
+<!--end ze angular-->
+
+		<div id="map-canvas"></div>
 		<div id="results">
 			<ul id="results-list">
 					<!--list items containing vendor info go here-->
 			</ul>
 		</div>
+
 	</body>
 </html>
-
-
 

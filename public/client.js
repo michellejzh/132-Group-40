@@ -36,6 +36,10 @@ function getParam(name){
       return decodeURIComponent(name[1]);
 }
 
+//TODO: change so there are different IDs for productCap and lead
+//want to get: productCap, capPrior, lead, leadPrior
+
+
 /*
 Returns a string of the address by parsing the URL parameters.
 */
@@ -233,7 +237,7 @@ function renderFilteredVendor(clientAddress, vendor) {
 
 		    //convert to miles
 		    totalDist *= 0.000621371;
-		    console.log(totalDist);
+		    //console.log(totalDist);
 		    // add if passes filter
 		    if (filter(totalDist)){
 				addResultToList(vendor);

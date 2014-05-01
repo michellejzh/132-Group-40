@@ -2,7 +2,8 @@
 
 // link to the server
 var serverURL = "http://localhost:8080/search.json";
-
+console.log("called loadProfile");
+//$("#profile-div").load("clientProfile.html");
 /*
 Gets the parameter of the URL as a string
 
@@ -20,6 +21,8 @@ function getIDFromURL(){
     //var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
     //return address.replace(new RegExp("\\+", 'g'), " ")
     document.vendorID = getParam('id');
+    //DELETE LATER
+    document.vendorID = '2';
     console.log(document.vendorID);
 }
 
