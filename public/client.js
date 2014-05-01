@@ -305,6 +305,7 @@ function moveMapCenter() {
 	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
+			map.setZoom(12);
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
@@ -323,7 +324,9 @@ function getAddressLine2(vendor){
 	return vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
 
-//TO DO~~~~~~~~~~~~~~~~~~~~~~~~~
+//TO DO!!!!!!!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//this is not written at all it's from Michelle's chatroom lol
+
 function validateForm() {
     var form = document.getElementById("roomName-form");
         form.addEventListener('submit', function(e) {
