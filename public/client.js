@@ -177,7 +177,8 @@ currAddress - a string representing an address
 //blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
 //green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
 
-function addMarker(map, currAddress, boundsList) {
+function addMarker(map, vendor, boundsList) {
+	var currAddress = getAddress(vendor);
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			console.log("called addMarker");
@@ -216,9 +217,9 @@ function addMarker(map, currAddress, boundsList) {
 		    var phone = vendor.primaryPhone;
 		    var email = vendor.primaryEmail;
 		    var website = "fake.com";
-		    var capability = vendor.productCapabilityIDs;
-		    var payment = vendor.paymentTerms;
-		    var lead = vendor.leadTime;
+		    var capability = vendor.productCapabilityIds;
+		    var payment = vendor.paymentTerms.terms;
+		    var lead = vendor.leadTime.leadTime;
 		    var deliveryFee = vendor.costs;
 		    var rate = "fix this";
 
@@ -354,7 +355,7 @@ function renderFilteredVendor(clientAddress, vendor, boundsList) {
 		    // add if passes filter
 		    if (filter(totalDist)){
 				addResultToList(vendor);
-				addMarker(map, getAddress(vendor), boundsList);
+				addMarker(map, vendor, boundsList);
 		    }
 		}
     });

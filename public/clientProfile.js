@@ -43,9 +43,6 @@ function loadProfile(){
 				if(data[k].id == document.vendorID){
 					renderProfile(data[k]);
 				}
-				else{
-					console.log("Couldn't find vendor with this ID");
-				}
 	    	} 
 		}else {
 	        // something went wrong, check the request status
