@@ -21,9 +21,7 @@ function getIDFromURL(){
     //var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
     //return address.replace(new RegExp("\\+", 'g'), " ")
     document.vendorID = getParam('id');
-    //DELETE LATER
-    document.vendorID = '2';
-    console.log(document.vendorID);
+    console.log("vendor ID is: "+document.vendorID);
 }
 
 
@@ -40,6 +38,7 @@ function loadProfile(){
 	        // do something with the loaded content
 	        var content = request.responseText;
 			var data = JSON.parse(content);
+            console.log("passing "+data[0]+" to renderProfile");
 	    	renderProfile(data[0]);
 	    } else {
 	        // something went wrong, check the request status

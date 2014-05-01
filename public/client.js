@@ -210,59 +210,73 @@ function addMarker(map, currAddress, boundsList) {
 			/*
 			Popup client profile windows when you click on their map markers.
 			*/
+			var vendorName = vendor.name;
+		    var address1 = vendor.addressLine1;
+		    var address2 = getAddressLine2(vendor);
+		    var phone = vendor.phone;
+		    var email = vendor.email;
+		    var id = vendor.primaryKey;
+		    var website = vendor.website;
 
 			var contentString = "<div id='content'>"
-		+"<table id='profile'>"
-		+"<tr>"
-		+"	<td>"
-		+"		<div id='non-table'>"
-		+"			<div id='name'></div>"
-		+"			<div id='address'></div><br>"
-		+"			<div id='phone'>Phone: </div>"
-		+"			<div id='email'>Email: </div>"
-		+"			<div id='website'>Website: </div>"
-		+"		</div>"
-		+"	</td>"
-		+"	<td>"
-		+"		<table border='1'>"
-		+"			<tr>"
-		+"				<td>Product Capability</td>"
-		+"				<td id='prodCap'></td>"
-		+"			</tr>"
-		+"			<tr>"
-		+"				<td>Payment Method</td>"
-		+"				<td id='payment'></td>"
-		+"			</tr>"
-		+"			<tr>"
-		+"				<td>Lead Time</td>"
-		+"				<td id='leadTime'></td>"
-		+"			</tr>"
-		+"			<tr>"
-		+"				<td>Rate</td>"
-		+"				<td id='rate'></td>"
-		+"			</tr>"
-		+"			<tr>"
-		+"				<td>Delivery Fee</td>"
-		+"				<td id='deliveryFee'></td>"
-		+"			</tr>"
-		+"		</table>"
-		+"	</td>"
-		+"</tr>"
-		+"</div>"
+			+"<table id='profile'>"
+			+"<tr>"
+			+"	<td>"
+			+"		<div id='non-table'>"
+			+"			<div id='name'>"+vendorName+"</div>"
+			+"			<div id='address'>"+address1+"<br>"+address2+"</div><br>"
+			+"			<div id='phone'>Phone: "+phone+"</div>"
+			+"			<div id='email'>Email: "+email+"</div>"
+			+"			<div id='website'>Website: "+website+"</div>"
+			+"		</div>"
+			+"	</td>"
+			+"	<td>"
+			+"		<table border='1'>"
+			+"			<tr>"
+			+"				<td>Product Capability</td>"
+			+"				<td id='prodCap'></td>"
+			+"			</tr>"
+			+"			<tr>"
+			+"				<td>Payment Method</td>"
+			+"				<td id='payment'></td>"
+			+"			</tr>"
+			+"			<tr>"
+			+"				<td>Lead Time</td>"
+			+"				<td id='leadTime'></td>"
+			+"			</tr>"
+			+"			<tr>"
+			+"				<td>Rate</td>"
+			+"				<td id='rate'></td>"
+			+"			</tr>"
+			+"			<tr>"
+			+"				<td>Delivery Fee</td>"
+			+"				<td id='deliveryFee'></td>"
+			+"			</tr>"
+			+"		</table>"
+			+"	</td>"
+			+"</tr>"
+			+"</div>"
 
 			var infowindow = new google.maps.InfoWindow({
-			  content: contentString
+				content: contentString,
+				width: 300
 			});
 
 			//add event listener so infowindow pops up on click
 			google.maps.event.addListener(marker, 'click', function() {
 				infowindow.open(map,marker);
+				//call the function that fills the info into the profile
+				loadProfile();
 			});
 			boundsList.push(location);
 			//set the bounds if we're at the end of the vendor list
-			if (boundsList.length==vendorsLength) {
+			console.log("length of boundsList: "+boundsList.length);
+			console.log("length of vendorsList: "+vendorsLength);
+			/*problem: that's the length of the full vendors list, not the number of vendors
+			that fit the criteria. fix.*/
+			//if (boundsList.length==vendorsLength) {
 				fitBounds(boundsList);
-			}
+			//}
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
@@ -360,7 +374,7 @@ function moveMapCenter() {
 	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
-			map.setZoom(12);
+			map.setZoom(10);
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
