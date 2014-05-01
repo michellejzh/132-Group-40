@@ -1,7 +1,7 @@
 
 
 // link to the server
-var serverURL = "http://localhost:8080/search.json";
+var serverURL = "http://localhost:8080/partner_data.json";
 console.log("called loadProfile");
 //$("#profile-div").load("clientProfile.html");
 /*
@@ -62,16 +62,15 @@ function loadProfile(){
 function renderProfile(vendor) {
 	//TO DO: make this puttable on the page
 	var vendorName = vendor.name;
-    var address1 = vendor.addressLine1
+    var address1 = vendor.addressLine1;
     var address2 = getAddressLine2(vendor);
-    var phone = vendor.phone;
-    var email = vendor.email;
-    var website = vendor.website;
-    var capability = vendor.capID;
-    var payment = vendor.payment;
-    var lead = vendor.lead;
-    var rate = vendor.rate;
-    var deliveryFee = vendor.deliveryFee;
+    var phone = vendor.primaryPhone;
+    var email = vendor.primaryEmail;
+    var website = "fake.com"
+    var capability = vendor.productCapabilityIDs;
+    var payment = vendor.paymentTerms;
+    var lead = vendor.leadTime;
+    var deliveryFee = vendor.costs;
     //non-table
     $("#name").append(vendorName);
     $("#address").append(address1+"<br>"+address2);
@@ -90,5 +89,5 @@ function renderProfile(vendor) {
 Given a JSON object of a vendor, returns the vendor's address as a string
 */
 function getAddressLine2(vendor){
-    return vendor.city + ", " + vendor.state + " " + vendor.zip;
+    return vendor.addressLine2 + " " + vendor.city + ", " + vendor.state + " " + vendor.zip;
 }

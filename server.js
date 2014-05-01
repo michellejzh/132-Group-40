@@ -43,6 +43,13 @@ app.get('/search.json', function(request, response){
     });
 });
 
+app.get('/partner_data.json', function(request, response){
+    response.setHeader("Access-Control-Allow-Origin", "*");
+	var parsedJSON = require('./Database/partner_data.json');
+	response.json(parsedJSON);
+});
+	
+
 //might want this to just be every search
 app.get('/profile/:id.json', function(request, response){
     response.setHeader("Access-Control-Allow-Origin", "*");
