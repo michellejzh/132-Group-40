@@ -213,10 +213,14 @@ function addMarker(map, currAddress, boundsList) {
 			var vendorName = vendor.name;
 		    var address1 = vendor.addressLine1;
 		    var address2 = getAddressLine2(vendor);
-		    var phone = vendor.phone;
-		    var email = vendor.email;
-		    var id = vendor.primaryKey;
-		    var website = vendor.website;
+		    var phone = vendor.primaryPhone;
+		    var email = vendor.primaryEmail;
+		    var website = "fake.com";
+		    var capability = vendor.productCapabilityIDs;
+		    var payment = vendor.paymentTerms;
+		    var lead = vendor.leadTime;
+		    var deliveryFee = vendor.costs;
+		    var rate = "fix this";
 
 			var contentString = "<div id='content'>"
 			+"<table id='profile'>"
@@ -234,23 +238,23 @@ function addMarker(map, currAddress, boundsList) {
 			+"		<table border='1'>"
 			+"			<tr>"
 			+"				<td>Product Capability</td>"
-			+"				<td id='prodCap'></td>"
+			+"				<td id='prodCap'>"+capability+"</td>"
 			+"			</tr>"
 			+"			<tr>"
 			+"				<td>Payment Method</td>"
-			+"				<td id='payment'></td>"
+			+"				<td id='payment'>"+payment+"</td>"
 			+"			</tr>"
 			+"			<tr>"
 			+"				<td>Lead Time</td>"
-			+"				<td id='leadTime'></td>"
+			+"				<td id='leadTime'>"+lead+"</td>"
 			+"			</tr>"
 			+"			<tr>"
 			+"				<td>Rate</td>"
-			+"				<td id='rate'></td>"
+			+"				<td id='rate'>"+rate+"</td>"
 			+"			</tr>"
 			+"			<tr>"
 			+"				<td>Delivery Fee</td>"
-			+"				<td id='deliveryFee'></td>"
+			+"				<td id='deliveryFee'>"+deliveryFee+"</td>"
 			+"			</tr>"
 			+"		</table>"
 			+"	</td>"
