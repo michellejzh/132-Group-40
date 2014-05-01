@@ -44,9 +44,9 @@ app.get('/search.json', function(request, response){
 });
 
 app.get('/partner_data.json', function(request, response){
-	  var parsedJSON = require('./Database/partner_data.json');
-	  console.log(parsedJSON);
-	  response.json(parsedJSON);
+    response.setHeader("Access-Control-Allow-Origin", "*");
+	var parsedJSON = require('./Database/partner_data.json');
+	response.json(parsedJSON);
 });
 	
 

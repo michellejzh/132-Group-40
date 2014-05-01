@@ -11,7 +11,7 @@ var mapID = "map-canvas";
 var resultsListID = "results-list";
 
 // link to the server
-var serverURL = "http://localhost:8080/search.json";
+var serverURL = "http://localhost:8080/partner_data.json";
 
 // geocoder
 var geocoder = new google.maps.Geocoder();
@@ -317,7 +317,7 @@ function moveMapCenter() {
 Given a JSON object of a vendor, returns the vendor's address as a string
 */
 function getAddress(vendor){
-	return vendor.addressLine1 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
+	return vendor.addressLine1 + ", " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
 
 function getAddressLine2(vendor){
