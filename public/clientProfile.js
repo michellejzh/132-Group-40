@@ -89,5 +89,5 @@ function renderProfile(vendor) {
 Given a JSON object of a vendor, returns the vendor's address as a string
 */
 function getAddressLine2(vendor){
-    return vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
+    return vendor.addressLine2 + " " + vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
