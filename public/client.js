@@ -171,19 +171,58 @@ function addResultToList(vendor) {
 Adds a marker on the google map at the given address. 
 currAddress - a string representing an address
 */
-function addMarker(map, currAddress) {
+
+
+//red: matches requirements but not distance. default
+//blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
+//green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
+
+function addMarker(map, currAddress, boundsList) {
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
+			console.log("called addMarker");
+
+			//FIX THESE
+			var matchesDistance = true;
+			var matchesRequirements = true;
+
+			if (matchesDistance&&matchesRequirements) {
+				//green
+				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
+			}
+			else if (matchesDistance) {
+				//blue
+				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+			}
+			else if (matchesRequirements) {
+				//red
+				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+			}
+			var location = results[0].geometry.location;
 			var marker = new google.maps.Marker({
 				map: map,
-				position: results[0].geometry.location,
+				//TODO: change the color based on parameters
+				icon: iconColor,
+				position: location,
     			animation: google.maps.Animation.DROP
 			});
+			boundsList.push(location);
+			//problem: it's calling this every time rather than at the end of all the vendors.
+			fitBounds(boundsList);
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
 		}
 	});
+}
+
+function fitBounds(boundsList) {
+	console.log("called boundsList");
+	var bounds = new google.maps.LatLngBounds();
+	for (var i = 0; i < boundsList.length; i++) {
+  		bounds.extend(boundsList[i]);
+  	}
+  	map.fitBounds(bounds);
 }
 
 /*
@@ -194,11 +233,12 @@ originAddress - a string representing the address of the origin
 */
 function renderVendors(vendors, originAddress){
 	var vendorsLength = vendors.length;
-
+	var boundsList = [];
 	for (var i = 0; i < vendorsLength; i++){
 		vendor = vendors[i];
-		renderFilteredVendor(originAddress, vendor);
+		renderFilteredVendor(originAddress, vendor, boundsList);
 	}
+	//fitBounds(boundsList);
 }
 
 /*
@@ -210,7 +250,7 @@ Renders vendor if:
 clientAdress - the client's address as a string
 vendor - JSON object representing vendor
 */
-function renderFilteredVendor(clientAddress, vendor) {
+function renderFilteredVendor(clientAddress, vendor, boundsList) {
 	var vendorAddress = getAddress(vendor);
 	service.getDistanceMatrix(
     {
@@ -241,7 +281,7 @@ function renderFilteredVendor(clientAddress, vendor) {
 		    // add if passes filter
 		    if (filter(totalDist)){
 				addResultToList(vendor);
-				addMarker(map, getAddress(vendor));
+				addMarker(map, getAddress(vendor), boundsList);
 		    }
 		}
     });
