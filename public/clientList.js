@@ -35,14 +35,14 @@ function renderVendorList(vendorJSON){
 		});
 		var $address = $('<div>', {
 			class: 'vendorAddress',
-			text: vendor.addressLine1 + ", " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip
+			text: vendor.addressLine1 + " " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip
 		});
 
 		// adds DOM objects to page
 		$li.append($name);
 		$li.append($phone);
 		$li.append($address);
-		$li.attr('onclick', "window.location.assign('"+newURL+"?id="+vendor.primaryKey+"'); loadProfile()");
+		$li.attr('onclick', "window.location.assign('"+newURL+"?id="+vendor.id+"'); loadProfile()");
 		$vendorList.append($li);
 	}
 }

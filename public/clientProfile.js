@@ -38,12 +38,19 @@ function loadProfile(){
 	        // do something with the loaded content
 	        var content = request.responseText;
 			var data = JSON.parse(content);
-            console.log("passing "+data[0]+" to renderProfile");
-	    	renderProfile(data[0]);
-	    } else {
+			var k;
+			for (k = 0; k < data.length; k++){
+				if(data[k].id == document.vendorID){
+					renderProfile(data[k]);
+				}
+				else{
+					console.log("Couldn't find vendor with this ID");
+				}
+	    	} 
+		}else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
-	        console.log('oops');
+	        console.log('request could not be sent');
 	    }
 	}, false);
 
@@ -53,7 +60,7 @@ function loadProfile(){
 	}, false);
 
 	// initiate connection
-	request.open('GET', profileURL, true);
+	request.open('GET', serverURL, true);
 	request.send();
 
 }
@@ -67,8 +74,8 @@ function renderProfile(vendor) {
     var email = vendor.primaryEmail;
     var website = "fake.com"
     var capability = vendor.productCapabilityIDs;
-    var payment = vendor.paymentTerms;
-    var lead = vendor.leadTime;
+    var payment = vendor.paymentTerms.terms;
+    var lead = vendor.leadTime.leadTime;
     var deliveryFee = vendor.costs;
     //non-table
     $("#name").append(vendorName);
