@@ -1,4 +1,4 @@
-//angular is so cool!
+//angular is so cool! but I don't really get it.
 
 app = angular.module('ModalDemo', []);
 app.directive('modalDialog', function() {

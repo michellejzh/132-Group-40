@@ -206,9 +206,63 @@ function addMarker(map, currAddress, boundsList) {
 				position: location,
     			animation: google.maps.Animation.DROP
 			});
+
+			/*
+			Popup client profile windows when you click on their map markers.
+			*/
+
+			var contentString = "<div id='content'>"
+		+"<table id='profile'>"
+		+"<tr>"
+		+"	<td>"
+		+"		<div id='non-table'>"
+		+"			<div id='name'></div>"
+		+"			<div id='address'></div><br>"
+		+"			<div id='phone'>Phone: </div>"
+		+"			<div id='email'>Email: </div>"
+		+"			<div id='website'>Website: </div>"
+		+"		</div>"
+		+"	</td>"
+		+"	<td>"
+		+"		<table border='1'>"
+		+"			<tr>"
+		+"				<td>Product Capability</td>"
+		+"				<td id='prodCap'></td>"
+		+"			</tr>"
+		+"			<tr>"
+		+"				<td>Payment Method</td>"
+		+"				<td id='payment'></td>"
+		+"			</tr>"
+		+"			<tr>"
+		+"				<td>Lead Time</td>"
+		+"				<td id='leadTime'></td>"
+		+"			</tr>"
+		+"			<tr>"
+		+"				<td>Rate</td>"
+		+"				<td id='rate'></td>"
+		+"			</tr>"
+		+"			<tr>"
+		+"				<td>Delivery Fee</td>"
+		+"				<td id='deliveryFee'></td>"
+		+"			</tr>"
+		+"		</table>"
+		+"	</td>"
+		+"</tr>"
+		+"</div>"
+
+			var infowindow = new google.maps.InfoWindow({
+			  content: contentString
+			});
+
+			//add event listener so infowindow pops up on click
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(map,marker);
+			});
 			boundsList.push(location);
-			//problem: it's calling this every time rather than at the end of all the vendors.
-			fitBounds(boundsList);
+			//set the bounds if we're at the end of the vendor list
+			if (boundsList.length==vendorsLength) {
+				fitBounds(boundsList);
+			}
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
@@ -231,14 +285,15 @@ Renders filtered vendors on page
 vendors - the complete JSON list of vendors
 originAddress - a string representing the address of the origin
 */
+var vendorsLenth = 0;
 function renderVendors(vendors, originAddress){
-	var vendorsLength = vendors.length;
+	vendorsLength = vendors.length;
 	var boundsList = [];
+
 	for (var i = 0; i < vendorsLength; i++){
 		vendor = vendors[i];
 		renderFilteredVendor(originAddress, vendor, boundsList);
 	}
-	//fitBounds(boundsList);
 }
 
 /*
@@ -323,6 +378,8 @@ function getAddress(vendor){
 function getAddressLine2(vendor){
 	return vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
+
+
 
 //TO DO!!!!!!!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //this is not written at all it's from Michelle's chatroom lol
