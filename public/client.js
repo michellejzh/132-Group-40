@@ -56,7 +56,10 @@ function getPayment() {
 
 //if you click on a box
 function updateSearch() {
-	loadVendors(map);
+	initializeMap();
+	//clear the list items
+	document.getElementById("results-list").innerHTML = "";
+
 }
 /*
 Gets the parameter of the URL as a string
@@ -310,7 +313,7 @@ Renders filtered vendors on page
 vendors - the complete JSON list of vendors
 originAddress - a string representing the address of the origin
 */
-var vendorsLenth = 0;
+var vendorsLength = 0;
 function renderVendors(vendors, originAddress){
 	vendorsLength = vendors.length;
 	var boundsList = [];

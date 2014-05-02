@@ -35,16 +35,18 @@
 
 				<div id='delivery'>
 				<legend>Lead Time</legend>
-				<input type='checkbox' id='lead' name='Delivery Time' value='0' onclick='updateSearch()'> Same Day <br>
-				<input type='checkbox' id='lead' name='Delivery Time' value='1' onclick='updateSearch()'> Next Day <br>
-				<input type='checkbox' id='lead' name='Delivery Time' value='2' onclick='updateSearch()'> 2+ Days <br>
+				<input type='radio' id='lead' name='Delivery Time' value='0' onclick='updateSearch()' checked> None Specified <br>				
+				<input type='radio' id='lead' name='Delivery Time' value='1' onclick='updateSearch()'> Same Day <br>
+				<input type='radio' id='lead' name='Delivery Time' value='2' onclick='updateSearch()'> Next Day <br>
+				<input type='radio' id='lead' name='Delivery Time' value='3' onclick='updateSearch()'> 2+ Days <br>
 			</div>
 
 				<div id='payment'>
 				<legend>Payment Terms</legend>
-				<input type='checkbox' id='payment' name='Payment Terms' value='0' onclick='updateSearch()'> CC Preferred <br>
-				<input type='checkbox' id='payment' name='Payment Terms' value='1' onclick='updateSearch()'> CC Required <br>
-				<input type='checkbox' id='payment' name='Payment Terms' value='2' onclick='updateSearch()'> Invoice <br>
+				<input type='radio' id='payment' name='Payment Terms' value='0' onclick='updateSearch()' checked> None specified<br>
+				<input type='radio' id='payment' name='Payment Terms' value='1' onclick='updateSearch()'> CC Preferred <br>
+				<input type='radio' id='payment' name='Payment Terms' value='2' onclick='updateSearch()'> CC Required <br>
+				<input type='radio' id='payment' name='Payment Terms' value='3' onclick='updateSearch()'> Invoice <br>
 			</div>
 				
 				<div id='matches'>
