@@ -1,9 +1,10 @@
 html{
-	background-image:url(http://vkreesphotography.com/wp-content/uploads/2013/07/HBlomExperimentFlowers9FW.jpg);
+	background-image:url(white-roses.jpg);
 	background-color: black;
 	/*background-size: 100% auto;*/
-	background-repeat:no-repeat;
-	background-position: center top;
+	background-repeat: repeat-x;
+	background-position: top;
+	background-attachment: fixed;
 	height:auto;
 	min-width: 600px;
 	min-height: 385px;

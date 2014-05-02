@@ -119,12 +119,11 @@ function addResultToList(vendor) {
     var address1 = vendor.addressLine1;
     var address2 = getAddressLine2(vendor);
     var phone = vendor.phone;
-    var id = vendor.primaryKey;
+    var id = vendor.id;
 
     //create DOM elements
     var $li = $("<li>", {
     	class: 'vendorLi',
-    	//id: generateID()
     });
     var $details = $("<div>", {
     	class: 'details'
@@ -147,7 +146,7 @@ function addResultToList(vendor) {
     });
     var $profile = $("<button>", {
     	class: 'profile',
-    	text: "View profile"
+    	text: "Full profile"
     });
     var $map = $("<button>", {
     	class: 'map',
@@ -218,10 +217,9 @@ function addMarker(map, vendor, boundsList) {
 		    var email = vendor.primaryEmail;
 		    var website = "fake.com";
 		    var capability = vendor.productCapabilityIds;
+		    console.log("capability is "+capability);
 		    var payment = vendor.paymentTerms.terms;
 		    var lead = vendor.leadTime.leadTime;
-		    var deliveryFee = vendor.costs;
-		    var rate = "fix this";
 
 			var contentString = "<div id='content'>"
 			+"<table id='profile'>"
@@ -248,14 +246,6 @@ function addMarker(map, vendor, boundsList) {
 			+"			<tr>"
 			+"				<td>Lead Time</td>"
 			+"				<td id='leadTime'>"+lead+"</td>"
-			+"			</tr>"
-			+"			<tr>"
-			+"				<td>Rate</td>"
-			+"				<td id='rate'>"+rate+"</td>"
-			+"			</tr>"
-			+"			<tr>"
-			+"				<td>Delivery Fee</td>"
-			+"				<td id='deliveryFee'>"+deliveryFee+"</td>"
 			+"			</tr>"
 			+"		</table>"
 			+"	</td>"
@@ -290,7 +280,6 @@ function addMarker(map, vendor, boundsList) {
 }
 
 function fitBounds(boundsList) {
-	console.log("called boundsList");
 	var bounds = new google.maps.LatLngBounds();
 	for (var i = 0; i < boundsList.length; i++) {
   		bounds.extend(boundsList[i]);

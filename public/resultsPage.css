@@ -22,7 +22,7 @@
 	margin: 0 auto;
 	border:2px solid silver;
 	border-style: groove;
-	border-radius:10px;
+	border-radius:15px;
 }
 
 .name {
@@ -58,37 +58,3 @@ a:visited {
 a:hover {
 	color: silver;
 }
-
-/*angular modal dialog*/
-
-.ng-modal-dialog {
-  /* A centered div above the overlay with a box shadow. */
-  z-index:10000;
-  position: absolute;
-  width: 50%; /* Default */
-
-  /* Center the dialog */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-
-  background-color: #fff;
-  box-shadow: 4px 4px 80px #000;
-}
-.ng-modal-dialog-content {
-  padding:10px;
-  text-align: left;
-}
-.ng-modal-close {
-  position: absolute;
-  top: 3px;
-  right: 5px;
-  padding: 5px;
-  cursor: pointer;
-  font-size: 120%;
-  display: inline-block;
-}
-
-

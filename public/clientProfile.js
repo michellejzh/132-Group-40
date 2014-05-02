@@ -73,7 +73,7 @@ function renderProfile(vendor) {
     var capability = vendor.productCapabilityIDs;
     var payment = vendor.paymentTerms.terms;
     var lead = vendor.leadTime.leadTime;
-    var deliveryFee = vendor.costs;
+
     //non-table
     $("#name").append(vendorName);
     $("#address").append(address1+"<br>"+address2);
@@ -84,7 +84,7 @@ function renderProfile(vendor) {
     $("#prodCap").append(capability);
     $("#payment").append(payment);
     $("#leadTime").append(lead);
-    $("#deliveryFee").append("$"+deliveryFee);
+
 }
 
 
