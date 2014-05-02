@@ -179,18 +179,19 @@ function addMarker(map, vendor, boundsList) {
 			console.log("called addMarker");
 
 			//FIX THESE
-			var matchesDistance = true;
-			var matchesRequirements = true;
+			var matchesProduct = true;
+			var matchesLead = true;
+			var matchesPayment = true;
 
-			if (matchesDistance&&matchesRequirements) {
+			if (matchesProduct&&matchesLead&&matchesPayment) {
 				//green
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
 			}
-			else if (matchesDistance) {
+			else if (matchesProduct) {
 				//blue
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
 			}
-			else if (matchesRequirements) {
+			else {
 				//red
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
 			}
