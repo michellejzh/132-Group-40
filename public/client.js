@@ -26,6 +26,38 @@ $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
 })
 
+
+function getProductCapability() {
+	var selected = [];
+	$('#prodCap input:checked').each(function() {
+	    selected.push($(this).attr('value'));
+	});
+	console.log("selected product capability: "+selected);
+	return selected;
+}
+
+function getLead() {
+	var selected = [];
+	$('#lead input:checked').each(function() {
+	    selected.push($(this).attr('value'));
+	});
+	console.log("selected lead: "+selected);
+	return selected;
+}
+
+function getPayment() {
+	var selected = [];
+	$('#payment input:checked').each(function() {
+	    selected.push($(this).attr('value'));
+	});
+	console.log("selected payment: "+selected);
+	return selected;
+}
+
+//if you click on a box
+function updateSearch() {
+	loadVendors(map);
+}
 /*
 Gets the parameter of the URL as a string
 
@@ -178,19 +210,25 @@ function addMarker(map, vendor, boundsList) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			console.log("called addMarker");
 
-			//FIX THESE
-			var matchesDistance = true;
-			var matchesRequirements = true;
+			//gets the selected search parameters
+			var product = getProductCapability();
+			var lead = getLead();
+			var payment = getPayment();
 
-			if (matchesDistance&&matchesRequirements) {
+			//FIX THESE
+			var matchesProduct = true;
+			var matchesLead = true;
+			var matchesPayment = true;
+
+			if (matchesProduct&&matchesLead&&matchesPayment) {
 				//green
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
 			}
-			else if (matchesDistance) {
+			else if (matchesProduct) {
 				//blue
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
 			}
-			else if (matchesRequirements) {
+			else {
 				//red
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
 			}
