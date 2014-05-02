@@ -1,0 +1,94 @@
+<!--trying some stuff with angular-->
+	<div ng-app='ModalDemo'>
+	  <div ng-controller='MyCtrl'>
+	    <button ng-click='toggleModal()'>Open Modal Dialog</button>
+	    <modal-dialog show='modalShown' width='400px' height='60%'>
+	    <div id='profile-div' onload="loadProfile();">
+			<div id='content'>
+			<table id='profile'>
+				<tr>
+					<td>
+						<div id='non-table'>
+							<div id="name"></div>
+							<div id="address"></div><br>
+							<div id="phone">Phone: </div>
+							<div id="email">Email: </div>
+							<div id="website">Website: </div>
+						</div>
+						<td>
+						<table border="1">
+							<tr>
+								<td>Product Capability</td>
+								<td id="prodCap"></td>
+							</tr>
+							<tr>
+								<td>Payment Method</td>
+								<td id="payment"></td>
+							</tr>
+							<tr>
+								<td>Lead Time</td>
+								<td id="leadTime"></td>
+							</tr>
+							<tr>
+								<td>Rate</td>
+								<td id="rate"></td>
+							</tr>
+							<tr>
+								<td>Delivery Fee</td>
+								<td id="deliveryFee"></td>
+							</tr>
+						</table>
+						</td>
+					</td>
+				</tr>
+			</table>
+		</div>
+	    </modal-dialog>
+	  </div>
+	</div>
+<!--end ze angular-->
+
+
+
+
+/*angular modal dialog*/
+
+.ng-modal-dialog {
+  /* A centered div above the overlay with a box shadow. */
+  z-index:10000;
+  position: absolute;
+  width: 50%; /* Default */
+
+  /* Center the dialog */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+
+  background-color: #fff;
+  box-shadow: 4px 4px 80px #000;
+}
+.ng-modal-dialog-content {
+  padding:10px;
+  text-align: left;
+}
+.ng-modal-close {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 120%;
+  display: inline-block;
+}
+
+button {
+	border-top: 2px solid #aaaaaa;
+	border-left: 2px solid #777777;
+	border-right: 2px solid #222222;
+	border-bottom: 2px solid black;
+	background-color: #444444;
+	color: white;
+}
+
