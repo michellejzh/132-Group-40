@@ -214,6 +214,11 @@ function addMarker(map, vendor, boundsList) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			console.log("called addMarker");
 
+		    var product = vendor.productCapabilityIds;
+		    console.log("product capability is "+product);
+		    var payment = vendor.paymentTerms.terms;
+		    var lead = vendor.leadTime.leadTime;
+
 			//gets the selected search parameters
 			var product = getProductCapability();
 			var lead = getLead();
@@ -254,10 +259,6 @@ function addMarker(map, vendor, boundsList) {
 		    var phone = vendor.primaryPhone;
 		    var email = vendor.primaryEmail;
 		    var website = "fake.com";
-		    var capability = vendor.productCapabilityIds;
-		    console.log("capability is "+capability);
-		    var payment = vendor.paymentTerms.terms;
-		    var lead = vendor.leadTime.leadTime;
 			var contentString = "<div id='content'>"
 			+"<table id='profile'>"
 			+"<tr>"
