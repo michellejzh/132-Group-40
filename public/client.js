@@ -253,7 +253,7 @@ function addMarker(map, vendor, boundsList) {
 			+"		<table border='1'>"
 			+"			<tr>"
 			+"				<td>Product Capability</td>"
-			+"				<td id='prodCap'>"+capability+"</td>"
+			+"				<td id='prodCap'>"+product+"</td>"
 			+"			</tr>"
 			+"			<tr>"
 			+"				<td>Payment Method</td>"
