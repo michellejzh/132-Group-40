@@ -183,15 +183,15 @@ function addMarker(map, vendor, boundsList) {
 			var matchesLead = true;
 			var matchesPayment = true;
 
-			if (matchesDistance&&matchesProduct) {
+			if (matchesProduct&&matchesLead&&matchesPayment) {
 				//green
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
 			}
-			else if (matchesDistance) {
+			else if (matchesProduct) {
 				//blue
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
 			}
-			else if (matchesProduct) {
+			else {
 				//red
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
 			}
