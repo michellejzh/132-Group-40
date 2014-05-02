@@ -36,10 +36,6 @@ function getParam(name){
       return decodeURIComponent(name[1]);
 }
 
-//TODO: change so there are different IDs for productCap and lead
-//want to get: productCap, capPrior, lead, leadPrior
-
-
 /*
 Returns a string of the address by parsing the URL parameters.
 */
@@ -220,14 +216,15 @@ function addMarker(map, vendor, boundsList) {
 		    console.log("capability is "+capability);
 		    var payment = vendor.paymentTerms.terms;
 		    var lead = vendor.leadTime.leadTime;
-
 			var contentString = "<div id='content'>"
 			+"<table id='profile'>"
 			+"<tr>"
 			+"	<td>"
 			+"		<div id='non-table'>"
 			+"			<div id='name'>"+vendorName+"</div>"
-			+"			<div id='address'>"+address1+"<br>"+address2+"</div><br>"
+			//+"			<button onclick='window.location.assign('"+newURL+"'); loadProfile()'>Full profile</button>"
+			+"			<button onclick='goToProfile("+vendor.id+")'>Full profile</button>"
+			+"			<div id='address'>"+address1+"<br>"+address2+"</div>"
 			+"			<div id='phone'>Phone: "+phone+"</div>"
 			+"			<div id='email'>Email: "+email+"</div>"
 			+"			<div id='website'>Website: "+website+"</div>"
@@ -277,6 +274,11 @@ function addMarker(map, vendor, boundsList) {
 			alert("Geocode was not successful for the following reason: " + status);
 		}
 	});
+}
+
+function goToProfile(id) {
+	var newURL = window.location.pathname+"../../clientProfile.html?id="+id;
+	window.location.assign(newURL);
 }
 
 function fitBounds(boundsList) {

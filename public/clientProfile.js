@@ -63,20 +63,24 @@ function loadProfile(){
 }
 
 function renderProfile(vendor) {
-	//TO DO: make this puttable on the page
 	var vendorName = vendor.name;
     var address1 = vendor.addressLine1;
     var address2 = getAddressLine2(vendor);
+    var primaryContact = vendor.primaryContact;
     var phone = vendor.primaryPhone;
     var email = vendor.primaryEmail;
     var website = "fake.com"
     var capability = vendor.productCapabilityIDs;
     var payment = vendor.paymentTerms.terms;
     var lead = vendor.leadTime.leadTime;
+    var conGR = vendor.costs.consumerGiftRate;
+    var conSR = vendor.costs.consumerSubRate;
+    var corSR = vendor.costs.corporateSubRate;
 
     //non-table
     $("#name").append(vendorName);
     $("#address").append(address1+"<br>"+address2);
+    $("#primaryContact").append(primaryContact);
     $("#phone").append(phone);
     $("#email").append("<a href='mailto:"+email+"'>"+email+'</a>');
     $("#website").append('<a href="http://'+website+'">'+website+'</a>');
@@ -84,7 +88,9 @@ function renderProfile(vendor) {
     $("#prodCap").append(capability);
     $("#payment").append(payment);
     $("#leadTime").append(lead);
-
+    $("#consumerGiftRate").append(conGR);
+    $("#consumerSubRate").append(conSR);
+    $("#corporateSubRate").append(corSR);
 }
 
 
