@@ -26,6 +26,32 @@ $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
 })
 
+
+var prodCap = document.getElementById("myCheck").value;;
+var delivery = document.getElementById("myCheck").value;;
+var payment = document.getElementById("myCheck").value;;
+
+function updateProductCapability() {
+	var selected = [];
+	$('#checkboxes input:checked').each(function() {
+	    selected.push($(this).attr('name'));
+	});
+}
+
+function updateDelivery() {
+	var selected = [];
+	$('#checkboxes input:checked').each(function() {
+	    selected.push($(this).attr('name'));
+	});
+}
+
+function updatePayment() {
+	var selected = [];
+	$('#checkboxes input:checked').each(function() {
+	    selected.push($(this).attr('name'));
+	});
+}
+
 /*
 Gets the parameter of the URL as a string
 
