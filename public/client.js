@@ -27,31 +27,37 @@ $(document).ready(function(){
 })
 
 
-var prodCap = document.getElementById("myCheck").value;;
-var delivery = document.getElementById("myCheck").value;;
-var payment = document.getElementById("myCheck").value;;
-
-function updateProductCapability() {
+function getProductCapability() {
 	var selected = [];
-	$('#checkboxes input:checked').each(function() {
-	    selected.push($(this).attr('name'));
+	$('#prodCap input:checked').each(function() {
+	    selected.push($(this).attr('value'));
 	});
+	console.log("selected product capability: "+selected);
+	return selected;
 }
 
-function updateDelivery() {
+function getLead() {
 	var selected = [];
-	$('#checkboxes input:checked').each(function() {
-	    selected.push($(this).attr('name'));
+	$('#lead input:checked').each(function() {
+	    selected.push($(this).attr('value'));
 	});
+	console.log("selected lead: "+selected);
+	return selected;
 }
 
-function updatePayment() {
+function getPayment() {
 	var selected = [];
-	$('#checkboxes input:checked').each(function() {
-	    selected.push($(this).attr('name'));
+	$('#payment input:checked').each(function() {
+	    selected.push($(this).attr('value'));
 	});
+	console.log("selected payment: "+selected);
+	return selected;
 }
 
+//if you click on a box
+function updateSearch() {
+	loadVendors(map);
+}
 /*
 Gets the parameter of the URL as a string
 
@@ -203,6 +209,11 @@ function addMarker(map, vendor, boundsList) {
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			console.log("called addMarker");
+
+			//gets the selected search parameters
+			var product = getProductCapability();
+			var lead = getLead();
+			var payment = getPayment();
 
 			//FIX THESE
 			var matchesProduct = true;
