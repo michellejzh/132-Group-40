@@ -97,31 +97,8 @@ google.maps.event.addDomListener(window, 'load', initializeMap);
 Gets a JSON object of vendors from the server
 */
 function loadVendors(map){
-	var request = new XMLHttpRequest();
 	var address = getAddressFromURL();
-
-	// get vendors
-	request.addEventListener('load', function(e){
-	    if (request.status == 200) {
-	        // do something with the loaded content
-	        var content = request.responseText;
-			var data = JSON.parse(content);
-			renderVendors(limit(data), address);
-	    } else {
-	        // something went wrong, check the request status
-	        // hint: 403 means Forbidden, maybe you forgot your username?
-	        console.log('oops');
-	    }
-	}, false);
-
-	// deal with errors
-	request.addEventListener('error', function(e){
-		alert('Error: failed to connect to server');
-	}, false);
-
-	// initiate connection
-	request.open('GET', serverURL, true);
-	request.send();
+	renderVendors(limit(partner_data), address);
 }
 
 

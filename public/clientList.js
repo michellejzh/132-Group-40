@@ -1,11 +1,9 @@
-// the location of the server that provides vendor information
-var serverURL = "http://localhost:8080/partner_data.json";
 
 // id of the form containing a list of the vendors
 var vendorsID = "vendorList";
 
 $(document).ready(function(){
-	renderVendors();
+	renderVendorList(partner_data);
 });
 
 
@@ -45,33 +43,4 @@ function renderVendorList(vendorJSON){
 		$li.attr('onclick', "window.location.assign('"+newURL+"?id="+vendor.id+"'); loadProfile()");
 		$vendorList.append($li);
 	}
-}
-
-/*
-Gets a list of vendors from the server and renders it on the page
-
-Returns a JSON object of all the vendors
-*/
-function renderVendors(vendorJSON){
-	var request = new XMLHttpRequest();
-
-	// eventlistener that gets the vendors when loaded
-    request.addEventListener('load', function(e){
-        if (request.status == 200) {
-            var content = request.responseText;
-            var data = JSON.parse(content);
-            renderVendorList(data);
-        } else {
-        	console.log("FUCK");
-        }
-    }, false);
-
-    // eventlistener for errors
-    request.addEventListener('error', function(e){
-		console.log('error');
-	}, false);
-
-    // open and send request
-	request.open('GET', serverURL, true);
-	request.send();
 }

@@ -29,37 +29,13 @@ function getIDFromURL(){
 function loadProfile(){
     getIDFromURL();
 	console.log("called loadProfile");
-	var request = new XMLHttpRequest();
-	var profileURL = "http://localhost:8080/profile/"+document.vendorID+".json";
 
-	// get vendors
-	request.addEventListener('load', function(e){
-	    if (request.status == 200) {
-	        // do something with the loaded content
-	        var content = request.responseText;
-			var data = JSON.parse(content);
-			var k;
-			for (k = 0; k < data.length; k++){
-				if(data[k].id == document.vendorID){
-					renderProfile(data[k]);
-				}
-	    	} 
-		}else {
-	        // something went wrong, check the request status
-	        // hint: 403 means Forbidden, maybe you forgot your username?
-	        console.log('request could not be sent');
-	    }
-	}, false);
-
-	// deal with errors
-	request.addEventListener('error', function(e){
-		alert('Error: failed to connect to server');
-	}, false);
-
-	// initiate connection
-	request.open('GET', serverURL, true);
-	request.send();
-
+    for (var k = 0; k < partner_data.length; k++){
+        console.log(partner_data[k]);
+        if(partner_data[k].id == document.vendorID){
+            renderProfile(partner_data[k]);
+        }
+    } 
 }
 
 function renderProfile(vendor) {
