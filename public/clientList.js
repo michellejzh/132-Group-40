@@ -1,5 +1,5 @@
 // the location of the server that provides vendor information
-var serverURL = "http://localhost:8080/search.json";
+var serverURL = "http://localhost:8080/partner_data.json";
 
 // id of the form containing a list of the vendors
 var vendorsID = "vendorList";
@@ -7,6 +7,9 @@ var vendorsID = "vendorList";
 $(document).ready(function(){
 	renderVendors();
 });
+
+
+var newURL = window.location.pathname+"../../clientProfile.html";
 
 /*
 Adds the vendors to the list in the HTML page
@@ -28,17 +31,18 @@ function renderVendorList(vendorJSON){
 		});
 		var $phone = $('<div>', {
 			class: 'vendorPhone',
-			text: vendor.phone
+			text: vendor.primaryPhone
 		});
 		var $address = $('<div>', {
 			class: 'vendorAddress',
-			text: vendor.addressLine1 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip
+			text: vendor.addressLine1 + " " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip
 		});
 
 		// adds DOM objects to page
 		$li.append($name);
 		$li.append($phone);
 		$li.append($address);
+		$li.attr('onclick', "window.location.assign('"+newURL+"?id="+vendor.id+"'); loadProfile()");
 		$vendorList.append($li);
 	}
 }

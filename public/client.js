@@ -11,7 +11,7 @@ var mapID = "map-canvas";
 var resultsListID = "results-list";
 
 // link to the server
-var serverURL = "http://localhost:8080/search.json";
+var serverURL = "http://localhost:8080/partner_data.json";
 
 // geocoder
 var geocoder = new google.maps.Geocoder();
@@ -48,7 +48,6 @@ function getAddressFromURL(){
 initializes the map
 */
 function initializeMap() {
-	
 	//paints map
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
@@ -71,7 +70,6 @@ function loadVendors(map){
 
 	// get vendors
 	request.addEventListener('load', function(e){
-		console.log("blah");
 	    if (request.status == 200) {
 	        // do something with the loaded content
 	        var content = request.responseText;
@@ -86,13 +84,14 @@ function loadVendors(map){
 
 	// deal with errors
 	request.addEventListener('error', function(e){
-		console.log('error');
+		alert('Error: failed to connect to server');
 	}, false);
 
 	// initiate connection
 	request.open('GET', serverURL, true);
 	request.send();
 }
+
 
 /*
 TODO: THIS FUNCTION SHOULD EVENTUALLY BE DELETED
@@ -113,14 +112,15 @@ data - a JSON of a single vendor
 */
 function addResultToList(vendor) {
     var vendorName = vendor.name;
-    var address = getAddress(vendor);
+    var address1 = vendor.addressLine1;
+    var address2 = getAddressLine2(vendor);
     var phone = vendor.phone;
+    var id = vendor.id;
 
     //create DOM elements
     var $li = $("<li>", {
     	class: 'vendorLi',
     });
-	$li.attr('onclick', "document.vendorAddress='"+address+"'; moveMapCenter();");
     var $details = $("<div>", {
     	class: 'details'
     });
@@ -128,19 +128,36 @@ function addResultToList(vendor) {
     	class: 'name',
     	text: vendorName
     });
-    var $address = $("<div>", {
+    var $address1 = $("<div>", {
     	class: 'address',
-    	text: address
+    	text: address1
+    });
+    var $address2 = $("<div>", {
+    	class: 'address',
+    	text: address2
     });
     var $phone = $("<div>", {
     	class: 'phone',
     	text: phone
     });
-
+    var $profile = $("<button>", {
+    	class: 'profile',
+    	text: "Full profile"
+    });
+    var $map = $("<button>", {
+    	class: 'map',
+    	text: "Find on map"
+    });
+    var newURL = window.location.pathname+"../../clientProfile.html";
+    $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
+    $map.attr('onclick', "document.vendorAddress='"+address1+" "+address2+"'; moveMapCenter();");
     // add DOM elements to page
-    $details.append(name);
-    $details.append(address);
-    $details.append(phone);
+    $details.append($name);
+    $details.append($address1);
+    $details.append($address2);
+    $details.append($phone);
+    $details.append($profile);
+    $details.append($map);
     $li.append($details);
     $("#" + resultsListID).append($li);
 }
@@ -149,19 +166,127 @@ function addResultToList(vendor) {
 Adds a marker on the google map at the given address. 
 currAddress - a string representing an address
 */
-function addMarker(map, currAddress) {
+
+
+//red: matches requirements but not distance. default
+//blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
+//green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
+
+function addMarker(map, vendor, boundsList) {
+	var currAddress = getAddress(vendor);
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
+			console.log("called addMarker");
+
+			//FIX THESE
+			var matchesDistance = true;
+			var matchesRequirements = true;
+
+			if (matchesDistance&&matchesRequirements) {
+				//green
+				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
+			}
+			else if (matchesDistance) {
+				//blue
+				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+			}
+			else if (matchesRequirements) {
+				//red
+				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+			}
+			var location = results[0].geometry.location;
 			var marker = new google.maps.Marker({
 				map: map,
-				position: results[0].geometry.location,
+				//TODO: change the color based on parameters
+				icon: iconColor,
+				position: location,
     			animation: google.maps.Animation.DROP
 			});
+
+			/*
+			Popup client profile windows when you click on their map markers.
+			*/
+			var vendorName = vendor.name;
+		    var address1 = vendor.addressLine1;
+		    var address2 = getAddressLine2(vendor);
+		    var phone = vendor.primaryPhone;
+		    var email = vendor.primaryEmail;
+		    var website = "fake.com";
+		    var capability = vendor.productCapabilityIds;
+		    console.log("capability is "+capability);
+		    var payment = vendor.paymentTerms.terms;
+		    var lead = vendor.leadTime.leadTime;
+			var contentString = "<div id='content'>"
+			+"<table id='profile'>"
+			+"<tr>"
+			+"	<td>"
+			+"		<div id='non-table'>"
+			+"			<div id='name'>"+vendorName+"</div>"
+			//+"			<button onclick='window.location.assign('"+newURL+"'); loadProfile()'>Full profile</button>"
+			+"			<button onclick='goToProfile("+vendor.id+")'>Full profile</button>"
+			+"			<div id='address'>"+address1+"<br>"+address2+"</div>"
+			+"			<div id='phone'>Phone: "+phone+"</div>"
+			+"			<div id='email'>Email: "+email+"</div>"
+			+"			<div id='website'>Website: "+website+"</div>"
+			+"		</div>"
+			+"	</td>"
+			+"	<td>"
+			+"		<table border='1'>"
+			+"			<tr>"
+			+"				<td>Product Capability</td>"
+			+"				<td id='prodCap'>"+capability+"</td>"
+			+"			</tr>"
+			+"			<tr>"
+			+"				<td>Payment Method</td>"
+			+"				<td id='payment'>"+payment+"</td>"
+			+"			</tr>"
+			+"			<tr>"
+			+"				<td>Lead Time</td>"
+			+"				<td id='leadTime'>"+lead+"</td>"
+			+"			</tr>"
+			+"		</table>"
+			+"	</td>"
+			+"</tr>"
+			+"</div>"
+
+			var infowindow = new google.maps.InfoWindow({
+				content: contentString,
+				width: 300
+			});
+
+			//add event listener so infowindow pops up on click
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(map,marker);
+				//call the function that fills the info into the profile
+				loadProfile();
+			});
+			boundsList.push(location);
+			//set the bounds if we're at the end of the vendor list
+			console.log("length of boundsList: "+boundsList.length);
+			console.log("length of vendorsList: "+vendorsLength);
+			/*problem: that's the length of the full vendors list, not the number of vendors
+			that fit the criteria. fix.*/
+			//if (boundsList.length==vendorsLength) {
+				fitBounds(boundsList);
+			//}
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
 		}
 	});
+}
+
+function goToProfile(id) {
+	var newURL = window.location.pathname+"../../clientProfile.html?id="+id;
+	window.location.assign(newURL);
+}
+
+function fitBounds(boundsList) {
+	var bounds = new google.maps.LatLngBounds();
+	for (var i = 0; i < boundsList.length; i++) {
+  		bounds.extend(boundsList[i]);
+  	}
+  	map.fitBounds(bounds);
 }
 
 /*
@@ -170,25 +295,27 @@ Renders filtered vendors on page
 vendors - the complete JSON list of vendors
 originAddress - a string representing the address of the origin
 */
+var vendorsLenth = 0;
 function renderVendors(vendors, originAddress){
-	var vendorsLength = vendors.length;
+	vendorsLength = vendors.length;
+	var boundsList = [];
 
 	for (var i = 0; i < vendorsLength; i++){
 		vendor = vendors[i];
-		renderFilteredVendor(originAddress, vendor);
+		renderFilteredVendor(originAddress, vendor, boundsList);
 	}
 }
 
 /*
 Renders vendor if:
 1. vendor is within distance radius
-2. TODO: vendor mathces flower types
+2. TODO: vendor matches flower types
 3. TODO: vendor matches lead time
 
 clientAdress - the client's address as a string
 vendor - JSON object representing vendor
 */
-function renderFilteredVendor(clientAddress, vendor) {
+function renderFilteredVendor(clientAddress, vendor, boundsList) {
 	var vendorAddress = getAddress(vendor);
 	service.getDistanceMatrix(
     {
@@ -202,7 +329,6 @@ function renderFilteredVendor(clientAddress, vendor) {
     	if (status != google.maps.DistanceMatrixStatus.OK) {
     		alert('Error was: ' + status);
 		} else {
-
 			//get distance
 			var origins = response.originAddresses;
 	    	var destinations = response.destinationAddresses;
@@ -216,11 +342,11 @@ function renderFilteredVendor(clientAddress, vendor) {
 
 		    //convert to miles
 		    totalDist *= 0.000621371;
-		    console.log(totalDist);
+		    //console.log(totalDist);
 		    // add if passes filter
 		    if (filter(totalDist)){
 				addResultToList(vendor);
-				addMarker(map, getAddress(vendor));
+				addMarker(map, vendor, boundsList);
 		    }
 		}
     });
@@ -244,6 +370,7 @@ function moveMapCenter() {
 	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
+			map.setZoom(10);
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
@@ -255,10 +382,18 @@ function moveMapCenter() {
 Given a JSON object of a vendor, returns the vendor's address as a string
 */
 function getAddress(vendor){
-	return vendor.addressLine1 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
+	return vendor.addressLine1 + ", " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
 
-//TO DO~~~~~~~~~~~~~~~~~~~~~~~~~
+function getAddressLine2(vendor){
+	return vendor.city + ", " + vendor.state + " " + vendor.zip;
+}
+
+
+
+//TO DO!!!!!!!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//this is not written at all it's from Michelle's chatroom lol
+
 function validateForm() {
     var form = document.getElementById("roomName-form");
         form.addEventListener('submit', function(e) {

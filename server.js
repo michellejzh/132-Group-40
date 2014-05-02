@@ -28,13 +28,51 @@ app.get('/search.json', function(request, response){
     var q = conn.query('SELECT * FROM vendors');
     console.log("'Select * From Vendors' being queried");
     q.on('row', function(row){
+        console.log(row);
+        vendorList.push(
+            {primaryKey: row.primaryKey,
+            addressLine1: row.address, 
+            city: row.city, 
+            zip: row.zipcode, 
+            state: row.state, 
+            phone: row.phone, 
+            name: row.vendorName});
+    });
+    q.on('end', function(){
+        response.json(vendorList)
+    });
+});
+
+app.get('/partner_data.json', function(request, response){
+    response.setHeader("Access-Control-Allow-Origin", "*");
+	var parsedJSON = require('./Database/partner_data.json');
+	response.json(parsedJSON);
+});
+	
+
+//might want this to just be every search
+app.get('/profile/:id.json', function(request, response){
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    var vendorList = [];
+    var id = request.params.id;
+    var q = conn.query('SELECT * FROM vendors WHERE primaryKey=$1', [id]);
+    console.log("'Select * from vendors where id is "+id+" being queried");
+    q.on('row', function(row){
+        console.log(row);
         vendorList.push(
             {addressLine1: row.address, 
             city: row.city, 
             zip: row.zipcode, 
             state: row.state, 
             phone: row.phone, 
-            name: row.vendorName});
+            name: row.vendorName,
+            email: row.email,
+            website: row.website,
+            capID: row.productCapabilityId,
+            payment: row.paymentTerms,
+            lead: row.leadTime,
+            rate: row.rate,
+            deliveryFee: row.deliveryFee});
     });
 
     q.on('end', function(){
@@ -42,7 +80,7 @@ app.get('/search.json', function(request, response){
     });
 });
 
-
+/*
 app.get('/test.json', function(request, response){
     response.setHeader("Access-Control-Allow-Origin", "*");
     var list = [];
@@ -56,4 +94,4 @@ app.get('/test.json', function(request, response){
         response.json(list);
     });
 });
-
+*/

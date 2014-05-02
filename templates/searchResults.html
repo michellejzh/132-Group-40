@@ -1,5 +1,3 @@
-<!--display the results. the map is going to go on this page-->
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,8 +6,10 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<script type="text/javascript" src="../public/client.js"></script>
+		<script type='text/javascript' src='../public/clientProfile.js'></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
 		<link rel="stylesheet" type="text/css" href="../public/allPages.css" />
-		<link rel="stylesheet" type="text/css" href="../public/style.css" />
+		<link rel="stylesheet" type="text/css" href="../public/resultsPage.css" />
 	</head>
 
 	<body>
@@ -20,29 +20,15 @@
 			<li id='Vendor_list'><a href='clientList.html'>Vendor List</a></li>
 			</ul>
 		</div>
-
-		<button onclick="getVendors()">get vendors</button>
-		<button onclick="returnResults()">return results</button>
-		<button onclick="calcDistance('451 Poppy Way, Aptos, CA', '116 Waterman Street, Providence, RI')">calc distance</button>
-		
-
-		<br>
-		<div id="map-canvas">
-		</div>
+		<!--take these away, format with CSS instead-->
+		<br><br><br><br>
+		<div id="map-canvas"></div>
 		<div id="results">
 			<ul id="results-list">
-				<li onclick="document.vendorAddress='1 Hope St., Providence RI 02912'; moveMapCenter();" class="vendorLi">
-					<!--<a href="../resultsPage.html">-->
-					<div id="details">					
-						<div id="name">Vendor Name<br></div>
-						<div id="address">1 Hope St., Providence RI 02912<br></div>
-						<div id="phone">401-123-9000<br></div>
-					</div></a>
-				</li>
+					<!--list items containing vendor info go here-->
 			</ul>
 		</div>
+
 	</body>
 </html>
-
-
 

@@ -12,31 +12,34 @@
 }
 
 .vendorLi {
-	position:inline;
+	position: inline;
+	background-color: rgba(255, 255, 255, 0.5);
 	color: #151B54;
 	text-decoration: none;
 	list-style: none;
-	width:92%;
+	width:90%;
 	border-style: groove;
 	border:1px solid silver;
 	border-radius:10px;
+	margin-bottom: 15px;
 
 }
 
 .vendorName{
 	width:90%;
-	margin-left: 30px;
-	background-color: rgba(255, 255, 255, 0.2);
+	font-size: 14pt;
+	font-weight: bold;
+	margin: 5px;
 }
 
 .vendorPhone{
 	position:inline;
 	color: #151B54;
+	margin: 5px;
 }
 
 .vendorAddress{
-	border-bottom: 2px solid silver;
 	position: inline;
 	color: #151B54;
-
+	margin: 5px;
 }
