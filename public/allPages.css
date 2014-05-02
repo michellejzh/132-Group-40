@@ -4,7 +4,6 @@ html{
 	/*background-size: 100% auto;*/
 	background-repeat: repeat-x;
 	background-position: top;
-	background-attachment: fixed;
 	height:auto;
 	min-width: 600px;
 	min-height: 385px;
