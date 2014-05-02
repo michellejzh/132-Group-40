@@ -56,7 +56,10 @@ function getPayment() {
 
 //if you click on a box
 function updateSearch() {
-	loadVendors(map);
+	initializeMap();
+	//clear the list items
+	document.getElementById("results-list").innerHTML = "";
+
 }
 /*
 Gets the parameter of the URL as a string
@@ -107,6 +110,7 @@ function loadVendors(map){
 	        var content = request.responseText;
 			var data = JSON.parse(content);
 			renderVendors(limit(data), address);
+			console.log("renderVendors was just called");
 	    } else {
 	        // something went wrong, check the request status
 	        // hint: 403 means Forbidden, maybe you forgot your username?
