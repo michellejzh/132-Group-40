@@ -72,5 +72,12 @@ input{
 	clear:both;
 }
 
+#searchsubmit{
+	border-style: solid;
+	border-color: #151B54;
+	border-radius:5px;
+	color: #151B54;
+}
+
 
 
