@@ -208,93 +208,113 @@ function addMarker(map, vendor, boundsList) {
 
 			if (matchesProduct&&matchesLead&&matchesPayment) {
 				//green
-				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
+				var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
+				var color = 'green';
 			}
 			else if (matchesProduct) {
 				//blue
-				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+				var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+				var color = 'blue';
 			}
 			else {
 				//just matches distance - red
-				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+				var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+				var color = 'red';
 			}
-			var location = results[0].geometry.location;
-			var marker = new google.maps.Marker({
-				map: map,
-				//TODO: change the color based on parameters
-				icon: iconColor,
-				position: location,
-    			animation: google.maps.Animation.DROP
-			});
 
-			/*
-			Popup client profile windows when you click on their map markers.
-			*/
-			var vendorName = vendor.name;
-		    var address1 = vendor.addressLine1;
-		    var address2 = getAddressLine2(vendor);
-		    var phone = vendor.primaryPhone;
-		    var email = vendor.primaryEmail;
-		    var website = "fake.com";
-			var contentString = "<div id='content'>"
-			+"<table id='profile'>"
-			+"<tr>"
-			+"	<td>"
-			+"		<div id='non-table'>"
-			+"			<div id='name'>"+vendorName+"</div>"
-			//+"			<button onclick='window.location.assign('"+newURL+"'); loadProfile()'>Full profile</button>"
-			+"			<button onclick='goToProfile("+vendor.id+")'>Full profile</button>"
-			+"			<div id='address'>"+address1+"<br>"+address2+"</div>"
-			+"			<div id='phone'>Phone: "+phone+"</div>"
-			+"			<div id='email'>Email: "+email+"</div>"
-			+"			<div id='website'>Website: "+website+"</div>"
-			+"		</div>"
-			+"	</td>"
-			+"	<td>"
-			+"		<table border='1'>"
-			+"			<tr>"
-			+"				<td>Product Capability</td>"
-			+"				<td id='prodCap'>"+product+"</td>"
-			+"			</tr>"
-			+"			<tr>"
-			+"				<td>Payment Method</td>"
-			+"				<td id='payment'>"+payment+"</td>"
-			+"			</tr>"
-			+"			<tr>"
-			+"				<td>Lead Time</td>"
-			+"				<td id='leadTime'>"+lead+"</td>"
-			+"			</tr>"
-			+"		</table>"
-			+"	</td>"
-			+"</tr>"
-			+"</div>"
+			var matchesColor = false;
+			for (i=0;i<matchesParam.length;i++) {
+				console.log(matchesParam[i]);
+				if (color==matchesParam[i]) {
+					console.log("matches a color!");
+					var matchesColor = true;
+				}
+			}
 
-			var infowindow = new google.maps.InfoWindow({
-				content: contentString,
-				width: 300
-			});
-
-			//add event listener so infowindow pops up on click
-			google.maps.event.addListener(marker, 'click', function() {
-				infowindow.open(map,marker);
-				//call the function that fills the info into the profile
-				loadProfile();
-			});
-			boundsList.push(location);
-			//set the bounds if we're at the end of the vendor list
-			console.log("length of boundsList: "+boundsList.length);
-			console.log("length of vendorsList: "+vendorsLength);
-			/*problem: that's the length of the full vendors list, not the number of vendors
-			that fit the criteria. fix.*/
-			//if (boundsList.length==vendorsLength) {
+			if (matchesColor) {
+				var location = results[0].geometry.location;
+				var marker = new google.maps.Marker({
+					map: map,
+					//TODO: change the color based on parameters
+					icon: iconColor,
+					position: location,
+	    			animation: google.maps.Animation.DROP
+				});
+				addPopupProfile(vendor)
+				boundsList.push(location);
+				//set the bounds if we're at the end of the vendor list
+				console.log("length of boundsList: "+boundsList.length);
+				console.log("length of vendorsList: "+vendorsLength);
+				/*problem: that's the length of the full vendors list, not the number of vendors
+				that fit the criteria. fix.*/
+				//if (boundsList.length==vendorsLength) {
 				fitBounds(boundsList);
-			//}
-		} 
+				//}
+			} 
+		}
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
 		}
 	});
 }
+
+
+function addPopupProfile(vendor) {
+	/*
+	Popup client profile windows when you click on their map markers.
+	*/
+	var vendorName = vendor.name;
+    var address1 = vendor.addressLine1;
+    var address2 = getAddressLine2(vendor);
+    var phone = vendor.primaryPhone;
+    var email = vendor.primaryEmail;
+    var website = "fake.com";
+	var contentString = "<div id='popupContent'>"
+	+"<table id='profile'>"
+	+"<tr>"
+	+"	<td>"
+	+"		<div id='non-table'>"
+	+"			<div id='name'>"+vendorName+"</div>"
+	//+"			<button onclick='window.location.assign('"+newURL+"'); loadProfile()'>Full profile</button>"
+	+"			<button onclick='goToProfile("+vendor.id+")'>Full profile</button>"
+	+"			<div id='address'>"+address1+"<br>"+address2+"</div>"
+	+"			<div id='phone'>Phone: "+phone+"</div>"
+	+"			<div id='email'>Email: "+email+"</div>"
+	+"			<div id='website'>Website: "+website+"</div>"
+	+"		</div>"
+	+"	</td>"
+	+"	<td>"
+	+"		<table border='1'>"
+	+"			<tr>"
+	+"				<td>Product Capability</td>"
+	+"				<td id='prodCap'>"+product+"</td>"
+	+"			</tr>"
+	+"			<tr>"
+	+"				<td>Payment Method</td>"
+	+"				<td id='payment'>"+payment+"</td>"
+	+"			</tr>"
+	+"			<tr>"
+	+"				<td>Lead Time</td>"
+	+"				<td id='leadTime'>"+lead+"</td>"
+	+"			</tr>"
+	+"		</table>"
+	+"	</td>"
+	+"</tr>"
+	+"</div>"
+
+	var infowindow = new google.maps.InfoWindow({
+		content: contentString,
+		width: 300
+	});
+
+	//add event listener so infowindow pops up on click
+	google.maps.event.addListener(marker, 'click', function() {
+		infowindow.open(map,marker);
+		//call the function that fills the info into the profile
+		loadProfile();
+	});
+}
+
 
 function goToProfile(id) {
 	var newURL = window.location.pathname+"../../clientProfile.html?id="+id;
