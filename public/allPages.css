@@ -47,8 +47,19 @@ body{
 	font-size: 30px;
 }
 
+#search{
+	height:15px;
+	float:right;
+	margin-right: 20px;
+}
+
+#search a{
+	color:white;
+	font-size: 15px;
+}
+
 #Vendor_list{
-	height:30px;
+	height:15px;
 	float:right;
 	margin-right: 20px;
 }
