@@ -55,6 +55,15 @@ button {
 	width: 85px;
 	margin-right: 5px;
 }
+
+#info1 {
+	width: 160px;
+}
+
+#info2 {
+	width: 140px;
+}
+
 .vendorLi{
 	height: 60px;
 	border-bottom: 2px solid silver;
@@ -125,7 +134,7 @@ a:hover {
 	margin: 0 auto;
 	margin-left:20px;
 }
-
+/*
 .profile {
 	border-style: none;
 	color:#151B54;
@@ -139,7 +148,7 @@ a:hover {
 	border-radius: 5px;
 	border-style: solid;
 
-}
+}*/
 
 #matches{
 	display: inline-block;

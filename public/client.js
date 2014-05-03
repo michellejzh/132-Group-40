@@ -200,7 +200,21 @@ function addMarker(map, vendor, boundsList) {
 			var paymentParam = getPayment();
 			var matchesParam = getMatches();
 			//now check to see whether the vendor matches the parameters
-			var matchesProduct = true;
+
+			var matchesProduct = false;
+			var paramsMatched = 0;
+			for (i=0;i<productParam.length;i++) {
+				for (j=0;j<product;j++) {
+					if (productParam[i]==product[j]) {
+						paramsMatched++;
+					}
+				}
+			}
+			if (paramsMatched=productParam.length) {
+				var matchesProduct = true;
+			}
+			console.log("matchesProduct is "+matchesProduct);
+
 			var matchesLead = lead==leadParam;
 			var matchesPayment = payment==paymentParam;
 
@@ -222,9 +236,7 @@ function addMarker(map, vendor, boundsList) {
 
 			var matchesColor = false;
 			for (i=0;i<matchesParam.length;i++) {
-				console.log("COLOR PARAM: "+matchesParam[i]);
 				if (color==matchesParam[i]) {
-					console.log("matches a color!");
 					var matchesColor = true;
 				}
 			}
@@ -240,7 +252,7 @@ function addMarker(map, vendor, boundsList) {
 				var contentString = getContentString(vendor);
 				var infowindow = new google.maps.InfoWindow({
 					content: contentString,
-					width: 300
+					width: 340
 				});
 				boundsList.push(location);
 				//set the bounds if we're at the end of the vendor list
@@ -259,7 +271,6 @@ function addMarker(map, vendor, boundsList) {
 				});
 				fitBounds(boundsList);
 				//add event listener so infowindow pops up on click
-				console.log(marker);
 				google.maps.event.addListener(marker, 'click', function() {
 					infowindow.open(map,marker);
 					//call the function that fills the info into the profile
@@ -275,7 +286,6 @@ function addMarker(map, vendor, boundsList) {
 
 
 function getContentString(vendor) {
-	console.log("getting content string");
 	/*
 	Popup client profile windows when you click on their map markers.
 	*/
@@ -292,7 +302,7 @@ function getContentString(vendor) {
 	+"<table id='profile'>"
 	+"<tr>"
 	+"	<td>"
-	+"		<div id='non-table'>"
+	+"		<div id='info1'>"
 	+"			<div id='name'>"+vendorName+"</div>"
 	//+"			<button onclick='window.location.assign('"+newURL+"'); loadProfile()'>Full profile</button>"
 	+"			<button onclick='goToProfile("+vendor.id+")'>Full profile</button>"
@@ -303,18 +313,18 @@ function getContentString(vendor) {
 	+"		</div>"
 	+"	</td>"
 	+"	<td>"
-	+"		<table border='1'>"
+	+"		<table border='1' id='info2'>"
 	+"			<tr>"
 	+"				<td>Product Capability</td>"
-	+"				<td id='prodCap'>"+product+"</td>"
+	+"				<td id='prodCapInfo'>"+product+"</td>"
 	+"			</tr>"
 	+"			<tr>"
 	+"				<td>Payment Method</td>"
-	+"				<td id='payment'>"+payment+"</td>"
+	+"				<td id='paymentInfo'>"+payment+"</td>"
 	+"			</tr>"
 	+"			<tr>"
 	+"				<td>Lead Time</td>"
-	+"				<td id='leadTime'>"+lead+"</td>"
+	+"				<td id='leadTimeInfo'>"+lead+"</td>"
 	+"			</tr>"
 	+"		</table>"
 	+"	</td>"
