@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 function getProductCapability() {
 	var selected = [];
-	$('#prodCap input:checked').each(function() {
+	$('#product input:checked').each(function() {
 	    selected.push($(this).attr('value'));
 	});
 	console.log("selected product capability: "+selected);
@@ -37,15 +37,14 @@ function getProductCapability() {
 }
 
 function getLead() {
-	var selected = [];
-	$('#lead input:checked').each(function() {
-	    selected.push($(this).attr('value'));
-	});
-	console.log("selected lead: "+selected);
-	return selected;
+	return $('#delivery input:checked').attr('value');
 }
 
 function getPayment() {
+	return $('#payment input:checked').attr('value');
+}
+
+function getMatches() {
 	var selected = [];
 	$('#payment input:checked').each(function() {
 	    selected.push($(this).attr('value'));
@@ -193,17 +192,24 @@ function addMarker(map, vendor, boundsList) {
 		    var product = vendor.productCapabilityIds;
 		    console.log("product capability is "+product);
 		    var payment = vendor.paymentTerms.terms;
+		    console.log("payment is "+payment);
 		    var lead = vendor.leadTime.leadTime;
+		    console.log("lead is "+lead);
 
 			//gets the selected search parameters
-			var product = getProductCapability();
-			var lead = getLead();
-			var payment = getPayment();
-
+			var productParam = getProductCapability();
+			//console.log(product);
+			var leadParam = getLead();
+			//console.log(lead);
+			var paymentParam = getPayment();
+			//console.log(payment);
+			var matchesParam = getMatches();
+			//console.log(matches);
+			
 			//FIX THESE
 			var matchesProduct = true;
-			var matchesLead = true;
-			var matchesPayment = true;
+			var matchesLead = lead==leadParam;
+			var matchesPayment = payment==paymentParam;
 
 			if (matchesProduct&&matchesLead&&matchesPayment) {
 				//green
@@ -214,7 +220,7 @@ function addMarker(map, vendor, boundsList) {
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
 			}
 			else {
-				//red
+				//just matches distance - red
 				iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
 			}
 			var location = results[0].geometry.location;
@@ -317,6 +323,7 @@ originAddress - a string representing the address of the origin
 var vendorsLength = 0;
 function renderVendors(vendors, originAddress){
 	vendorsLength = vendors.length;
+	console.log("vendor length is: "+vendorsLength);
 	var boundsList = [];
 
 	for (var i = 0; i < vendorsLength; i++){
