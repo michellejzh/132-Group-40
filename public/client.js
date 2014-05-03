@@ -235,7 +235,6 @@ function addMarker(map, vendor, boundsList) {
 		    var address2 = getAddressLine2(vendor);
 		    var phone = vendor.primaryPhone;
 		    var email = vendor.primaryEmail;
-		    var website = "fake.com";
 			var contentString = "<div id='content'>"
 			+"<table id='profile'>"
 			+"<tr>"
@@ -247,7 +246,6 @@ function addMarker(map, vendor, boundsList) {
 			+"			<div id='address'>"+address1+"<br>"+address2+"</div>"
 			+"			<div id='phone'>Phone: "+phone+"</div>"
 			+"			<div id='email'>Email: "+email+"</div>"
-			+"			<div id='website'>Website: "+website+"</div>"
 			+"		</div>"
 			+"	</td>"
 			+"	<td>"
