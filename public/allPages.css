@@ -5,12 +5,17 @@ html{
 	background-repeat: repeat-x;
 	background-position: top;
 	height:auto;
-	min-width: 600px;
+	min-width: 1235px;
 	min-height: 385px;
 }
 
 body{
 	font-family: Helvetica;
+}
+
+#center{
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #navigation{
@@ -47,9 +52,21 @@ body{
 	font-size: 30px;
 }
 
-#Vendor_list{
-	height:30px;
+#search{
+	height:15px;
 	float:right;
+	margin-right: 20px;
+}
+
+#search a{
+	color:white;
+	font-size: 15px;
+}
+
+#Vendor_list{
+	height:15px;
+	float:right;
+	margin-right: 20px;
 }
 
 #Vendor_list a{

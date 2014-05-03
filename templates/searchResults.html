@@ -20,48 +20,47 @@
 		<div id='navigation'>
 			<ul id ='Items'>
 			<li id='Company_Name'><a href='searchPage.html'>COMPANY</a></li>
-			<li id='Vendor_list'><a href='clientList.html'>Vendor List</a></li>
+			<li id='search'><a href='clientList.html'>Search</a></li> <br>
+			<li id='Vendor_list'><a href='clientList.html'>Vendors</a></li>
 			</ul>
 		</div>
 		<br><br><br>
 		<div id='content'>
 			<legend> Filter Results </legend>
-
-		<div id='A'>
+			<div id='A'>
 				<div id='delivery'>
-				<legend>Lead Time</legend>
-				<input type='radio' id='A1' name='Delivery Time' value='0' onclick='updateSearch()' checked> None Specified 
-				<input type='radio' id='A2' name='Delivery Time' value='1' onclick='updateSearch()'> Same Day 
-				<input type='radio' id='A3' name='Delivery Time' value='2' onclick='updateSearch()'> Next Day 
-				<input type='radio' id='A4' name='Delivery Time' value='3' onclick='updateSearch()'> 2+ Days <br>
-			</div>
+				<legend>Lead Time:</legend>
+				<input type='radio' id='A1' name='Delivery Time' value='None Specified' onclick='updateSearch()' checked> None Specified 
+				<input type='radio' id='A2' name='Delivery Time' value='Same Day' onclick='updateSearch()'> Same Day 
+				<input type='radio' id='A3' name='Delivery Time' value='Next Day' onclick='updateSearch()'> Next Day 
+				<input type='radio' id='A4' name='Delivery Time' value='2+ Days' onclick='updateSearch()'> 2+ Days <br>
+				</div>
 
 				<div id='payment'>
-				<legend>Payment Terms</legend>
-				<input type='radio' id='A1' name='Payment Terms' value='1' onclick='updateSearch()' checked> None specified
-				<input type='radio' id='A2' name='Payment Terms' value='2' onclick='updateSearch()'> CC Preferred
-				<input type='radio' id='A3' name='Payment Terms' value='3' onclick='updateSearch()'> CC Required
-				<input type='radio' id='A4' name='Payment Terms' value='4' onclick='updateSearch()'> Invoice <br>
-			</div>
+				<legend>Payment Terms:</legend>
+				<input type='radio' id='A1' name='Payment Terms' value='None Specified' onclick='updateSearch()' checked> None Specified
+				<input type='radio' id='A2' name='Payment Terms' value='CC Preferred' onclick='updateSearch()'> CC Preferred
+				<input type='radio' id='A3' name='Payment Terms' value='CC Required' onclick='updateSearch()'> CC Required
+				<input type='radio' id='A4' name='Payment Terms' value='Invoice' onclick='updateSearch()'> Invoice <br>
+				</div>
 		</div>
 		<div id='B'>
 				<div id ='product'>
-				<legend>Product Capability</legend>
+				<legend> Product Capability: </legend>
 				<input type='checkbox' id='B1' name='Product Capability' value='0' onclick='updateSearch()'> Plants 
 				<input type='checkbox' id='B2' name='Product Capability' value='1' onclick='updateSearch()'> Flowers 
 				<input type='checkbox' id='B3' name='Product Capability' value='2' onclick='updateSearch()'> Orchids <br> 
 			</div>
 				
 				<div id='matches'>
-				<legend>Markers</legend>	
-				<input type='checkbox' name='B1' value='1' checked> Exact match (green)
-				<input type='checkbox' name='B2' value='1' checked> Distance & Product match (red)
-				<input type='checkbox' name='B3' value='1' checked> Distance match (blue) <br>
+				<legend>Markers:</legend>	
+				<input type='checkbox' name='B1' value='green' checked> Exact Match <div id='green'></div>
+				<input type='checkbox' name='B2' value='blue' checked> Distance & Product Match <div id='blue'></div>
+				<input type='checkbox' name='B3' value='red' checked> Distance Match <div id='red'></div><br>
 			</div>
 		</div>
 
 		</div>
-		<!--take these away, format with CSS instead-->
 		<br><br>
 		<div id="map-canvas"></div>
 		<div id="results">
