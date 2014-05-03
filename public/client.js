@@ -221,7 +221,6 @@ function addMarker(map, vendor, boundsList) {
 				var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
 				var color = 'red';
 			}
-<<<<<<< HEAD
 
 			var matchesColor = false;
 			for (i=0;i<matchesParam.length;i++) {
@@ -249,7 +248,6 @@ function addMarker(map, vendor, boundsList) {
 				/*problem: that's the length of the full vendors list, not the number of vendors
 				that fit the criteria. fix.*/
 				//if (boundsList.length==vendorsLength) {
-=======
 			var location = results[0].geometry.location;
 			var marker = new google.maps.Marker({
 				map: map,
@@ -317,7 +315,6 @@ function addMarker(map, vendor, boundsList) {
 			/*problem: that's the length of the full vendors list, not the number of vendors
 			that fit the criteria. fix.*/
 			//if (boundsList.length==vendorsLength) {
->>>>>>> 6b1aa65cc869350604da318e1f196c5d4271623a
 				fitBounds(boundsList);
 				//}
 			} 
