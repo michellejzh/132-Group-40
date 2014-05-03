@@ -207,13 +207,13 @@ input{
 margin: 40px auto;
 position:relative;
 /* Chrome, Safari, Opera */
--webkit-animation-name:myfirst;
+/*-webkit-animation-name:myfirst;
 -webkit-animation-duration:5s;
 -webkit-animation-timing-function:linear;
 -webkit-animation-delay:2s;
 -webkit-animation-iteration-count:infinite;
 -webkit-animation-direction:alternate;
--webkit-animation-play-state:running;
+-webkit-animation-play-state:running;*/
 /* Standard syntax */
 /*animation-name:myfirst;
 animation-duration:5s;
