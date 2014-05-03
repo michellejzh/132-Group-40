@@ -5,7 +5,7 @@ html{
 	background-repeat: repeat-x;
 	background-position: top;
 	height:auto;
-	min-width: 600px;
+	min-width: 1235px;
 	min-height: 385px;
 }
 
@@ -50,6 +50,7 @@ body{
 #Vendor_list{
 	height:30px;
 	float:right;
+	margin-right: 20px;
 }
 
 #Vendor_list a{

@@ -20,15 +20,15 @@
 		<div id='navigation'>
 			<ul id ='Items'>
 			<li id='Company_Name'><a href='searchPage.html'>COMPANY</a></li>
-			<li id='Vendor_list'><a href='clientList.html'>Vendor List</a></li>
+			<li id='Vendor_list'><a href='clientList.html'>List of Vendors</a></li>
 			</ul>
 		</div>
 		<br><br><br>
 		<div id='content'>
 			<legend> Filter Results </legend>
-
-		<div id='A'>
+			<div id='A'>
 				<div id='delivery'>
+<<<<<<< HEAD
 				<legend>Lead Time</legend>
 				<input type='radio' id='A1' name='Delivery Time' value='None Specified' onclick='updateSearch()' checked> None Specified 
 				<input type='radio' id='A2' name='Delivery Time' value='Same Day' onclick='updateSearch()'> Same Day 
@@ -42,21 +42,43 @@
 				<input type='radio' id='A2' name='Payment Terms' value='CC Preferred' onclick='updateSearch()'> CC Preferred
 				<input type='radio' id='A3' name='Payment Terms' value='CC Required' onclick='updateSearch()'> CC Required
 				<input type='radio' id='A4' name='Payment Terms' value='Invoice' onclick='updateSearch()'> Invoice <br>
+=======
+				Lead Time: 
+				<input type='radio' id='A1' name='Delivery Time' value='0' onclick='updateSearch()' checked> None Specified 
+				<input type='radio' id='A2' name='Delivery Time' value='1' onclick='updateSearch()'> Same Day 
+				<input type='radio' id='A3' name='Delivery Time' value='2' onclick='updateSearch()'> Next Day 
+				<input type='radio' id='A4' name='Delivery Time' value='3' onclick='updateSearch()'> 2+ Days <br>
+			</div>
+
+				<div id='payment'>
+				Payment Terms:
+				<input type='radio' id='A1' name='Payment Terms' value='1' onclick='updateSearch()' checked> None specified
+				<input type='radio' id='A2' name='Payment Terms' value='2' onclick='updateSearch()'> CC Preferred
+				<input type='radio' id='A3' name='Payment Terms' value='3' onclick='updateSearch()'> CC Required
+				<input type='radio' id='A4' name='Payment Terms' value='4' onclick='updateSearch()'> Invoice <br>
+>>>>>>> b60a9c33bf798f058b3bd5db365f4ea94f641251
 			</div>
 		</div>
 		<div id='B'>
 				<div id ='product'>
-				<legend>Product Capability</legend>
+				Product Capability:
 				<input type='checkbox' id='B1' name='Product Capability' value='0' onclick='updateSearch()'> Plants 
 				<input type='checkbox' id='B2' name='Product Capability' value='1' onclick='updateSearch()'> Flowers 
 				<input type='checkbox' id='B3' name='Product Capability' value='2' onclick='updateSearch()'> Orchids <br> 
 			</div>
 				
 				<div id='matches'>
+<<<<<<< HEAD
 				<legend>Markers</legend>	
 				<input type='checkbox' name='B1' value='green' checked> Exact Match (green)
 				<input type='checkbox' name='B2' value='blue' checked> Distance & Product match (Blue)
 				<input type='checkbox' name='B3' value='red' checked> Distance Match (Red) <br>
+=======
+				Markers:
+				<input type='checkbox' name='B1' value='1' checked> Exact match (green)
+				<input type='checkbox' name='B2' value='1' checked> Distance & Product match (red)
+				<input type='checkbox' name='B3' value='1' checked> Distance match (blue) <br>
+>>>>>>> b60a9c33bf798f058b3bd5db365f4ea94f641251
 			</div>
 		</div>
 
