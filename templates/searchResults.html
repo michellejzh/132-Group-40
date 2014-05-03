@@ -26,10 +26,9 @@
 		<br><br><br>
 		<div id='content'>
 			<legend> Filter Results </legend>
-
-		<div id='A'>
+			<div id='A'>
 				<div id='delivery'>
-				<legend>Lead Time</legend>
+				Lead Time: 
 				<input type='radio' id='A1' name='Delivery Time' value='0' onclick='updateSearch()' checked> None Specified 
 				<input type='radio' id='A2' name='Delivery Time' value='1' onclick='updateSearch()'> Same Day 
 				<input type='radio' id='A3' name='Delivery Time' value='2' onclick='updateSearch()'> Next Day 
@@ -37,7 +36,7 @@
 			</div>
 
 				<div id='payment'>
-				<legend>Payment Terms</legend>
+				Payment Terms:
 				<input type='radio' id='A1' name='Payment Terms' value='1' onclick='updateSearch()' checked> None specified
 				<input type='radio' id='A2' name='Payment Terms' value='2' onclick='updateSearch()'> CC Preferred
 				<input type='radio' id='A3' name='Payment Terms' value='3' onclick='updateSearch()'> CC Required
@@ -46,14 +45,14 @@
 		</div>
 		<div id='B'>
 				<div id ='product'>
-				<legend>Product Capability</legend>
+				Product Capability:
 				<input type='checkbox' id='B1' name='Product Capability' value='0' onclick='updateSearch()'> Plants 
 				<input type='checkbox' id='B2' name='Product Capability' value='1' onclick='updateSearch()'> Flowers 
 				<input type='checkbox' id='B3' name='Product Capability' value='2' onclick='updateSearch()'> Orchids <br> 
 			</div>
 				
 				<div id='matches'>
-				<legend>Markers</legend>	
+				Markers:
 				<input type='checkbox' name='B1' value='1' checked> Exact match (green)
 				<input type='checkbox' name='B2' value='1' checked> Distance & Product match (red)
 				<input type='checkbox' name='B3' value='1' checked> Distance match (blue) <br>

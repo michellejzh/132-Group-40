@@ -77,11 +77,21 @@ a:hover {
 	float:left;
 	border-right: solid;
 	border-color:#151B54;
-	padding-right: 100px;
+	padding-right: 10px;
+	padding-left:20px;
+}
+
+#delivery, #payment, #product, #matches{
+	font-size:11pt;
+}
+
+#content legend{
+	font-weight: bold;
 }
 
 #B{
 	float:right;
+	margin-right: 10px;
 
 }
 
