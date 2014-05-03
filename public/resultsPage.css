@@ -127,3 +127,28 @@ a:hover {
 	border-style: solid;
 
 }
+
+#matches{
+	display: inline-block;
+}
+
+#green{
+	height:10px;
+	width:10px;
+	background-color: green;
+	display: inline-block;
+}
+
+#blue{
+	height:10px;
+	width:10px;
+	background-color: blue;
+	display: inline-block;
+}
+
+#red{
+	height:10px;
+	width:10px;
+	background-color: red;
+	display: inline-block;
+}
