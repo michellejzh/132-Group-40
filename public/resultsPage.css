@@ -1,3 +1,7 @@
+html{
+	min-width: 1235px
+}
+
 #map-canvas {
 	border: 10px;
 	border-color: red;
