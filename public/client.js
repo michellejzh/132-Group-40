@@ -131,8 +131,11 @@ function addResultToList(vendor) {
     var $li = $("<li>", {
     	class: 'vendorLi',
     });
-    var $details = $("<div>", {
-    	class: 'details'
+    var $details1 = $("<div>", {
+    	class: 'details1'
+    });
+    var $details2 = $("<div>", {
+		class: 'details2'
     });
     var $name = $("<div>", {
     	class: 'name',
@@ -162,13 +165,15 @@ function addResultToList(vendor) {
     $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
     $map.attr('onclick', "document.vendorAddress='"+address1+" "+address2+"'; moveMapCenter();");
     // add DOM elements to page
-    $details.append($name);
-    $details.append($address1);
-    $details.append($address2);
-    $details.append($phone);
-    $details.append($profile);
-    $details.append($map);
-    $li.append($details);
+    $details1.append($name);
+    $details1.append($address1);
+    $details1.append($address2);
+    $details1.append($phone);
+    $details2.append($profile);
+    $details2.append("<br>");
+    $details2.append($map);
+    $li.append($details1);
+    $li.append($details2);
     $("#" + resultsListID).append($li);
 }
 
@@ -232,7 +237,11 @@ function addMarker(map, vendor, boundsList) {
 					position: location,
 	    			animation: google.maps.Animation.DROP
 				});
-				addPopupProfile(vendor, marker);
+				var contentString = getContentString(vendor);
+				var infowindow = new google.maps.InfoWindow({
+					content: contentString,
+					width: 300
+				});
 				boundsList.push(location);
 				//set the bounds if we're at the end of the vendor list
 				//console.log("length of boundsList: "+boundsList.length);
@@ -249,6 +258,13 @@ function addMarker(map, vendor, boundsList) {
 	    			animation: google.maps.Animation.DROP
 				});
 				fitBounds(boundsList);
+				//add event listener so infowindow pops up on click
+				console.log(marker);
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.open(map,marker);
+					//call the function that fills the info into the profile
+					loadProfile();
+				});
 			}
 		}
 		else {
@@ -258,7 +274,8 @@ function addMarker(map, vendor, boundsList) {
 }
 
 
-function addPopupProfile(vendor, marker) {
+function getContentString(vendor) {
+	console.log("getting content string");
 	/*
 	Popup client profile windows when you click on their map markers.
 	*/
@@ -304,17 +321,7 @@ function addPopupProfile(vendor, marker) {
 	+"</tr>"
 	+"</div>"
 
-	var infowindow = new google.maps.InfoWindow({
-		content: contentString,
-		width: 300
-	});
-
-	//add event listener so infowindow pops up on click
-	google.maps.event.addListener(marker, 'click', function() {
-		infowindow.open(map,marker);
-		//call the function that fills the info into the profile
-		loadProfile();
-	});
+	return contentString;
 }
 
 
@@ -413,7 +420,7 @@ function moveMapCenter() {
 	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
-			map.setZoom(10);
+			map.setZoom(8);
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
