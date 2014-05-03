@@ -1,12 +1,10 @@
 html{
 	background-image:url(white-roses.jpg);
 	background-color: black;
-	/*background-size: 100% auto;*/
 	background-repeat: repeat-x;
 	background-position: top;
 	height:auto;
-	min-width: 1235px;
-	min-height: 385px;
+	margin-bottom: 30px;
 }
 
 body{

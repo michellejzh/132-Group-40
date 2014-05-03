@@ -1,13 +1,17 @@
-html{
-	min-width: 1235px
+#main {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
 }
 
 #map-canvas {
 	border: 10px;
 	border-color: red;
 	display: visible;
-	height: 80%;
-	width: 730px;
+	height: 450px;
+	width: 670px;
+	float: right;
 	position: absolute;
 	border-radius:10px;
 }
@@ -15,16 +19,16 @@ html{
 #results {
 	border: 2px solid white;
 	display: visible;
-	height: 80%;
-	width: 420px;
-	position: absolute;
-	left: 760px;
+	width: 285px;
+	height: 445px;
+	float: right;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	background-color: rgba(255, 255, 255, 0.5);
 	padding-left: 20px;
 	color: #151B54;
 	margin: 0 auto;
+	margin-left: 20px;
 	border:2px solid silver;
 	border-style: groove;
 	border-radius:10px;
@@ -47,8 +51,6 @@ ul{
 	border-bottom: 2px solid silver;
 	position: inline;
 	width: 120%;
-/*	margin-left: auto;
-	margin-right: auto;*/
 	margin-left:-50px;
 }
 
@@ -70,7 +72,7 @@ a:hover {
 	display: inline-block;
 	position: relative;
 	height:20%;
-	width:1193px;
+	width: 100%;
 	margin: 0 auto;
 	border-radius: 10px;
 	padding-bottom: 10px;
@@ -83,8 +85,8 @@ a:hover {
 	float:left;
 	border-right: solid;
 	border-color:#151B54;
-	padding-right: 160px;
-	padding-left:20px;
+	padding-right: 10px;
+	padding-left:10px;
 }
 
 #delivery, #payment, #product, #matches{
@@ -96,9 +98,9 @@ a:hover {
 }
 
 #B{
-	float:right;
-	margin-right: 80px;
-	padding-left: 10px;
+	float:left;
+	margin-right: 10px;
+	padding-left: 20px;
 
 }
 
