@@ -198,15 +198,10 @@ function addMarker(map, vendor, boundsList) {
 
 			//gets the selected search parameters
 			var productParam = getProductCapability();
-			//console.log(product);
 			var leadParam = getLead();
-			//console.log(lead);
 			var paymentParam = getPayment();
-			//console.log(payment);
 			var matchesParam = getMatches();
-			//console.log(matches);
-			
-			//FIX THESE
+			//now check to see whether the vendor matches the parameters
 			var matchesProduct = true;
 			var matchesLead = lead==leadParam;
 			var matchesPayment = payment==paymentParam;
