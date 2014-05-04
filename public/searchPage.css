@@ -1,12 +1,12 @@
 legend{
 	font-size: 18px;
 	font-weight: none;
-	color: #241E46;
+	color: #2F3237;
 	font-weight: bold;
 }
 
 input{
-	color: #322B61;
+	color: #2F3237;
 	padding-left: 10px;
 }
 
@@ -29,7 +29,7 @@ input{
 
 #order{
 	margin-left:50px;
-	color: #322B61;
+	color: #2F3237;
 	font-size: 18px;
 	width: 80%;
 
