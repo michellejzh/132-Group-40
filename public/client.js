@@ -158,7 +158,7 @@ function addResultToList(vendor) {
     });
     var $map = $("<button>", {
     	class: 'map',
-    	text: "Find on map"
+    	text: "Center map"
     });
     var newURL = window.location.pathname+"../../clientProfile.html";
     $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
