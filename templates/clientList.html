@@ -19,8 +19,30 @@
 			<li id='search'><button id="navButton" onclick='window.location.href="searchPage.html"'>New Search</a></li> <br><br>
 			<li id='Vendor_list'><button id="navButton" onclick='window.location.href="clientList.html"'>Vendors List</a></li>
 			</ul>
+		</div> 
+		<div id="main">
+			<br><br>
+			<div id='content'>
+			<br>
+				<div id='A'>
+					<div id='Search'>
+						<form id="searchByName" action="clientList.html" method="get">
+							<div id='submit'>
+								Search by name: <input type='text' name='name' >
+								<input id="searchsubmit" type='submit'>
+							</div>
+						</form>
+						<form id="searchByState" action="clientList.html" method="get">
+							<div id='submit'>
+								Search by state:  <input type='text' name='state' >
+								<input id="searchsubmit" type='submit'>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
-	<br><br><br>
+	<br><br>
 		<div id='content'>
 			<ul id="vendorList">
 			</ul>
