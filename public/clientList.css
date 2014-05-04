@@ -1,3 +1,9 @@
+#main{
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+}
 #content{
 	background-color: rgba(255, 255, 255, 0.5);
 	color: #151B54;
