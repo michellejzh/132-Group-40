@@ -1,20 +1,20 @@
 legend{
 	font-size: 18px;
 	font-weight: none;
-	color: #151B54;
+	color: #241E46;
 	font-weight: bold;
 }
 
 input{
-	color: #151B54;
+	color: #322B61;
 	padding-left: 10px;
 }
 
 #content{
 	background-color: rgba(255, 255, 255, 0.8);
 	padding-left: 20px;
-	color: #151B54;
-	display: block;
+/*	color: #151B54;
+*/	display: block;
 	position: relative;
 	height:20%;
 	width:60%;
@@ -28,7 +28,7 @@ input{
 
 #order{
 	margin-left:50px;
-	color: #151B54;
+	color: #322B61;
 	font-size: 18px;
 	width: 80%;
 
@@ -41,8 +41,8 @@ input{
 #product{
 	padding-top:18px;
 	margin-left:18px;
-	color: #151B54;
-	font-size: 18px;
+/*	color: #151B54;
+*/	font-size: 18px;
 	float:left;
 	display:inline-block;
 }
@@ -50,15 +50,15 @@ input{
 #delivery{
 	padding-top: 18px;
 	margin-left:100px;
-	color: #151B54;
-	font-size: 18px;
+/*	color: #151B54;
+*/	font-size: 18px;
 	display: inline-block;
 }
 
 #payment{
 	padding-top: 18px;
-	color: #151B54;
-	font-size: 18px;
+/*	color: #151B54;
+*/	font-size: 18px;
 	margin-left: 100px;
 	/*float:right;*/
 	display: inline-block;
@@ -74,9 +74,15 @@ input{
 
 #searchsubmit{
 	border-style: solid;
-	border-color: #151B54;
+	background-color: white;
 	border-radius:5px;
-	color: #151B54;
+	color: #322B61;
+	font-size: 16px;
+
+}
+
+#searchsubmit:hover{
+	background-color:gray;
 }
 
 

@@ -26,7 +26,7 @@
 	overflow-y: scroll;
 	background-color: rgba(255, 255, 255, 0.5);
 	padding-left: 20px;
-	color: #151B54;
+	color: #322B61;
 	margin: 0 auto;
 	margin-left: 20px;
 	border:2px solid silver;
@@ -88,7 +88,7 @@ a:hover {
 
 #content {
 	background-color: rgba(255, 255, 255, 0.5);
-	color: #151B54;
+	color: #322B61;
 	display: inline-block;
 	position: relative;
 	height:20%;
@@ -104,7 +104,7 @@ a:hover {
 #A{
 	float:left;
 	border-right: solid;
-	border-color:#151B54;
+	border-color:#322B61;
 	padding-right: 10px;
 	padding-left:10px;
 }

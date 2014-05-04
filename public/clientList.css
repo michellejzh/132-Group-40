@@ -6,7 +6,7 @@
 }
 #content{
 	background-color: rgba(255, 255, 255, 0.5);
-	color: #151B54;
+	color: #322B61;
 	display: block;
 	position: relative;
 	height:20%;
@@ -20,7 +20,7 @@
 .vendorLi {
 	position: inline;
 	background-color: rgba(255, 255, 255, 0.5);
-	color: #151B54;
+	color: #322B61;
 	text-decoration: none;
 	list-style: none;
 	width:90%;
@@ -40,13 +40,13 @@
 
 .vendorPhone{
 	position:inline;
-	color: #151B54;
+	color: #322B61;
 	margin: 5px;
 }
 
 .vendorAddress{
 	position: inline;
-	color: #151B54;
+	color: #322B61;
 	margin: 5px;
 }
 
@@ -59,7 +59,11 @@
 
 #searchsubmit{
 	border-style: solid;
-	border-color: #151B54;
+	background-color: white;
 	border-radius:5px;
 	color: #151B54;
+}
+
+#searchsubmit:hover{
+	background-color: gray;
 }
