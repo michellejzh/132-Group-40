@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title ClientProfile></title>
+		<title> Client Profile</title>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4CHn-S_e0LdeN8V0VW7ELs4mBJMLNCNw&sensor=false"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -14,9 +14,9 @@
 	<body onload="loadProfile();">
 		<div id='navigation'>
 			<ul id ='Items'>
-			<li id='Company_Name'><a href='searchPage.html'>COMPANY</a></li>			
-			<li id='search'><a href='clientList.html'>Search</a></li> <br>
-			<li id='Vendor_list'><a href='clientList.html'>Vendors</a></li>
+			<li id='Company_Name'><a href='searchPage.html'>COMPANY</a></li>
+			<li id='search'><button id="navButton" onclick='window.location.href="searchPage.html"'>New Search</a></li> <br><br>
+			<li id='Vendor_list'><button id="navButton" onclick='window.location.href="clientList.html"'>Vendors List</a></li>
 			</ul>
 		</div>
 		

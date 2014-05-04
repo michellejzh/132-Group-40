@@ -35,7 +35,7 @@ function loadProfile(){
         if(partner_data[k].id == document.vendorID){
             renderProfile(partner_data[k]);
         }
-    } 
+    }
 }
 
 function renderProfile(vendor) {

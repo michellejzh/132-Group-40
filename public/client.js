@@ -29,7 +29,6 @@ function getProductCapability() {
 	$('#product input:checked').each(function() {
 	    selected.push($(this).attr('value'));
 	});
-	console.log("selected product capability: "+selected);
 	return selected;
 }
 
@@ -43,10 +42,9 @@ function getPayment() {
 
 function getMatches() {
 	var selected = [];
-	$('#payment input:checked').each(function() {
+	$('#matches input:checked').each(function() {
 	    selected.push($(this).attr('value'));
 	});
-	console.log("selected payment: "+selected);
 	return selected;
 }
 
@@ -137,8 +135,11 @@ function addResultToList(vendor) {
     var $li = $("<li>", {
     	class: 'vendorLi',
     });
-    var $details = $("<div>", {
-    	class: 'details'
+    var $details1 = $("<div>", {
+    	class: 'details1'
+    });
+    var $details2 = $("<div>", {
+		class: 'details2'
     });
     var $name = $("<div>", {
     	class: 'name',
@@ -162,19 +163,21 @@ function addResultToList(vendor) {
     });
     var $map = $("<button>", {
     	class: 'map',
-    	text: "Find on map"
+    	text: "Center map"
     });
     var newURL = window.location.pathname+"../../clientProfile.html";
     $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
     $map.attr('onclick', "document.vendorAddress='"+address1+" "+address2+"'; moveMapCenter();");
     // add DOM elements to page
-    $details.append($name);
-    $details.append($address1);
-    $details.append($address2);
-    $details.append($phone);
-    $details.append($profile);
-    $details.append($map);
-    $li.append($details);
+    $details1.append($name);
+    $details1.append($address1);
+    $details1.append($address2);
+    $details1.append($phone);
+    $details2.append($profile);
+    $details2.append("<br>");
+    $details2.append($map);
+    $li.append($details1);
+    $li.append($details2);
     $("#" + resultsListID).append($li);
 }
 
@@ -192,22 +195,29 @@ function addMarker(map, vendor, boundsList) {
 	var currAddress = getAddress(vendor);
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
-			console.log("called addMarker");
-
 		    var product = vendor.productCapabilityIds;
-		    console.log("product capability is "+product);
 		    var payment = vendor.paymentTerms.terms;
-		    console.log("payment is "+payment);
 		    var lead = vendor.leadTime.leadTime;
-		    console.log("lead is "+lead);
-
 			//gets the selected search parameters
 			var productParam = getProductCapability();
 			var leadParam = getLead();
 			var paymentParam = getPayment();
 			var matchesParam = getMatches();
 			//now check to see whether the vendor matches the parameters
-			var matchesProduct = true;
+
+			var matchesProduct = false;
+			var paramsMatched = 0;
+			for (i=0;i<productParam.length;i++) {
+				for (j=0;j<product;j++) {
+					if (productParam[i]==product[j]) {
+						paramsMatched++;
+					}
+				}
+			}
+			if (paramsMatched==productParam.length) {
+				var matchesProduct = true;
+			}
+
 			var matchesLead = lead==leadParam;
 			var matchesPayment = payment==paymentParam;
 
@@ -229,9 +239,7 @@ function addMarker(map, vendor, boundsList) {
 
 			var matchesColor = false;
 			for (i=0;i<matchesParam.length;i++) {
-				console.log(matchesParam[i]);
 				if (color==matchesParam[i]) {
-					console.log("matches a color!");
 					var matchesColor = true;
 				}
 			}
@@ -240,89 +248,38 @@ function addMarker(map, vendor, boundsList) {
 				var location = results[0].geometry.location;
 				var marker = new google.maps.Marker({
 					map: map,
+					icon: iconColor,
+					position: location,
+	    			animation: google.maps.Animation.DROP
+				});
+				var contentString = getContentString(vendor);
+				var infowindow = new google.maps.InfoWindow({
+					content: contentString,
+					width: 340
+				});
+				boundsList.push(location);
+				//set the bounds if we're at the end of the vendor list
+				//console.log("length of boundsList: "+boundsList.length);
+				//console.log("length of vendorsList: "+vendorsLength);
+				/*problem: that's the length of the full vendors list, not the number of vendors
+				that fit the criteria. fix.*/
+				//if (boundsList.length==vendorsLength) {
+				var location = results[0].geometry.location;
+				var marker = new google.maps.Marker({
+					map: map,
 					//TODO: change the color based on parameters
 					icon: iconColor,
 					position: location,
 	    			animation: google.maps.Animation.DROP
 				});
-				addPopupProfile(vendor)
-				boundsList.push(location);
-				//set the bounds if we're at the end of the vendor list
-				console.log("length of boundsList: "+boundsList.length);
-				console.log("length of vendorsList: "+vendorsLength);
-				/*problem: that's the length of the full vendors list, not the number of vendors
-				that fit the criteria. fix.*/
-				//if (boundsList.length==vendorsLength) {
-			var location = results[0].geometry.location;
-			var marker = new google.maps.Marker({
-				map: map,
-				//TODO: change the color based on parameters
-				icon: iconColor,
-				position: location,
-    			animation: google.maps.Animation.DROP
-			});
-
-			/*
-			Popup client profile windows when you click on their map markers.
-			*/
-			var vendorName = vendor.name;
-		    var address1 = vendor.addressLine1;
-		    var address2 = getAddressLine2(vendor);
-		    var phone = vendor.primaryPhone;
-		    var email = vendor.primaryEmail;
-			var contentString = "<div id='content'>"
-			+"<table id='profile'>"
-			+"<tr>"
-			+"	<td>"
-			+"		<div id='non-table'>"
-			+"			<div id='name'>"+vendorName+"</div>"
-			//+"			<button onclick='window.location.assign('"+newURL+"'); loadProfile()'>Full profile</button>"
-			+"			<button onclick='goToProfile("+vendor.id+")'>Full profile</button>"
-			+"			<div id='address'>"+address1+"<br>"+address2+"</div>"
-			+"			<div id='phone'>Phone: "+phone+"</div>"
-			+"			<div id='email'>Email: "+email+"</div>"
-			+"		</div>"
-			+"	</td>"
-			+"	<td>"
-			+"		<table border='1'>"
-			+"			<tr>"
-			+"				<td>Product Capability</td>"
-			+"				<td id='prodCap'>"+product+"</td>"
-			+"			</tr>"
-			+"			<tr>"
-			+"				<td>Payment Method</td>"
-			+"				<td id='payment'>"+payment+"</td>"
-			+"			</tr>"
-			+"			<tr>"
-			+"				<td>Lead Time</td>"
-			+"				<td id='leadTime'>"+lead+"</td>"
-			+"			</tr>"
-			+"		</table>"
-			+"	</td>"
-			+"</tr>"
-			+"</div>"
-
-			var infowindow = new google.maps.InfoWindow({
-				content: contentString,
-				width: 300
-			});
-
-			//add event listener so infowindow pops up on click
-			google.maps.event.addListener(marker, 'click', function() {
-				infowindow.open(map,marker);
-				//call the function that fills the info into the profile
-				loadProfile();
-			});
-			boundsList.push(location);
-			//set the bounds if we're at the end of the vendor list
-			console.log("length of boundsList: "+boundsList.length);
-			console.log("length of vendorsList: "+vendorsLength);
-			/*problem: that's the length of the full vendors list, not the number of vendors
-			that fit the criteria. fix.*/
-			//if (boundsList.length==vendorsLength) {
 				fitBounds(boundsList);
-				//}
-			} 
+				//add event listener so infowindow pops up on click
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.open(map,marker);
+					//call the function that fills the info into the profile
+					loadProfile();
+				});
+			}
 		}
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
@@ -331,10 +288,13 @@ function addMarker(map, vendor, boundsList) {
 }
 
 
-function addPopupProfile(vendor) {
+function getContentString(vendor) {
 	/*
 	Popup client profile windows when you click on their map markers.
 	*/
+    var product = vendor.productCapabilityIds;
+    var payment = vendor.paymentTerms.terms;
+    var lead = vendor.leadTime.leadTime;
 	var vendorName = vendor.name;
     var address1 = vendor.addressLine1;
     var address2 = getAddressLine2(vendor);
@@ -345,7 +305,7 @@ function addPopupProfile(vendor) {
 	+"<table id='profile'>"
 	+"<tr>"
 	+"	<td>"
-	+"		<div id='non-table'>"
+	+"		<div id='info1'>"
 	+"			<div id='name'>"+vendorName+"</div>"
 	//+"			<button onclick='window.location.assign('"+newURL+"'); loadProfile()'>Full profile</button>"
 	+"			<button onclick='goToProfile("+vendor.id+")'>Full profile</button>"
@@ -356,35 +316,25 @@ function addPopupProfile(vendor) {
 	+"		</div>"
 	+"	</td>"
 	+"	<td>"
-	+"		<table border='1'>"
+	+"		<table border='1' id='info2'>"
 	+"			<tr>"
 	+"				<td>Product Capability</td>"
-	+"				<td id='prodCap'>"+product+"</td>"
+	+"				<td id='prodCapInfo'>"+product+"</td>"
 	+"			</tr>"
 	+"			<tr>"
 	+"				<td>Payment Method</td>"
-	+"				<td id='payment'>"+payment+"</td>"
+	+"				<td id='paymentInfo'>"+payment+"</td>"
 	+"			</tr>"
 	+"			<tr>"
 	+"				<td>Lead Time</td>"
-	+"				<td id='leadTime'>"+lead+"</td>"
+	+"				<td id='leadTimeInfo'>"+lead+"</td>"
 	+"			</tr>"
 	+"		</table>"
 	+"	</td>"
 	+"</tr>"
 	+"</div>"
 
-	var infowindow = new google.maps.InfoWindow({
-		content: contentString,
-		width: 300
-	});
-
-	//add event listener so infowindow pops up on click
-	google.maps.event.addListener(marker, 'click', function() {
-		infowindow.open(map,marker);
-		//call the function that fills the info into the profile
-		loadProfile();
-	});
+	return contentString;
 }
 
 
@@ -514,7 +464,7 @@ function moveMapCenter() {
 	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
-			map.setZoom(10);
+			map.setZoom(8);
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
