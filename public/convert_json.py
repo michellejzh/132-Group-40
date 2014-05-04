@@ -29,13 +29,25 @@ def get_coordinates(query, from_sensor=False):
 partner_json_file = "../Database/partner_data.json"
 output_file = "../Database/partner_data.js"
 
+'''
+Loads a json file and returns a list of the json objects
+'''
 def load_json():
 	with open(partner_json_file, 'r') as f:
 		return json.load(f)
 
+'''
+Given a vendor, returns the string of the vendor's address
+'''
 def get_address(partner):
 	return partner['addressLine1'] + " " + partner['addressLine2'] + ", " + partner['city'] + " " +  partner['zip'] 
 
+'''
+Takes in a json file of vendors and outputs a javascript file which contains
+each vendor json object in a list called partner_data. Each json object also
+has an added lat_long param. The format of this param is an array of size 2 
+where index 0 contains the latitude and index 1 contains the longitude
+'''
 def make_partner_js():
 	str_list = ['var partner_data = [']
 	json_data = load_json()
