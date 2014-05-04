@@ -13,9 +13,9 @@ body{
 
 button {
 	border-style: none;
-	color:#151B54;
+	color:black;
 	border-radius: 5px;
-	border-style: solid;
+	background-color: white;
 }
 
 #navButton {
