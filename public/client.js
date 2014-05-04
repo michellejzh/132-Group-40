@@ -32,7 +32,6 @@ function getProductCapability() {
 	$('#product input:checked').each(function() {
 	    selected.push($(this).attr('value'));
 	});
-	console.log("selected product capability: "+selected);
 	return selected;
 }
 
@@ -210,10 +209,9 @@ function addMarker(map, vendor, boundsList) {
 					}
 				}
 			}
-			if (paramsMatched=productParam.length) {
+			if (paramsMatched==productParam.length) {
 				var matchesProduct = true;
 			}
-			console.log("matchesProduct is "+matchesProduct);
 
 			var matchesLead = lead==leadParam;
 			var matchesPayment = payment==paymentParam;
