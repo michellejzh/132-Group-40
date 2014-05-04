@@ -53,8 +53,8 @@ function updateSearch() {
 	initializeMap();
 	//clear the list items
 	document.getElementById("results-list").innerHTML = "";
-
 }
+
 /*
 Gets the parameter of the URL as a string
 
@@ -104,19 +104,6 @@ function loadVendors(map){
 			renderVendors(partner_data, [lat, lng]);
 		}
 	});
-}
-
-
-/*
-TODO: THIS FUNCTION SHOULD EVENTUALLY BE DELETED
-*/
-function limit(vendorList){
-	var length = 10;
-	var toRet = [];
-	for (var i = 0; i < length; i++){
-		toRet.push(vendorList[i]);
-	}
-	return toRet;
 }
 
 /*
@@ -378,15 +365,15 @@ and index 2 contains the longitude
 returns the distance in miles between the two coordinates
 */
 function calcDistance(coord1, coord2){
-	var radius = 6471;
-	var lat = deg2rad(coord1[0] - coord2[0]);
-	var lon = deg2rad(coord1[1] - coord1[1]);
-  	var a = Math.sin(lat/2) * Math.sin(lat/2) + 
-  		Math.cos(deg2rad(coord2[0])) * Math.cos(deg2rad(coord1[0])) * 
-  		Math.sin(lon/2) * Math.sin(lon/2); 
-	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-	var d = radius * c; // Distance in km
-	return d/1.609344; // returns distance in miles
+	var radlat1 = Math.PI * coord1[0]/180;
+	var radlat2 = Math.PI * coord2[0]/180;
+	var radlon1 = Math.PI * coord1[1]/180;
+	var radlon2 = Math.PI * coord2[1]/180;
+	var theta = coord1[1]-coord2[1];
+	var radtheta = Math.PI * theta/180;
+	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+	dist = Math.acos(dist) * 180/Math.PI * 60 * 1.1515;
+	return dist;
 }
 
 /*
