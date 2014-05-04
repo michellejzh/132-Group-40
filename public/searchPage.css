@@ -91,26 +91,3 @@ input{
 */
 
 
-
-
-/*.flower{
-margin: 40px auto;
-position:relative;
--webkit-animation-name:myfirst;
--webkit-animation-duration:5s;
--webkit-animation-timing-function:linear;
--webkit-animation-delay:2s;
--webkit-animation-iteration-count:infinite;
--webkit-animation-direction:alternate;
--webkit-animation-play-state:running;
-}*/
-
-/*@-webkit-keyframes myfirst
-{
-0%   {background:red; left:0px; top:0px;}
-25%  {background:purple; left:900px; top:0px;}
-50%  {background:blue; left:900px; top:0px;}
-75%  {background:purple; left:0px; top:0px;}
-100% {background:red; left:0px; top:0px;}
-}*/
-
