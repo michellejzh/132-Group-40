@@ -10,9 +10,6 @@ var mapID = "map-canvas";
 // id for resulsts list id
 var resultsListID = "results-list";
 
-// link to the server
-var serverURL = "http://localhost:8080/partner_data.json";
-
 // geocoder
 var geocoder = new google.maps.Geocoder();
 
@@ -100,7 +97,15 @@ Gets a JSON object of vendors from the server
 */
 function loadVendors(map){
 	var address = getAddressFromURL();
-	renderVendors(limit(partner_data), address);
+	$.ajax({
+		url:"http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&sensor=false",
+		type: "POST",
+		success:function(res){
+		    var lat = res.results[0].geometry.location.lat;
+		    var lng = res.results[0].geometry.location.lng;
+			renderVendors(partner_data, [lat, lng]);
+		}
+	});
 }
 
 
@@ -403,15 +408,42 @@ vendors - the complete JSON list of vendors
 originAddress - a string representing the address of the origin
 */
 var vendorsLength = 0;
-function renderVendors(vendors, originAddress){
+function renderVendors(vendors, originCoord){
 	vendorsLength = vendors.length;
-	console.log("vendor length is: "+vendorsLength);
+	console.log("vendor length is: " + vendorsLength);
 	var boundsList = [];
 
 	for (var i = 0; i < vendorsLength; i++){
 		vendor = vendors[i];
-		renderFilteredVendor(originAddress, vendor, boundsList);
+		renderFilteredVendor(originCoord, vendor, boundsList);
 	}
+}
+
+/*
+Calculates the distance (in miles) between 2 longitude/latitude points
+
+coord1/coord2 - an array of size 2 where index 0 contains the latitude
+and index 2 contains the longitude
+
+returns the distance in miles between the two coordinates
+*/
+function calcDistance(coord1, coord2){
+	var radius = 6471;
+	var lat = deg2rad(coord1[0] - coord2[0]);
+	var lon = deg2rad(coord1[1] - coord1[1]);
+  	var a = Math.sin(lat/2) * Math.sin(lat/2) + 
+  		Math.cos(deg2rad(coord2[0])) * Math.cos(deg2rad(coord1[0])) * 
+  		Math.sin(lon/2) * Math.sin(lon/2); 
+	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+	var d = radius * c; // Distance in km
+	return d/1.609344; // returns distance in miles
+}
+
+/*
+Converts from degrees to radians
+*/
+function deg2rad(deg) {
+  return deg * (Math.PI/180);
 }
 
 /*
@@ -423,8 +455,12 @@ Renders vendor if:
 clientAdress - the client's address as a string
 vendor - JSON object representing vendor
 */
-function renderFilteredVendor(clientAddress, vendor, boundsList) {
-	var vendorAddress = getAddress(vendor);
+function renderFilteredVendor(originCoord, vendor, boundsList) {	
+    if (filter(calcDistance(originCoord, vendor.lat_long))){
+		addResultToList(vendor);
+		addMarker(map, vendor, boundsList);
+    }
+	/*var vendorAddress = getAddress(vendor);
 	service.getDistanceMatrix(
     {
       origins: [clientAddress],
@@ -457,7 +493,7 @@ function renderFilteredVendor(clientAddress, vendor, boundsList) {
 				addMarker(map, vendor, boundsList);
 		    }
 		}
-    });
+    });*/
 }
 
 /*
