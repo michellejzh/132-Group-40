@@ -93,7 +93,7 @@ function filterColors() {
 			}
 		}
 		else if (productBool){
-			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png');
+			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png');
 			if (!contains(matchesParam, "blue")){
 				markersArray[i].setMap(null);
 			}
@@ -277,7 +277,7 @@ function addMarker(map, vendor, boundsList) {
 	if (color === "green"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
 	} else if (color === "blue"){
-		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png';
 	} else if (color === "red"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
 	}
