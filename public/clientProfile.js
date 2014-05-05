@@ -45,8 +45,7 @@ function renderProfile(vendor) {
     var primaryContact = vendor.primaryContact;
     var phone = vendor.primaryPhone;
     var email = vendor.primaryEmail;
-    var website = "fake.com"
-    var capability = String(vendor.productCapabilityIds);
+	var capability = String(vendor.productCapabilityIds);
     if (capability=="") {
         capability = "None Specified";
     }
@@ -60,8 +59,7 @@ function renderProfile(vendor) {
     $("#primaryContact").append(primaryContact);
     $("#phone").append(phone);
     $("#email").append("<a href='mailto:"+email+"'>"+email+'</a>');
-    $("#website").append('<a href="http://'+website+'">'+website+'</a>');
-    //table
+	//table
     $("#prodCap").append(capability);
     $("#payment").append(payment);
     $("#leadTime").append(lead);
