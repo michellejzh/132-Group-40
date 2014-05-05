@@ -1,31 +1,38 @@
 // id for the form
 var formID = 'queryVendorForm';
 
+// name of the input that stores distance
 var distanceName = 'distance';
 
+// name of the input that stores the address
 var address1Name = "addressLine1";
 
-var address2Name = "addressLine2";
-
-var cityName = "city";
-
-var stateName = "state";
-
-var zipcodeName = "zipcode";
-
+// name of the class of inputs that contains an error
 var errorClass = 'error';
 
+// name of the class that displays error messages
 var errorMsgClass = 'errorMsg';
 
 $(document).ready(function(){
 	initiateFormValidation();
 });
 
+/*
+Gets the input with the associated name
+
+name - a string of the name of the input you are querying
+*/
 function getInput(name){
     var $form = $("#" + formID);
     return $form.find('input[name=\"' + name + '\"]');
 }
 
+/*
+Displays an error by:
+
+1. outlining the offending input in red
+2. display an error message beneath the input
+*/
 function showError(name){
 	$("#" + name).css('display', 'block');
 	getInput(name).addClass(errorClass);
