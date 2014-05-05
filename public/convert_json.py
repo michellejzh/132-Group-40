@@ -46,7 +46,7 @@ def get_address(partner):
 Takes in a json file of vendors and outputs a javascript file which contains
 each vendor json object in a list called partner_data. Each json object also
 has an added lat_long param. The format of this param is an array of size 2 
-where index 0 contains the latitude and index 1 contains the longitude
+where index 0 contains the latitude and index 1 contains the longitude =^_^=
 '''
 def make_partner_js():
 	str_list = ['var partner_data = [']

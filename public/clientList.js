@@ -21,7 +21,6 @@ $(document).ready(function(){
 	renderVendorList(partner_data);
 });
 
-
 var newURL = window.location.pathname+"../../clientProfile.html";
 
 /*
