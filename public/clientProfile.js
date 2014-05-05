@@ -31,7 +31,7 @@ function loadProfile(){
 	console.log("called loadProfile");
 
     for (var k = 0; k < partner_data.length; k++){
-        console.log(partner_data[k]);
+        //console.log(partner_data[k]);
         if(partner_data[k].id == document.vendorID){
             renderProfile(partner_data[k]);
         }
@@ -46,12 +46,13 @@ function renderProfile(vendor) {
     var phone = vendor.primaryPhone;
     var email = vendor.primaryEmail;
     var website = "fake.com"
-    var capability = vendor.productCapabilityIDs;
+    var capability = String(vendor.productCapabilityIds);
+    if (capability=="") {
+        capability = "None Specified";
+    }
+    capability = translateCapability(capability);
     var payment = vendor.paymentTerms.terms;
     var lead = vendor.leadTime.leadTime;
-    var conGR = vendor.costs.consumerGiftRate;
-    var conSR = vendor.costs.consumerSubRate;
-    var corSR = vendor.costs.corporateSubRate;
 
     //non-table
     $("#name").append(vendorName);
@@ -64,11 +65,15 @@ function renderProfile(vendor) {
     $("#prodCap").append(capability);
     $("#payment").append(payment);
     $("#leadTime").append(lead);
-    $("#consumerGiftRate").append(conGR);
-    $("#consumerSubRate").append(conSR);
-    $("#corporateSubRate").append(corSR);
 }
 
+function translateCapability(ids) {
+    ids = ids.replace("1", "Plants");
+    ids = ids.replace("2", "Flowers");
+    ids = ids.replace("3", "Orchids");
+    ids = ids.replace(",", "<br>")
+    return ids;
+}
 
 /*
 Given a JSON object of a vendor, returns the vendor's address as a string

@@ -310,7 +310,11 @@ function addMarker(map, vendor, boundsList) {
 Popup client profile windows when you click on their map markers.
 */
 function getContentString(vendor) {
-    var product = vendor.productCapabilityIds;
+    var capability = String(vendor.productCapabilityIds);
+    if (capability=="") {
+        capability = "None Specified";
+    }
+    capability = translateCapability(capability);
     var payment = vendor.paymentTerms.terms;
     var lead = vendor.leadTime.leadTime;
 	var vendorName = vendor.name;
@@ -325,7 +329,6 @@ function getContentString(vendor) {
 	+"	<td>"
 	+"		<div id='info1'>"
 	+"			<div id='name'>"+vendorName+"</div>"
-	//+"			<button onclick='window.location.assign('"+newURL+"'); loadProfile()'>Full profile</button>"
 	+"			<button onclick='goToProfile("+vendor.id+")'>Full profile</button>"
 	+"			<div id='address'>"+address1+"<br>"+address2+"</div>"
 	+"			<div id='phone'>Phone: "+phone+"</div>"
@@ -337,7 +340,7 @@ function getContentString(vendor) {
 	+"		<table border='1' id='info2'>"
 	+"			<tr>"
 	+"				<td>Product Capability</td>"
-	+"				<td id='prodCapInfo'>"+product+"</td>"
+	+"				<td id='prodCapInfo'>"+capability+"</td>"
 	+"			</tr>"
 	+"			<tr>"
 	+"				<td>Payment Method</td>"
@@ -355,6 +358,13 @@ function getContentString(vendor) {
 	return contentString;
 }
 
+function translateCapability(ids) {
+    ids = ids.replace("1", "Plants");
+    ids = ids.replace("2", "Flowers");
+    ids = ids.replace("3", "Orchids");
+    ids = ids.replace(",", "<br>")
+    return ids;
+}
 
 function goToProfile(id) {
 	var newURL = window.location.pathname+"../../clientProfile.html?id="+id;
