@@ -251,7 +251,8 @@ function addMarker(map, vendor, boundsList) {
 		else {
 			//alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
 			//console.log("Retrying in 3 seconds");
-			setTimeout(addMarker(map, vendor, boundsList),5000);
+			console.log("calling add marker for id="+vendor.id);
+			window.setTimeout(addMarker(map, vendor, boundsList), 5000);
 		}
 	});
 }
@@ -327,7 +328,6 @@ function fitBounds(boundsList) {
   		bounds.extend(boundsList[i]);
   	}
   	map.fitBounds(bounds);
-  	console.log(map.getZoom()+" is zoom");
   	if (map.getZoom()>8) {
   		map.setZoom(8);
   	}
@@ -465,11 +465,13 @@ function compareByDist(a, b){
 function addClosestVendors(filteredVendors, boundsList) {
 	filteredVendors.sort(compareByDist);
 
-	//it only allows you to drop 11 markers at a time before it gets angry
-	var vendorsLength = (filteredVendors.length < 11) ? filteredVendors.length : 11;
+	/*it only allows you to drop 11 markers at a time before it gets angry
+	 (so drop 10 + the client marker)*/
+	var vendorsLength = (filteredVendors.length < 10) ? filteredVendors.length : 10;
 
     for (var i = 0; i < vendorsLength; i++) {
     	var vendor = filteredVendors[i];
+    	console.log("timed out, going to try and call again");
     	console.log("addClosestVendors " + vendor.id);
     	addMarker(map, vendor, boundsList);
     }
