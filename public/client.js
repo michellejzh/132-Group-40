@@ -545,7 +545,7 @@ function moveMapCenter() {
 	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
-			map.setZoom(8);
+			map.setZoom(10);
 		} 
 		else {
 			alert("Geocode was not successful for the following reason: " + status);
