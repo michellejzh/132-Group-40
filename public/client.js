@@ -177,14 +177,50 @@ currAddress - a string representing an address
 //red: matches requirements but not distance. default
 //blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
 //green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
-<<<<<<< HEAD
-function addMarker(map, boundsList, vendor, numVendors) {
-	console.log("adding marker");
+
+
+function addMarker(map, vendor, boundsList, color) {
 	var currAddress = getAddress(vendor);
-	console.log("currAddress is "+currAddress);
+	if (color === "green"){
+		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
+	} else if (color === "blue"){
+		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+	} else if (color === "red"){
+		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+	}
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-		    var product = vendor.productCapabilityIds;
+		if (status == google.maps.GeocoderStatus.OK) {	  
+			var location = results[0].geometry.location;
+			var marker = new google.maps.Marker({
+				map: map,
+				icon: iconColor,
+				position: location,
+	   			animation: google.maps.Animation.DROP
+			});
+			var contentString = getContentString(vendor);
+			var infowindow = new google.maps.InfoWindow({
+				content: contentString,
+				width: 340
+			});
+			boundsList.push(location);
+			//set the bounds if we're at the end of the vendor list
+			//console.log("length of boundsList: "+boundsList.length);
+			//console.log("length of vendorsList: "+vendorsLength);
+			//add event listener so infowindow pops up on click
+			fitBounds(boundsList);
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(map,marker);
+				//call the function that fills the info into the profile
+				loadProfile();
+			});
+		}
+		else {
+			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
+		}
+	});
+}
+
+		    /*var product = vendor.productCapabilityIds;
 		    var payment = vendor.paymentTerms.terms;
 		    var lead = vendor.leadTime.leadTime;
 			//gets the selected search parameters
@@ -248,11 +284,6 @@ function addMarker(map, boundsList, vendor, numVendors) {
 					width: 340
 				});
 				boundsList.push(location);
-				//set the bounds if we're at the end of the vendor list
-				//console.log("length of boundsList: "+boundsList.length);
-				//console.log("length of vendorsList: "+vendorsLength);
-				/*problem: that's the length of the full vendors list, not the number of vendors
-				that fit the criteria. fix.*/
 
 				if (boundsList.length==numVendors) {
 					fitBounds(boundsList);
@@ -264,50 +295,14 @@ function addMarker(map, boundsList, vendor, numVendors) {
 					loadProfile();
 				});
 				console.log("finished adding a marker");
+				
 			}
-=======
-
-function addMarker(map, vendor, boundsList, color) {
-	var currAddress = getAddress(vendor);
-	if (color === "green"){
-		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
-	} else if (color === "blue"){
-		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
-	} else if (color === "red"){
-		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
-	}
-	geocoder.geocode( { 'address': currAddress}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {	  
-			var location = results[0].geometry.location;
-			var marker = new google.maps.Marker({
-				map: map,
-				icon: iconColor,
-				position: location,
-    			animation: google.maps.Animation.DROP
-			});
-			var contentString = getContentString(vendor);
-			var infowindow = new google.maps.InfoWindow({
-				content: contentString,
-				width: 340
-			});
-			boundsList.push(location);
-			//set the bounds if we're at the end of the vendor list
-			//console.log("length of boundsList: "+boundsList.length);
-			//console.log("length of vendorsList: "+vendorsLength);
-			//add event listener so infowindow pops up on click
-			fitBounds(boundsList);
-			google.maps.event.addListener(marker, 'click', function() {
-				infowindow.open(map,marker);
-				//call the function that fills the info into the profile
-				loadProfile();
-			});
->>>>>>> d5684414e46a19b1372536fbc3869de3cdfd1212
 		}
 		else {
 			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
 		}
 	});
-}
+}*/
 
 /*
 Popup client profile windows when you click on their map markers.
@@ -379,23 +374,14 @@ vendors - the complete JSON list of vendors
 originAddress - a string representing the address of the origin
 */
 function renderVendors(vendors, originCoord){
-<<<<<<< HEAD
-=======
-	vendorsLength = vendors.length;
->>>>>>> d5684414e46a19b1372536fbc3869de3cdfd1212
 	var boundsList = [];
 	var vendorsByDist = [];
 	for (var i = 0; i < vendors.length; i++){
 		vendor = vendors[i];
 		renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist);
 	}
-<<<<<<< HEAD
 	console.log("vendors by dist: "+vendorsByDist);
 	addClosestVendors(vendorsByDist, boundsList);
-=======
-
-	fitBounds(boundsList);
->>>>>>> d5684414e46a19b1372536fbc3869de3cdfd1212
 }
 
 /*
@@ -441,36 +427,9 @@ vendor - JSON object representing vendor
 
 function renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist) {	
     if (filter(calcDistance(originCoord, vendor.lat_long))){
-		vendorsByDist.push(vendor);
-		console.log("vendorsByDist length is "+vendorsByDist.length);
-    }
-}
-
-
-function addClosestVendors(vendorsByDist, boundsList) {
-	vendorsByDist.sort();
-	//it only allows you to drop 11 markers at a time before it gets angry
-	var vendorsLength = 11;
-	if (vendorsByDist.length<11) {
-		var vendorsLength = vendorsByDist.length;
-	}
-	//problem: vendorsLength is 20, why is it stopping adding
-	//things to the bounds list at 11?
-    for (i=0;i<vendorsLength;i++) {
-    	console.log("i is "+i);
-    	addResultToList(vendorsByDist[i]);
-    	addMarker(map, boundsList, vendorsByDist[i], vendorsLength);
-    }
-}
-
-	/* newer
-    if (filter(calcDistance(originCoord, vendor.lat_long))){
-<<<<<<< HEAD
-		addResultToList(vendor);
-		addMarker(map, vendor, boundsList);
-    }*/
-    //older
-=======
+	//	vendorsByDist.push(vendor);
+	//	console.log("vendorsByDist length is "+vendorsByDist.length);
+    //}
     	var vendorProduct = vendor.productCapabilityIds;
 	    var vendorPayment = vendor.paymentTerms.terms;
 	    var vendorLead = vendor.leadTime.leadTime;
@@ -522,7 +481,8 @@ function addClosestVendors(vendorsByDist, boundsList) {
 			addResultToList(vendor);
 		}
     }
->>>>>>> d5684414e46a19b1372536fbc3869de3cdfd1212
+}
+
 	/*var vendorAddress = getAddress(vendor);
 	service.getDistanceMatrix(
     {
@@ -557,7 +517,26 @@ function addClosestVendors(vendorsByDist, boundsList) {
 		    }
 		}
     });
+}
 }*/
+
+
+function addClosestVendors(vendorsByDist, boundsList) {
+	vendorsByDist.sort();
+	//it only allows you to drop 11 markers at a time before it gets angry
+	var vendorsLength = 11;
+	if (vendorsByDist.length<11) {
+		var vendorsLength = vendorsByDist.length;
+	}
+	//problem: vendorsLength is 20, why is it stopping adding
+	//things to the bounds list at 11?
+    for (i=0;i<vendorsLength;i++) {
+    	console.log("i is "+i);
+    	addResultToList(vendorsByDist[i]);
+    	addMarker(map, boundsList, vendorsByDist[i], vendorsLength);
+    }
+}
+
 
 /*
 Returns true if the vendor passes the filter/matches the user's query. 
