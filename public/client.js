@@ -412,9 +412,10 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 		}
 
 		var matchesLead = ((vendorLead == leadParam) || (vendorLead == 1) || (leadParam == 1));
-		console.log("matchesLead: " + matchesLead);
-		var matchesPayment = ((vendorPayment==paymentParam) || (vendorPayment == 1) || (leadParam == 1));
-		console.log("matchesPayment: " + matchesPayment);
+		var matchesPayment = ((vendorPayment == paymentParam) || (vendorPayment == 1) || (paymentParam == 1));
+		console.log("vendorPayment: " + vendorPayment);
+		console.log("paymentParam: " + paymentParam);
+
 		if (matchesProduct && matchesLead && matchesPayment) {
 			//green
 			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
