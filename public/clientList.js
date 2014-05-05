@@ -50,7 +50,7 @@ function renderVendorList(vendorJSON){
 	}
 	for (var i = 0; i < length; i++){
 		var vendor = vendorJSON[i];
-		if (filterOnName===1){
+		if (filterOnName === 1){
 			if (vendor.name.toLowerCase().indexOf(nameFilter.toLowerCase()) > -1){
 				// create relevant DOM objects
 				var $li = $('<li>', {
@@ -78,7 +78,9 @@ function renderVendorList(vendorJSON){
 			}
 		}
 		else if (filterOnState===1){
-			if (vendor.state.toLowerCase().indexOf(stateFilter.toLowerCase()) > -1){
+			var mapEntry = stateAbbr[stateFilter.toLowerCase()];
+			if (((vendor.state != null) && (vendor.state.toLowerCase().indexOf(stateFilter.toLowerCase()) > -1)) ||
+				((mapEntry != null) && (vendor.state.toLowerCase().indexOf(mapEntry.toLowerCase()) > -1))){
 				// create relevant DOM objects
 				var $li = $('<li>', {
 					class: 'vendorLi'
