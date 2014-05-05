@@ -19,6 +19,8 @@ var service = new google.maps.DistanceMatrixService();
 // Minimum distance for vendors
 var distance = 0;
 
+var markersArray = [];
+
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
 	console.log("distance is "+distance);
@@ -214,7 +216,6 @@ function addClientMarker(address, boundsList) {
 //green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
 
 function addMarker(map, vendor, boundsList) {
-	addResultToList(vendor);
 	console.log("addMarker " + vendor.id);
 	var color = vendor.color;
 	var currAddress = getAddress(vendor);
@@ -226,7 +227,8 @@ function addMarker(map, vendor, boundsList) {
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
 	}
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {	  
+		if (status == google.maps.GeocoderStatus.OK) {
+			addResultToList(vendor);	  
 			var location = results[0].geometry.location;
 			var marker = new google.maps.Marker({
 				map: map,
@@ -234,6 +236,7 @@ function addMarker(map, vendor, boundsList) {
 				position: location,
 	   			animation: google.maps.Animation.DROP
 			});
+			markersArray.push(marker);
 			var contentString = getContentString(vendor);
 			var infowindow = new google.maps.InfoWindow({
 				content: contentString,
@@ -404,8 +407,6 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 		var paymentParam = getPayment();
 		var matchesParam = getMatches();
 
-		console.log("vendorPayment is "+vendorPayment);
-		console.log("paymentParam is "+paymentParam);
 		//now check to see whether the vendor matches the parameters
 		// set matches product to true if the length is 0 (since many vendors leave it blank)
 		var matchesProduct = true;
@@ -418,8 +419,6 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 
 		var matchesLead = ((vendorLead == leadParam) || (vendorLead == 1) || (leadParam == 1));
 		var matchesPayment = ((vendorPayment == paymentParam) || (vendorPayment == 1) || (paymentParam == 1));
-		console.log("vendorPayment: " + vendorPayment);
-		console.log("paymentParam: " + paymentParam);
 
 		if (matchesProduct && matchesLead && matchesPayment) {
 			//green
