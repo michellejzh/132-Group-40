@@ -4,6 +4,7 @@
 		<title> Search Page</title>
 		<link rel='stylesheet' href='../public/searchPage.css' type='text/css'/>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script type="text/javascript" src="../public/searchFormValidation.js"></script>
 		<link rel='stylesheet' href='../public/allPages.css' type='text/css'/>
 	</head>
 
@@ -24,11 +25,13 @@
 			<form id="queryVendorForm" action="searchResults.html" method="get">
 				<div id='order'>
 				Street Address (line 1):<br><input type='text' name='addressLine1' ><br>
+				<span id="addressLine1" class="errorMsg">Can not be empty</span>
 				Street Address (line 2):<br><input type='text' name='addressLine2' ><br>
 				City: <br><input type='text' name='city' ><br>
 				State: <br><input type='text' name='state' ><br>
 				Zipcode: <br><input type='text' name='zipcode' ><br>
 				Distance (in miles): <br><input type='text' name='distance'></br>
+				<span id="distance" class="errorMsg">Specify a positive numerical value</span>
 			</div>
 			<br>
 				<div id='submit'>
