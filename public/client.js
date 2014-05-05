@@ -78,6 +78,8 @@ function getAddressFromURL(){
 initializes the map
 */
 function initializeMap() {
+
+
 	//paints map
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
@@ -212,7 +214,7 @@ function addClientMarker(address, boundsList) {
 //green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
 
 function addMarker(map, vendor, boundsList) {
-	console.log(vendor.id);
+	console.log("addMarker " + vendor.id);
 	var color = vendor.color;
 	var currAddress = getAddress(vendor);
 	if (color === "green"){
@@ -463,6 +465,7 @@ function addClosestVendors(filteredVendors, boundsList) {
 
     for (var i = 0; i < vendorsLength; i++) {
     	var vendor = filteredVendors[i];
+    	console.log("addClosestVendors " + vendor.id);
     	addResultToList(vendor);
     	addMarker(map, vendor, boundsList);
     }
@@ -504,5 +507,3 @@ function getAddress(vendor){
 function getAddressLine2(vendor){
 	return vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
-
-
