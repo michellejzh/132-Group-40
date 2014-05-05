@@ -20,6 +20,7 @@ var service = new google.maps.DistanceMatrixService();
 var distance = 0;
 
 var markersArray = [];
+var resultList = [];
 
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
@@ -50,14 +51,70 @@ function getMatches() {
 	});
 	return selected;
 }
-
+/*
 //if you click on a box
 function updateSearch() {
 	initializeMap();
 	//clear the list items
 	document.getElementById("results-list").innerHTML = "";
-}
+}*/
 
+function filterColors() {
+	var productParam = getProductCapability();
+	var leadParam = getLead();
+	var paymentParam = getPayment();
+	var matchesParam = getMatches();
+	console.log("matchesParam = " + matchesParam);
+
+	for (var i = 0; i < resultList.length; i++) {
+		var productBool = true;
+		var leadBool = true;
+		var paymentBool = true;
+
+		for (var k = 0; k < productParam.length; k++) {
+			if (!contains(resultList[i].productCapabilityIds, parseInt(productParam[k]))){
+				productBool = false;
+			}
+		}
+		if (resultList[i].leadTime.id != leadParam && leadParam!=1){
+			leadBool = false;
+		}
+		if (resultList[i].paymentTerms.id != paymentParam && paymentParam!=1){
+			paymentBool = false;
+		}
+		
+		if (productBool && leadBool && paymentBool){
+			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
+			if (!contains(matchesParam, "green")){
+				markersArray[i].setMap(null);
+			}
+			else{
+				markersArray[i].setMap(map);
+			}
+		}
+		else if (productBool){
+			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png');
+			if (!contains(matchesParam, "blue")){
+				markersArray[i].setMap(null);
+			}
+			else{
+				markersArray[i].setMap(map);
+			}
+		}
+		else{
+			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png');	
+			if (!contains(matchesParam, "red")){
+				markersArray[i].setMap(null);
+			}
+			else{
+				markersArray[i].setMap(map);
+			}
+		}
+
+		
+	}
+}
+	
 /*
 Gets the parameter of the URL as a string
 
@@ -179,7 +236,6 @@ currAddress - a string representing an address
 */
 
 function addClientMarker(address, boundsList) {
-	console.log("adding client marker");
 	//console.log(coords);
 	//var position = new google.maps.LatLng(coords[0], coords[1], false);
 	//console.log(position);
@@ -216,7 +272,6 @@ function addClientMarker(address, boundsList) {
 //green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
 
 function addMarker(map, vendor, boundsList) {
-	console.log("addMarker " + vendor.id);
 	var color = vendor.color;
 	var currAddress = getAddress(vendor);
 	if (color === "green"){
@@ -228,7 +283,8 @@ function addMarker(map, vendor, boundsList) {
 	}
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
-			addResultToList(vendor);	  
+			addResultToList(vendor);
+			resultList.push(vendor);
 			var location = results[0].geometry.location;
 			var marker = new google.maps.Marker({
 				map: map,
@@ -254,8 +310,7 @@ function addMarker(map, vendor, boundsList) {
 		else {
 			//alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
 			//console.log("Retrying in 3 seconds");
-			console.log("calling add marker for id="+vendor.id);
-			window.setTimeout(addMarker(map, vendor, boundsList), 5000);
+			setTimeout(addMarker(map, vendor, boundsList), 5000);
 		}
 	});
 }
@@ -470,9 +525,7 @@ function addClosestVendors(filteredVendors, boundsList) {
 
     for (var i = 0; i < vendorsLength; i++) {
     	var vendor = filteredVendors[i];
-    	console.log("timed out, going to try and call again");
-    	console.log("addClosestVendors " + vendor.id);
-    	addMarker(map, vendor, boundsList);
+		addMarker(map, vendor, boundsList);
     }
 }
 
