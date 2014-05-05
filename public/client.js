@@ -386,8 +386,8 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 	var distance = calcDistance(originCoord, vendor.lat_long);
     if (filter(distance)){
     	var vendorProduct = vendor.productCapabilityIds;
-	    var vendorPayment = vendor.paymentTerms.terms;
-	    var vendorLead = vendor.leadTime.leadTime;
+	    var vendorPayment = vendor.paymentTerms.id;
+	    var vendorLead = vendor.leadTime.id;
 
 		//gets the selected search parameters
 		var productParam = getProductCapability();
@@ -407,9 +407,10 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 			}
 		}
 
-		var matchesLead = (vendorLead == leadParam) || (vendorLead == "None Specified") || (leadParam === "None Specified");
-		var matchesPayment = (vendorPayment==paymentParam) || (vendorPayment == "None Specified") || (leadParam === "None Specified");
-
+		var matchesLead = ((vendorLead == leadParam) || (vendorLead == 1) || (leadParam == 1));
+		console.log("matchesLead: " + matchesLead);
+		var matchesPayment = ((vendorPayment==paymentParam) || (vendorPayment == 1) || (leadParam == 1));
+		console.log("matchesPayment: " + matchesPayment);
 		if (matchesProduct && matchesLead && matchesPayment) {
 			//green
 			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
