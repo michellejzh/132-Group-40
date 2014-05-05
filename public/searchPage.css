@@ -63,6 +63,17 @@ input{
 	background:gray;
 }
 
+.error {
+	border: 1px red solid;
+}
+
+.errorMsg {
+	display: none;
+	margin-bottom: 10px;
+	font-size: 12px;
+	color: red;
+}
+
 
 
 /*--------------------------flower animation-----------------------------
