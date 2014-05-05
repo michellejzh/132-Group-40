@@ -449,8 +449,8 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 			}
 		}
 
-		var matchesLead = (vendorLead == leadParam) || (vendorLead == "None Specified");
-		var matchesPayment = (vendorPayment==paymentParam) || (vendorPayment == "None Specified");
+		var matchesLead = (vendorLead == leadParam) || (vendorLead == "None Specified") || (leadParam === "None Specified");
+		var matchesPayment = (vendorPayment==paymentParam) || (vendorPayment == "None Specified") || (leadParam === "None Specified");
 
 		if (matchesProduct && matchesLead && matchesPayment) {
 			//green
