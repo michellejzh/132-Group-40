@@ -177,6 +177,7 @@ currAddress - a string representing an address
 //red: matches requirements but not distance. default
 //blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
 //green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
+<<<<<<< HEAD
 function addMarker(map, boundsList, vendor, numVendors) {
 	console.log("adding marker");
 	var currAddress = getAddress(vendor);
@@ -264,6 +265,43 @@ function addMarker(map, boundsList, vendor, numVendors) {
 				});
 				console.log("finished adding a marker");
 			}
+=======
+
+function addMarker(map, vendor, boundsList, color) {
+	var currAddress = getAddress(vendor);
+	if (color === "green"){
+		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
+	} else if (color === "blue"){
+		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+	} else if (color === "red"){
+		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+	}
+	geocoder.geocode( { 'address': currAddress}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {	  
+			var location = results[0].geometry.location;
+			var marker = new google.maps.Marker({
+				map: map,
+				icon: iconColor,
+				position: location,
+    			animation: google.maps.Animation.DROP
+			});
+			var contentString = getContentString(vendor);
+			var infowindow = new google.maps.InfoWindow({
+				content: contentString,
+				width: 340
+			});
+			boundsList.push(location);
+			//set the bounds if we're at the end of the vendor list
+			//console.log("length of boundsList: "+boundsList.length);
+			//console.log("length of vendorsList: "+vendorsLength);
+			//add event listener so infowindow pops up on click
+			fitBounds(boundsList);
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(map,marker);
+				//call the function that fills the info into the profile
+				loadProfile();
+			});
+>>>>>>> d5684414e46a19b1372536fbc3869de3cdfd1212
 		}
 		else {
 			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
@@ -341,14 +379,23 @@ vendors - the complete JSON list of vendors
 originAddress - a string representing the address of the origin
 */
 function renderVendors(vendors, originCoord){
+<<<<<<< HEAD
+=======
+	vendorsLength = vendors.length;
+>>>>>>> d5684414e46a19b1372536fbc3869de3cdfd1212
 	var boundsList = [];
 	var vendorsByDist = [];
 	for (var i = 0; i < vendors.length; i++){
 		vendor = vendors[i];
 		renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist);
 	}
+<<<<<<< HEAD
 	console.log("vendors by dist: "+vendorsByDist);
 	addClosestVendors(vendorsByDist, boundsList);
+=======
+
+	fitBounds(boundsList);
+>>>>>>> d5684414e46a19b1372536fbc3869de3cdfd1212
 }
 
 /*
@@ -376,6 +423,13 @@ Converts from degrees to radians
 */
 function deg2rad(deg) {
   return deg * (Math.PI/180);
+}
+
+function contains(list, item){
+	for (var i = 0; i < list.length; i++){
+		if (list[i] == item) return true;
+	}
+	return false;
 }
 
 /*
@@ -411,10 +465,64 @@ function addClosestVendors(vendorsByDist, boundsList) {
 
 	/* newer
     if (filter(calcDistance(originCoord, vendor.lat_long))){
+<<<<<<< HEAD
 		addResultToList(vendor);
 		addMarker(map, vendor, boundsList);
     }*/
     //older
+=======
+    	var vendorProduct = vendor.productCapabilityIds;
+	    var vendorPayment = vendor.paymentTerms.terms;
+	    var vendorLead = vendor.leadTime.leadTime;
+
+		//gets the selected search parameters
+		var productParam = getProductCapability();
+		var leadParam = getLead();
+		var paymentParam = getPayment();
+		var matchesParam = getMatches();
+
+		//now check to see whether the vendor matches the parameters
+		// set matches product to true if the length is 0 (since many vendors leave it blank)
+		var matchesProduct = true;
+		for (var i=0; i < productParam.length; i++) {
+			if (!contains(vendorProduct, parseInt(productParam[i]))){
+				matchesProduct = false;
+				break;
+			}
+		}
+
+		var matchesLead = (vendorLead == leadParam) || (vendorLead == "None Specified");
+		var matchesPayment = (vendorPayment==paymentParam) || (vendorPayment == "None Specified");
+
+		if (matchesProduct && matchesLead && matchesPayment) {
+			//green
+			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
+			var color = 'green';
+		} else if (matchesProduct) {
+			//blue
+			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
+			var color = 'blue';
+		} else {
+			//just matches distance - red
+			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+			var color = 'red';
+		}
+
+		var matchesColor = false;
+
+		if ((color === 'green' && contains(matchesParam, "green")) ||
+			color === 'blue' && contains(matchesParam, 'blue') ||
+			color == 'red' && contains(matchesParam, 'red')){
+			matchesColor = true;
+		}
+
+		if (matchesColor) {
+			console.log(vendor.id + " " + color);
+			addMarker(map, vendor, boundsList, color);
+			addResultToList(vendor);
+		}
+    }
+>>>>>>> d5684414e46a19b1372536fbc3869de3cdfd1212
 	/*var vendorAddress = getAddress(vendor);
 	service.getDistanceMatrix(
     {
@@ -465,7 +573,6 @@ function filter(vendorDistance){
 Moves the map to the center of the address clicked
 */
 function moveMapCenter() {
-	console.log("you clicked on the address: " + document.vendorAddress);
 	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
 			map.setCenter(results[0].geometry.location);
