@@ -179,7 +179,9 @@ currAddress - a string representing an address
 //green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
 
 
-function addMarker(map, vendor, boundsList, color) {
+function addMarker(map, vendor, boundsList) {
+	console.log(vendor.id);
+	var color = vendor.color;
 	var currAddress = getAddress(vendor);
 	if (color === "green"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
@@ -375,13 +377,12 @@ originAddress - a string representing the address of the origin
 */
 function renderVendors(vendors, originCoord){
 	var boundsList = [];
-	var vendorsByDist = [];
-	var colorsList = [];
+	var filteredVendors = [];
 	for (var i = 0; i < vendors.length; i++){
 		vendor = vendors[i];
-		renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist, colorsList);
+		renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors);
 	}
-	addClosestVendors(vendorsByDist, boundsList, colorsList);
+	addClosestVendors(filteredVendors, boundsList);
 }
 
 /*
@@ -425,8 +426,9 @@ clientAdress - the client's address as a string
 vendor - JSON object representing vendor
 */
 
-function renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist, colorsList) {	
-    if (filter(calcDistance(originCoord, vendor.lat_long))){
+function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) {	
+	var distance = calcDistance(originCoord, vendor.lat_long);
+    if (filter(distance)){
     	var vendorProduct = vendor.productCapabilityIds;
 	    var vendorPayment = vendor.paymentTerms.terms;
 	    var vendorLead = vendor.leadTime.leadTime;
@@ -473,26 +475,34 @@ function renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist, co
 		}
 
 		if (matchesColor) {
-			console.log(vendor.id + " is " + color);
-			vendorsByDist.push(vendor);
-			colorsList.push(color);
-			//addMarker(map, vendor, boundsList, color);
-			//addResultToList(vendor);
+			vendor.color = color;
+			vendor.distance = distance;
+			filteredVendors.push(vendor);
 		}
     }
 }
 
+/*
+A sorting function that compares two vendors by distance.
 
-function addClosestVendors(vendorsByDist, boundsList, colorsList) {
-	vendorsByDist.sort();
+a, b - vendors
+*/
+function compareByDist(a, b){
+	if (a.distance < b.distance) return -1;
+	if (a.distance > b.distance) return 1;
+	return 0;
+}
+
+function addClosestVendors(filteredVendors, boundsList) {
+	filteredVendors.sort(compareByDist);
+
 	//it only allows you to drop 11 markers at a time before it gets angry
-	var vendorsLength = 11;
-	if (vendorsByDist.length<11) {
-		var vendorsLength = vendorsByDist.length;
-	}
-    for (i=0;i<vendorsLength;i++) {
-    	addResultToList(vendorsByDist[i]);
-    	addMarker(map, vendorsByDist[i], boundsList, colorsList[i]);
+	var vendorsLength = (filteredVendors.length < 11) ? filteredVendors.length : 11;
+
+    for (var i = 0; i < vendorsLength; i++) {
+    	var vendor = filteredVendors[i];
+    	addResultToList(vendor);
+    	addMarker(map, vendor, boundsList);
     }
 }
 
