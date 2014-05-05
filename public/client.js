@@ -21,6 +21,7 @@ var distance = 0;
 
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
+	console.log("distance is "+distance);
 })
 
 
@@ -83,7 +84,6 @@ function initializeMap() {
 		zoom: 7
 	};
 	map = new google.maps.Map($('#' + mapID)[0], mapOptions);
-
 	//deal with applicable vendors
 	loadVendors(map);
 }
@@ -99,9 +99,10 @@ function loadVendors(map){
 		url:"http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&sensor=false",
 		type: "POST",
 		success:function(res){
-		    var lat = res.results[0].geometry.location.lat;
+			//Display the specified distance from client.
+			var lat = res.results[0].geometry.location.lat;
 		    var lng = res.results[0].geometry.location.lng;
-			renderVendors(partner_data, [lat, lng]);
+			renderVendors(partner_data, [lat, lng], address);
 		}
 	});
 }
@@ -173,11 +174,42 @@ Adds a marker on the google map at the given address.
 currAddress - a string representing an address
 */
 
-
+function addClientMarker(address, boundsList) {
+	console.log("adding client marker");
+	//console.log(coords);
+	//var position = new google.maps.LatLng(coords[0], coords[1], false);
+	//console.log(position);
+	geocoder.geocode( { 'address': address}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {	  
+		var location = results[0].geometry.location;
+		var marker = new google.maps.Marker({
+			map: map,
+			icon: 'http://maps.google.com/mapfiles/marker_white.png',
+			position: location,
+			animation: google.maps.Animation.DROP
+		});
+		var distanceOptions = {
+		  strokeColor: '#FF0000',
+		  strokeOpacity: 0.2,
+		  strokeWeight: 2,
+		  fillColor: '#FF0000',
+		  fillOpacity: 0.09,
+		  map: map,
+		  center: location,
+		  radius: distance*1609.34
+		};
+		console.log(distanceOptions);
+		var distanceCircle = new google.maps.Circle(distanceOptions);
+		boundsList.push(location);
+		}
+		else {
+			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
+		}
+	});
+}
 //red: matches requirements but not distance. default
 //blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
 //green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
-
 
 function addMarker(map, vendor, boundsList) {
 	console.log(vendor.id);
@@ -298,8 +330,9 @@ Renders filtered vendors on page
 vendors - the complete JSON list of vendors
 originAddress - a string representing the address of the origin
 */
-function renderVendors(vendors, originCoord){
+function renderVendors(vendors, originCoord, address){
 	var boundsList = [];
+	addClientMarker(address, boundsList);
 	var filteredVendors = [];
 	for (var i = 0; i < vendors.length; i++){
 		vendor = vendors[i];
