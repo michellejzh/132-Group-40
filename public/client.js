@@ -398,8 +398,6 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 		//now check to see whether the vendor matches the parameters
 		// set matches product to true if the length is 0 (since many vendors leave it blank)
 		var matchesProduct = true;
-		console.log(vendorProduct+" is vendorProduct");
-		console.log(productParam+" is productParam");
 		for (var i=0; i < productParam.length; i++) {
 			if (!contains(vendorProduct, parseInt(productParam[i]))){
 				matchesProduct = false;
@@ -408,9 +406,10 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 		}
 
 		var matchesLead = ((vendorLead == leadParam) || (vendorLead == 1) || (leadParam == 1));
-		console.log("matchesLead: " + matchesLead);
-		var matchesPayment = ((vendorPayment==paymentParam) || (vendorPayment == 1) || (leadParam == 1));
-		console.log("matchesPayment: " + matchesPayment);
+		var matchesPayment = ((vendorPayment == paymentParam) || (vendorPayment == 1) || (paymentParam == 1));
+		console.log("vendorPayment: " + vendorPayment);
+		console.log("paymentParam: " + paymentParam);
+
 		if (matchesProduct && matchesLead && matchesPayment) {
 			//green
 			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
