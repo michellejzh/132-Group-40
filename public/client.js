@@ -213,6 +213,7 @@ function addClientMarker(address, boundsList) {
 
 function addMarker(map, vendor, boundsList) {
 	console.log(vendor.id);
+	addResultToList(vendor);
 	var color = vendor.color;
 	var currAddress = getAddress(vendor);
 	if (color === "green"){
@@ -246,7 +247,9 @@ function addMarker(map, vendor, boundsList) {
 			});
 		}
 		else {
-			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
+			//alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
+			//console.log("Retrying in 3 seconds");
+			setTimeout(addMarker(map, vendor, boundsList),5000);
 		}
 	});
 }
@@ -465,7 +468,6 @@ function addClosestVendors(filteredVendors, boundsList) {
 
     for (var i = 0; i < vendorsLength; i++) {
     	var vendor = filteredVendors[i];
-    	addResultToList(vendor);
     	addMarker(map, vendor, boundsList);
     }
 }
