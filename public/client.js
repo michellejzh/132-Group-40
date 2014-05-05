@@ -205,11 +205,8 @@ function addMarker(map, vendor, boundsList) {
 				width: 340
 			});
 			boundsList.push(location);
-			//set the bounds if we're at the end of the vendor list
-			//console.log("length of boundsList: "+boundsList.length);
-			//console.log("length of vendorsList: "+vendorsLength);
-			//add event listener so infowindow pops up on click
 			fitBounds(boundsList);
+			//add event listener so infowindow pops up on click
 			google.maps.event.addListener(marker, 'click', function() {
 				infowindow.open(map,marker);
 				//call the function that fills the info into the profile
@@ -221,90 +218,6 @@ function addMarker(map, vendor, boundsList) {
 		}
 	});
 }
-
-		    /*var product = vendor.productCapabilityIds;
-		    var payment = vendor.paymentTerms.terms;
-		    var lead = vendor.leadTime.leadTime;
-			//gets the selected search parameters
-			var productParam = getProductCapability();
-			var leadParam = getLead();
-			var paymentParam = getPayment();
-			var matchesParam = getMatches();
-			//now check to see whether the vendor matches the parameters
-
-			var matchesProduct = false;
-			var paramsMatched = 0;
-			for (i=0;i<productParam.length;i++) {
-				for (j=0;j<product;j++) {
-					if (productParam[i]==product[j]) {
-						paramsMatched++;
-					}
-				}
-			}
-			if (paramsMatched==productParam.length) {
-				var matchesProduct = true;
-			}
-
-			var matchesLead = lead==leadParam;
-			var matchesPayment = payment==paymentParam;
-
-			if (matchesProduct&&matchesLead&&matchesPayment) {
-				//green
-				var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
-				var color = 'green';
-			}
-			else if (matchesProduct) {
-				//blue
-				var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
-				var color = 'blue';
-			}
-			else {
-				//just matches distance - red
-				var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
-				var color = 'red';
-			}
-
-			var matchesColor = false;
-			for (i=0;i<matchesParam.length;i++) {
-				if (color==matchesParam[i]) {
-					var matchesColor = true;
-				}
-			}
-			console.log("matchesColor is "+matchesColor);
-			if (matchesColor) {
-				var location = results[0].geometry.location;
-				console.log("marker location is "+location);
-				var marker = new google.maps.Marker({
-					map: map,
-					icon: iconColor,
-					position: location,
-	    			animation: google.maps.Animation.DROP
-				});
-				var contentString = getContentString(vendor);
-				var infowindow = new google.maps.InfoWindow({
-					content: contentString,
-					width: 340
-				});
-				boundsList.push(location);
-
-				if (boundsList.length==numVendors) {
-					fitBounds(boundsList);
-				}
-				//add event listener so infowindow pops up on click
-				google.maps.event.addListener(marker, 'click', function() {
-					infowindow.open(map,marker);
-					//call the function that fills the info into the profile
-					loadProfile();
-				});
-				console.log("finished adding a marker");
-				
-			}
-		}
-		else {
-			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
-		}
-	});
-}*/
 
 /*
 Popup client profile windows when you click on their map markers.
@@ -452,6 +365,8 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 		//now check to see whether the vendor matches the parameters
 		// set matches product to true if the length is 0 (since many vendors leave it blank)
 		var matchesProduct = true;
+		console.log(vendorProduct+" is vendorProduct");
+		console.log(productParam+" is productParam");
 		for (var i=0; i < productParam.length; i++) {
 			if (!contains(vendorProduct, parseInt(productParam[i]))){
 				matchesProduct = false;
