@@ -190,10 +190,10 @@ function addClientMarker(address, boundsList) {
 		});
 		var distanceOptions = {
 		  strokeColor: '#FF0000',
-		  strokeOpacity: 0.2,
+		  strokeOpacity: 0.3,
 		  strokeWeight: 2,
 		  fillColor: '#FF0000',
-		  fillOpacity: 0.09,
+		  fillOpacity: 0.05,
 		  map: map,
 		  center: location,
 		  radius: distance*1609.34
@@ -399,11 +399,11 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 		var paymentParam = getPayment();
 		var matchesParam = getMatches();
 
+		console.log("vendorPayment is "+vendorPayment);
+		console.log("paymentParam is "+paymentParam);
 		//now check to see whether the vendor matches the parameters
 		// set matches product to true if the length is 0 (since many vendors leave it blank)
 		var matchesProduct = true;
-		console.log(vendorProduct+" is vendorProduct");
-		console.log(productParam+" is productParam");
 		for (var i=0; i < productParam.length; i++) {
 			if (!contains(vendorProduct, parseInt(productParam[i]))){
 				matchesProduct = false;
