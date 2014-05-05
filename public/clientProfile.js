@@ -63,6 +63,7 @@ function renderProfile(vendor) {
     $("#prodCap").append(capability);
     $("#payment").append(payment);
     $("#leadTime").append(lead);
+    initializeMap(address1+address2);
 }
 
 function translateCapability(ids) {
@@ -72,6 +73,37 @@ function translateCapability(ids) {
     ids = ids.replace(",", "<br>")
     return ids;
 }
+
+// geocoder
+var geocoder = new google.maps.Geocoder();
+var mapID = "map-canvas";
+
+function initializeMap(address) {
+    console.log(String(address));
+    geocoder.geocode( { 'address': String(address)}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {    
+            var location = results[0].geometry.location;
+            console.log(location);
+            var mapOptions = {
+                center: location,
+                zoom: 7
+            };
+            map = new google.maps.Map($('#' + mapID)[0], mapOptions);
+            console.log(map);
+            var marker = new google.maps.Marker({
+                map: map,
+                icon: 'http://maps.google.com/mapfiles/marker_green.png',
+                position: location,
+                animation: google.maps.Animation.DROP
+            });
+        }
+        else {
+            alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
+        }
+    });
+}
+
+//google.maps.event.addDomListener(window, 'load', initializeMap);
 
 /*
 Given a JSON object of a vendor, returns the vendor's address as a string

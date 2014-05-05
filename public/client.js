@@ -13,9 +13,6 @@ var resultsListID = "results-list";
 // geocoder
 var geocoder = new google.maps.Geocoder();
 
-// distance matrix service
-var service = new google.maps.DistanceMatrixService();
-
 // Minimum distance for vendors
 var distance = 0;
 
@@ -137,8 +134,6 @@ function getAddressFromURL(){
 initializes the map
 */
 function initializeMap() {
-
-
 	//paints map
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
@@ -236,9 +231,6 @@ currAddress - a string representing an address
 */
 
 function addClientMarker(address, boundsList) {
-	//console.log(coords);
-	//var position = new google.maps.LatLng(coords[0], coords[1], false);
-	//console.log(position);
 	geocoder.geocode( { 'address': address}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {	  
 		var location = results[0].geometry.location;
