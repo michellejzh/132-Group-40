@@ -28,7 +28,8 @@ input{
 }
 
 #order{
-	margin-left:50px;
+	margin-left:auto;
+	margin-right:auto;
 	color: #2F3237;
 	font-size: 18px;
 	width: 80%;
@@ -36,35 +37,9 @@ input{
 }
 
 #order input{
-	width:100%;
+	width:90%;
 }
 
-#product{
-	padding-top:18px;
-	margin-left:18px;
-/*	color: #151B54;
-*/	font-size: 18px;
-	float:left;
-	display:inline-block;
-}
-
-#delivery{
-	padding-top: 18px;
-	margin-left:100px;
-/*	color: #151B54;
-*/	font-size: 18px;
-	display: inline-block;
-}
-
-#payment{
-	padding-top: 18px;
-/*	color: #151B54;
-*/	font-size: 18px;
-	margin-left: 100px;
-	/*float:right;*/
-	display: inline-block;
-
-}
 
 #submit{
 	text-align:center;
@@ -81,7 +56,7 @@ input{
 	font-size: 16px;
 	height:26px;
 	width:100px;
-
+	cursor: pointer;
 }
 
 #searchsubmit:hover{

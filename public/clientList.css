@@ -4,17 +4,23 @@
 	margin-right: auto;
 	margin-bottom: 50px;
 }
+
 #content{
 	background-color: rgba(255, 255, 255, 0.5);
 	color: #2F3237;
 	display: block;
 	position: relative;
-	height:20%;
-	width:60%;
-	margin: 0 auto;
+	width:580px;
+	margin-left: auto;
+	margin-right: auto;
 	border:2px solid silver;
 	border-style: groove;
 	border-radius:10px;
+}
+
+#vendorList {
+	overflow-y: scroll;
+	height: 500px;
 }
 
 .vendorLi {
@@ -23,12 +29,17 @@
 	color: #2F3237;
 	text-decoration: none;
 	list-style: none;
-	width:90%;
+	width:95%;
 	border-style: groove;
-	border:1px solid silver;
+	border-bottom:1px solid silver;
 	border-radius:10px;
 	margin-bottom: 15px;
+	margin-left: -10px;
+}
 
+.vendorLi:hover{
+	background-color: rgba(255, 255, 255, 0.8);
+	cursor: pointer;
 }
 
 .vendorName{
@@ -66,4 +77,6 @@
 
 #searchsubmit:hover{
 	background: gray;
+	cursor: pointer;
 }
+

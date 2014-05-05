@@ -80,7 +80,7 @@ function initializeMap() {
 	//paints map
 	var mapOptions = {
 		center: new google.maps.LatLng(40.7078, -74.0119),
-		zoom: 15
+		zoom: 7
 	};
 	map = new google.maps.Map($('#' + mapID)[0], mapOptions);
 
@@ -376,12 +376,12 @@ originAddress - a string representing the address of the origin
 function renderVendors(vendors, originCoord){
 	var boundsList = [];
 	var vendorsByDist = [];
+	var colorsList = [];
 	for (var i = 0; i < vendors.length; i++){
 		vendor = vendors[i];
-		renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist);
+		renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist, colorsList);
 	}
-	console.log("vendors by dist: "+vendorsByDist);
-	addClosestVendors(vendorsByDist, boundsList);
+	addClosestVendors(vendorsByDist, boundsList, colorsList);
 }
 
 /*
@@ -425,11 +425,8 @@ clientAdress - the client's address as a string
 vendor - JSON object representing vendor
 */
 
-function renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist) {	
+function renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist, colorsList) {	
     if (filter(calcDistance(originCoord, vendor.lat_long))){
-	//	vendorsByDist.push(vendor);
-	//	console.log("vendorsByDist length is "+vendorsByDist.length);
-    //}
     	var vendorProduct = vendor.productCapabilityIds;
 	    var vendorPayment = vendor.paymentTerms.terms;
 	    var vendorLead = vendor.leadTime.leadTime;
@@ -476,64 +473,26 @@ function renderFilteredVendor(originCoord, vendor, boundsList, vendorsByDist) {
 		}
 
 		if (matchesColor) {
-			console.log(vendor.id + " " + color);
-			addMarker(map, vendor, boundsList, color);
-			addResultToList(vendor);
+			console.log(vendor.id + " is " + color);
+			vendorsByDist.push(vendor);
+			colorsList.push(color);
+			//addMarker(map, vendor, boundsList, color);
+			//addResultToList(vendor);
 		}
     }
 }
 
-	/*var vendorAddress = getAddress(vendor);
-	service.getDistanceMatrix(
-    {
-      origins: [clientAddress],
-      destinations: [vendorAddress],
-      travelMode: google.maps.TravelMode.DRIVING,
-      unitSystem: google.maps.UnitSystem.IMPERIAL,
-      avoidHighways: false,
-      avoidTolls: false
-    }, function(response, status){
-    	if (status != google.maps.DistanceMatrixStatus.OK) {
-    		alert('Error was: ' + status);
-		} else {
-			//get distance
-			var origins = response.originAddresses;
-	    	var destinations = response.destinationAddresses;
-	    	var totalDist = 0.0;
-			for (var i = 0; i < origins.length; i++) {
-	    		var results = response.rows[i].elements;
-		      	for (var j = 0; j < results.length; j++) {
-					totalDist = totalDist + results[j].distance.value;
-		      	}
-		    }
 
-		    //convert to miles
-		    totalDist *= 0.000621371;
-		    //console.log(totalDist);
-		    // add if passes filter
-		    if (filter(totalDist)){
-				addResultToList(vendor);
-				addMarker(map, vendor, boundsList);
-		    }
-		}
-    });
-}
-}*/
-
-
-function addClosestVendors(vendorsByDist, boundsList) {
+function addClosestVendors(vendorsByDist, boundsList, colorsList) {
 	vendorsByDist.sort();
 	//it only allows you to drop 11 markers at a time before it gets angry
 	var vendorsLength = 11;
 	if (vendorsByDist.length<11) {
 		var vendorsLength = vendorsByDist.length;
 	}
-	//problem: vendorsLength is 20, why is it stopping adding
-	//things to the bounds list at 11?
     for (i=0;i<vendorsLength;i++) {
-    	console.log("i is "+i);
     	addResultToList(vendorsByDist[i]);
-    	addMarker(map, boundsList, vendorsByDist[i], vendorsLength);
+    	addMarker(map, vendorsByDist[i], boundsList, colorsList[i]);
     }
 }
 

@@ -20,6 +20,7 @@ button {
 
 button:hover{
 	background: gray;
+	cursor: pointer;
 }
 
 #navButton {

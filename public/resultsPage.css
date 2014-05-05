@@ -10,7 +10,7 @@
 	border-color: red;
 	display: visible;
 	height: 450px;
-	width: 655px;
+	width: 625px;
 	float: right;
 	position: absolute;
 	border-radius:10px;
@@ -19,7 +19,7 @@
 #results {
 	border: 2px solid white;
 	display: visible;
-	width: 300px;
+	width: 330px;
 	height: 445px;
 	float: right;
 	overflow-x: hidden;
@@ -44,6 +44,7 @@
 
 .details2 {
 	float: right;
+	margin-right: 7px;
 }
 
 ul{
