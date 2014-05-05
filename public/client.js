@@ -198,9 +198,9 @@ function addClientMarker(address, boundsList) {
 		  center: location,
 		  radius: distance*1609.34
 		};
-		console.log(distanceOptions);
 		var distanceCircle = new google.maps.Circle(distanceOptions);
 		boundsList.push(location);
+		fitBounds(boundsList);
 		}
 		else {
 			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
@@ -322,6 +322,10 @@ function fitBounds(boundsList) {
   		bounds.extend(boundsList[i]);
   	}
   	map.fitBounds(bounds);
+  	console.log(map.getZoom()+" is zoom");
+  	if (map.getZoom()>8) {
+  		map.setZoom(8);
+  	}
 }
 
 /*
@@ -501,27 +505,5 @@ function getAddress(vendor){
 function getAddressLine2(vendor){
 	return vendor.city + ", " + vendor.state + " " + vendor.zip;
 }
-
-
-
-//TO DO!!!!!!!=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-//this is not written at all it's from Michelle's chatroom lol
-
-function validateForm() {
-    var form = document.getElementById("roomName-form");
-        form.addEventListener('submit', function(e) {
-            if (this.roomName.value.length==0) {
-                document.getElementById("roomName-err").style.display = "block";
-                e.preventDefault();
-            }
-            else {
-                document.getElementById("roomName-err").style.display = "none";
-                e.preventDefault();
-                window.location.assign(document.URL+"/messages/"+this.roomName.value);
-            }
-        });
-}
-
-
 
 
