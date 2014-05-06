@@ -26,7 +26,7 @@ var boundsList = [];
 //Get the distance specified from the search
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
-	document.getElementById("searchAddress").innerHTML = "You searched for" + getAddressFromURL();
+	document.getElementById("searchAddress").innerHTML = "You searched for:  " + getAddressFromURL() + "  within " + getParam('distance') + " miles.";
 })
 
 /*
@@ -43,7 +43,7 @@ function getParam(name){
 Returns a string of the address by parsing the URL parameters.
 */
 function getAddressFromURL(){
-	var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
+	var address = getParam('addressLine1') + " " + getParam('addressLine2') + " " + getParam('city') + " " + getParam('state') + " " + getParam("zipcode");
 	return address.replace(new RegExp("\\+", 'g'), " ")
 }
 
@@ -184,6 +184,9 @@ function addTenVendors(){
 	var temp = vendorsAdded + 10
 	if (vendorsLength > 10){
 		vendorsLength = 10;
+	}
+	if (vendorsLength == 0){ //All possible vendors are already being displayed
+		alert("All vendors within " + getParam('distance') + " miles are being shown");
 	}
 	for (; vendorsAdded < temp; vendorsAdded++){
 		var vendor = filteredVendors[vendorsAdded];
