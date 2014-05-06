@@ -181,3 +181,7 @@ a:hover {
 	display:inline-block;
 	float:left;
 }
+
+#load{
+	float:right;
+}
