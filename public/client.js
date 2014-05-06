@@ -167,8 +167,10 @@ function addClosestVendors(filteredVendors, boundsList) {
     }
 	filterColors();
 	document.getElementById("load").disabled = true;
+	document.getElementById("load").style.backgroundColor="red";
 	setTimeout(function(){
 		document.getElementById("load").disabled = false;
+		document.getElementById("load").style.backgroundColor="green";
 	}, 11000);
 }
 
@@ -188,8 +190,11 @@ function addTenVendors(){
 	}
 	filterColors();
 	document.getElementById("load").disabled = true;
+	document.getElementById("load").style.backgroundColor="red";
+	document.getElementById("load").innerHTML = "please wait";
 	setTimeout(function(){
 		document.getElementById("load").disabled = false;
+		document.getElementById("load").style.backgroundColor="green";
 	}, 11000);
 }
 
