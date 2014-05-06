@@ -25,6 +25,8 @@
 	margin-right: auto;
 	position: relative;
 	padding-left: 42px; 
+	position: relative;
+	left: 24px;
 }
 
 #info-table {
@@ -39,7 +41,6 @@
 
 td{
 	padding-left:10px;
-
 }
 
 #map-canvas {

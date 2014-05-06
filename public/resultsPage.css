@@ -43,15 +43,6 @@
 	top:3px;
 }
 
-#wait {
-	color: #990000;
-	position:relative;
-	right:-40px;
-	top: 1px;
-	font-size: 8pt;
-	display: none;
-}
-
 #map-info {
 	margin-top: 13px;
 	margin-bottom: 2px;
