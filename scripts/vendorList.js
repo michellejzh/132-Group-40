@@ -79,7 +79,7 @@ function renderVendorList(vendorJSON){
 				});
 				var $address = $('<div>', {
 					class: 'vendorAddress',
-					text: vendor.addressLine1 + " " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip
+					text: vendor.addressLine1 + ", " + vendor.addressLine2 + " " + vendor.city + ", " + vendor.state + " " + vendor.zip
 				});
 
 				// adds DOM objects to page
@@ -108,7 +108,7 @@ function renderVendorList(vendorJSON){
 				});
 				var $address = $('<div>', {
 					class: 'vendorAddress',
-					text: vendor.addressLine1 + " " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip
+					text: vendor.addressLine1 + ", " + vendor.addressLine2 + " " + vendor.city + ", " + vendor.state + " " + vendor.zip
 				});
 
 				// adds DOM objects to page
