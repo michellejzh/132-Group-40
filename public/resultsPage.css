@@ -171,9 +171,10 @@ a:hover {
 	background-color: #F47457;
 	display: inline-block;
 }
-/*
+
 #vendorColor{
 	height:50px;
+	width:5px;
 	display:inline-block;
 	float:left;
-}*/
+}
