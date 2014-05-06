@@ -54,7 +54,7 @@ input{
 	border-radius:5px;
 	color:#D9D9D9;
 	font-size: 16px;
-	height:26px;
+	height:30px;
 	width:100px;
 	cursor: pointer;
 }
@@ -73,10 +73,5 @@ input{
 	font-size: 12px;
 	color: red;
 }
-
-
-
-/*--------------------------flower animation-----------------------------
-*/
 
 
