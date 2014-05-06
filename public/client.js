@@ -167,10 +167,10 @@ function addClosestVendors(filteredVendors, boundsList) {
     	var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
     }
-	document.getElementById("load").disabled = true;
+	document.getElementById("load").onclick = function(){waitMessage();};
 	document.getElementById("load").style.backgroundColor="red";
 	setTimeout(function(){
-		document.getElementById("load").disabled = false;
+		document.getElementById("load").onclick = function(){addTenVendors();};
 		document.getElementById("load").style.backgroundColor="green";
 	}, 11000);
 }
@@ -179,7 +179,6 @@ function addClosestVendors(filteredVendors, boundsList) {
 /* addTenVendors
 adds up to ten more vendors to the map depending on how many vendors are left in filteredVendors
 */
-
 
 function addTenVendors(){
 	var vendorsLength = filteredVendors.length-vendorsAdded;
@@ -194,15 +193,24 @@ function addTenVendors(){
 		var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
 	}
-	document.getElementById("load").disabled = true;
+	document.getElementById("load").onclick = function(){waitMessage();};
 	document.getElementById("load").style.backgroundColor="red";
 	setTimeout(function(){
-		document.getElementById("load").disabled = false;
 		document.getElementById("load").style.backgroundColor="green";
+		document.getElementById("load").onclick = function(){addTenVendors();};
 	}, 11000);
 }
 
-
+/*
+Displays a message that tells the user to wait until maps can query more markers.
+*/
+function waitMessage() {
+	console.log("called waitMessage");
+	document.getElementById("wait").style.display="inline-block";
+	setTimeout(function(){
+		$("#wait").fadeOut(1000);
+	}, 3000);
+}
 /*
 Adds a marker at the client's location, and a circle around it denoting the
 area on the map within the specified distance requirement.

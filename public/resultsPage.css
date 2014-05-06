@@ -39,6 +39,15 @@
 	display: inline-block;
 }
 
+#wait {
+	color: #990000;
+	position:relative;
+	left:150px;
+	top:3px;
+	font-size: 10pt;
+	display: none;
+}
+
 #load{
 	float:right;
 	width:176px;
@@ -165,21 +174,21 @@ a:hover {
 #green{
 	height:10px;
 	width:10px;
-	background-color: #00EF3F;
+	background-color: green;
 	display: inline-block;
 }
 
 #yellow{
 	height:10px;
 	width:10px;
-	background-color: #FAFD58;
+	background-color: yellow;
 	display: inline-block;
 }
 
 #red{
 	height:10px;
 	width:10px;
-	background-color: #F47457;
+	background-color: red;
 	display: inline-block;
 }
 
