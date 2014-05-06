@@ -517,7 +517,7 @@ function addResultToList(vendor) {
     	text: "Center map"
     });
     var newURL = window.location.pathname+"../../vendorProfile.html";
-    $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
+    $profile.attr('onclick', "window.open('"+newURL+"?id="+id+"', '_blank'); loadProfile()");
     $map.attr('onclick', "document.vendorAddress='"+address1+" "+address2+"'; moveMapCenter();");
     // add DOM elements to page
     $details1.append($name);
@@ -559,8 +559,7 @@ Redirect to a given client's profile page.
 IN: id - the ID of the given client
 */
 function goToProfile(id) {
-	var newURL = window.location.pathname+"../../vendorProfile.html?id="+id;
-	window.location.assign(newURL);
+	window.open("vendorProfile.html?id="+id, '_blank');
 }
 
 /*
