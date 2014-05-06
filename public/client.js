@@ -259,16 +259,18 @@ function addClientMarker(address, boundsList) {
 		}
 	});
 }
-//red: matches requirements but not distance. default
-//blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
-//green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
 
+/*Adds a 
+ red: matches requirements but not distance. default
+blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
+green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
+*/
 function addMarker(map, vendor, boundsList) {
 	var color = vendor.color;
 	var currAddress = getAddress(vendor);
 	if (color === "green"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
-	} else if (color === "blue"){
+	} else if (color === "yellow"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png';
 	} else if (color === "red"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
@@ -470,9 +472,9 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
 			var color = 'green';
 		} else if (matchesProduct) {
-			//blue
-			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png';
-			var color = 'blue';
+			//yellow
+			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png';
+			var color = 'yellow';
 		} else {
 			//just matches distance - red
 			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
