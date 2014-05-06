@@ -204,10 +204,6 @@ function addLoadMore() {
     $("#" + resultsListID).append($li);
 }
 
-function loadMore() {
-	//TODO make it so 10 more clients are loaded when button clicked
-}
-
 /*
 Adds a marker at the client's location, and a circle around it denoting the
 area on the map within the specified distance requirement.
@@ -282,6 +278,7 @@ function addMarker(map, vendor, boundsList) {
 	   			animation: google.maps.Animation.DROP
 			});
 			markersArray.push(marker);
+
 			//set the content of the info window
 			var contentString = getContentString(vendor);
 			var infowindow = new google.maps.InfoWindow({
