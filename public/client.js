@@ -191,7 +191,6 @@ function addTenVendors(){
 	filterColors();
 	document.getElementById("load").disabled = true;
 	document.getElementById("load").style.backgroundColor="red";
-	document.getElementById("load").innerHTML = "please wait";
 	setTimeout(function(){
 		document.getElementById("load").disabled = false;
 		document.getElementById("load").style.backgroundColor="green";
@@ -470,10 +469,10 @@ function addResultToList(vendor) {
     });
 
     var $vendorColor = $("<div>", {
-    	value: color,
-    	text: "testing"
+    	class: "vendorColor",
+    	value: color
     });
-    $vendorColor.css("background-color: color");
+    $vendorColor.css("background", color);
 
     var $details1 = $("<div>", {
     	class: 'details1'
