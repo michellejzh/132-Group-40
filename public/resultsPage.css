@@ -34,12 +34,35 @@
 	border-radius:10px;
 }
 
+#searchAddress{
+	color:#D9D9D9;
+	display: inline-block;
+}
+
+#load{
+	float:right;
+	width:176px;
+	display:inline-block;
+}
+
 .name {
 	font-weight: bold;
 }
 
 .details1 {
 	float: left;
+	word-wrap:break-word;
+
+}
+
+.address{
+		word-wrap:break-word;
+
+}
+
+.phone{
+		word-wrap:break-word;
+
 }
 
 .details2 {
@@ -57,13 +80,6 @@ button {
 	margin-right: 5px;
 }
 
-#info1 {
-	width: 160px;
-}
-
-#info2 {
-	width: 140px;
-}
 
 .vendorLi{
 	height: 60px;
@@ -101,6 +117,7 @@ a:hover {
 	padding-top: 5px;
 	border:2px solid silver;
 
+
 }
 
 #A{
@@ -109,6 +126,8 @@ a:hover {
 	border-color:#2F3237;
 	padding-right: 10px;
 	padding-left:10px;
+	margin-left: 5px;
+
 }
 
 #delivery, #payment, #product, #matches{
@@ -117,6 +136,8 @@ a:hover {
 
 #content legend{
 	font-weight: bold;
+	margin-left: 2px;
+
 }
 
 #B{
@@ -136,21 +157,6 @@ a:hover {
 	margin: 0 auto;
 	margin-left:20px;
 }
-/*
-.profile {
-	border-style: none;
-	color:#151B54;
-	border-radius: 5px;
-	border-style: solid;
-}
-
-.map {
-	border-style:none;
-	color:#151B54;
-	border-radius: 5px;
-	border-style: solid;
-
-}*/
 
 #matches{
 	display: inline-block;
@@ -159,20 +165,32 @@ a:hover {
 #green{
 	height:10px;
 	width:10px;
-	background-color: green;
+	background-color: #00EF3F;
 	display: inline-block;
 }
 
-#blue{
+#yellow{
 	height:10px;
 	width:10px;
-	background-color: blue;
+	background-color: #FAFD58;
 	display: inline-block;
 }
 
 #red{
 	height:10px;
 	width:10px;
-	background-color: red;
+	background-color: #F47457;
 	display: inline-block;
 }
+
+.vendorColor{
+	height:45px;
+	width:5px;
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-right: 10px;
+	display:inline-block;
+	float:left;
+}
+
+

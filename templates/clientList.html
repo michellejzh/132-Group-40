@@ -1,4 +1,4 @@
-<!--when you're looking at a list of all the clients in the database-->
+<!--when you're looking at a list of all the vendors in the database-->
 
 <!DOCTYPE html>
 <html>
@@ -29,13 +29,13 @@
 						<form id="searchByName" action="clientList.html" method="get">
 							<div id='submit'>
 								Search by name: <input type='text' name='name' >
-								<input id="searchsubmit" type='submit'>
+								<input id="searchsubmit" type='submit' value='Search'>
 							</div>
 						</form>
 						<form id="searchByState" action="clientList.html" method="get">
 							<div id='submit'>
 								Search by state:  <input type='text' name='state' >
-								<input id="searchsubmit" type='submit'>
+								<input id="searchsubmit" type='submit' value='Search'>
 							</div>
 							<br>
 						</form>
@@ -44,7 +44,7 @@
 			</div>
 	<br><br>
 		<div id='content'>
-			<ul id="vendorList">
+			<ul id="vendorList"> <!--populated by javascript-->
 			</ul>
 		</div>
 	</div>
