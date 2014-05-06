@@ -113,6 +113,7 @@ a:hover {
 	padding-top: 5px;
 	border:2px solid silver;
 
+
 }
 
 #A{
@@ -121,6 +122,8 @@ a:hover {
 	border-color:#2F3237;
 	padding-right: 10px;
 	padding-left:10px;
+	margin-left: 5px;
+
 }
 
 #delivery, #payment, #product, #matches{
@@ -129,6 +132,8 @@ a:hover {
 
 #content legend{
 	font-weight: bold;
+		margin-left: 5px;
+
 }
 
 #B{
