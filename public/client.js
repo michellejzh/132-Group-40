@@ -178,14 +178,13 @@ function addTenVendors(){
 	if (vendorsLength > 10){
 		vendorsLength = 10;
 	}
-	
 	for (; vendorsAdded < temp; vendorsAdded++){
 		var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
 	}
 	filterColors();
 }
-1
+
 
 /*
 Adds a marker at the client's location, and a circle around it denoting the
@@ -574,6 +573,7 @@ a, b - vendors
 function compareByDist(a, b){
 	if (a.distance < b.distance) return -1;
 	if (a.distance > b.distance) return 1;
+
 	return 0;
 }
 
