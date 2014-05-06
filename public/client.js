@@ -26,6 +26,7 @@ var boundsList = [];
 //Get the distance specified from the search
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
+	document.getElementById("searchAddress").innerHTML = "You searched for" + getAddressFromURL();
 })
 
 /*
@@ -166,6 +167,12 @@ function addClosestVendors(filteredVendors, boundsList) {
 		addMarker(map, vendor, boundsList);
     }
 	filterColors();
+	document.getElementById("load").disabled = true;
+	document.getElementById("load").style.backgroundColor="red";
+	setTimeout(function(){
+		document.getElementById("load").disabled = false;
+		document.getElementById("load").style.backgroundColor="green";
+	}, 11000);
 }
 
 
@@ -183,6 +190,12 @@ function addTenVendors(){
 		addMarker(map, vendor, boundsList);
 	}
 	filterColors();
+	document.getElementById("load").disabled = true;
+	document.getElementById("load").style.backgroundColor="red";
+	setTimeout(function(){
+		document.getElementById("load").disabled = false;
+		document.getElementById("load").style.backgroundColor="green";
+	}, 11000);
 }
 
 

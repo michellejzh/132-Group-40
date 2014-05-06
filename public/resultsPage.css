@@ -34,6 +34,11 @@
 	border-radius:10px;
 }
 
+#searchAddress{
+	color:#D9D9D9;
+
+}
+
 .name {
 	font-weight: bold;
 }
@@ -184,4 +189,6 @@ a:hover {
 
 #load{
 	float:right;
+	width:150px;
+	height:38px;
 }
