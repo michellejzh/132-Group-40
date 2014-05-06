@@ -2,24 +2,27 @@
 Javascript for searchResults.html
 */
 
-// id for the map canvas
+//ID for the map canvas
 var mapID = "map-canvas";
-// id for resulsts list id
+//div ID for resulsts list ID
 var resultsListID = "results-list";
-// geocoder
+//Geocoder
 var geocoder = new google.maps.Geocoder();
-// minimum distance for vendors
+//Minimum distance for vendors
 var distance = 0;
-//lists for the markers and clients to add to the results list
+//Lists for the markers and clients to add to the results list
 var markersArray = [];
 var resultList = [];
 
-//get the distance specified from the search
+//Get the distance specified from the search
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
 })
 
-
+/*
+Functions to get the specifications from "Filter Results"
+*/
+//Product capability
 function getProductCapability() {
 	var selected = [];
 	$('#product input:checked').each(function() {
@@ -27,15 +30,15 @@ function getProductCapability() {
 	});
 	return selected;
 }
-
+//Lead time
 function getLead() {
 	return $('#delivery input:checked').attr('value');
 }
-
+//Payment terms
 function getPayment() {
 	return $('#payment input:checked').attr('value');
 }
-
+//The color markers you want to display
 function getMatches() {
 	var selected = [];
 	$('#matches input:checked').each(function() {
@@ -43,14 +46,10 @@ function getMatches() {
 	});
 	return selected;
 }
-/*
-//if you click on a box
-function updateSearch() {
-	initializeMap();
-	//clear the list items
-	document.getElementById("results-list").innerHTML = "";
-}*/
 
+/*
+
+*/
 function filterColors() {
 	var productParam = getProductCapability();
 	var leadParam = getLead();
