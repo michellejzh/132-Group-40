@@ -40,6 +40,8 @@
 
 .details1 {
 	float: left;
+	word-wrap:break-word;
+
 }
 
 .details2 {
