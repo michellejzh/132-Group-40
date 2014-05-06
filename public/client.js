@@ -1,27 +1,22 @@
 /*
-TODO
-1. edit database to match what mike sent over.
-2. cache locations so that geolocation thing doesn't send too many queries
+Javascript for searchResults.html
 */
 
 // id for the map canvas
 var mapID = "map-canvas";
-
 // id for resulsts list id
 var resultsListID = "results-list";
-
 // geocoder
 var geocoder = new google.maps.Geocoder();
-
-// Minimum distance for vendors
+// minimum distance for vendors
 var distance = 0;
-
+//lists for the markers and clients to add to the results list
 var markersArray = [];
 var resultList = [];
 
+//get the distance specified from the search
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
-	console.log("distance is "+distance);
 })
 
 
@@ -91,7 +86,7 @@ function filterColors() {
 		}
 		else if (productBool){
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png');
-			if (!contains(matchesParam, "blue")){
+			if (!contains(matchesParam, "yellow")){
 				markersArray[i].setMap(null);
 			}
 			else{
@@ -227,8 +222,10 @@ function addResultToList(vendor) {
 
 /*
 Adds a marker at the client's location, and a circle around it denoting the
-bounds in which clients are considered.
-currAddress - a string representing an address
+area on the map within the specified distance requirement.
+
+IN: address - a string representing an address
+	boundsList - the list of coordinates that define the bounds of the map
 */
 function addClientMarker(address, boundsList) {
 	geocoder.geocode( { 'address': address}, function(results, status) {
@@ -240,6 +237,7 @@ function addClientMarker(address, boundsList) {
 			position: location,
 			animation: google.maps.Animation.DROP
 		});
+		//set the properties of the distance circle
 		var distanceOptions = {
 		  strokeColor: '#FF0000',
 		  strokeOpacity: 0.3,
@@ -250,6 +248,7 @@ function addClientMarker(address, boundsList) {
 		  center: location,
 		  radius: distance*1609.34
 		};
+		//add the distance circle
 		var distanceCircle = new google.maps.Circle(distanceOptions);
 		boundsList.push(location);
 		fitBounds(boundsList);
@@ -260,12 +259,18 @@ function addClientMarker(address, boundsList) {
 	});
 }
 
-/*Adds a 
- red: matches requirements but not distance. default
-blue: matches distance but not requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png
-green: matches distance and requirements. http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png
+/*
+Adds a marker of a color determined by which specifications it matches.
+	Red: matches the distance, but not the product.
+	Yellow: matches the distance and product, but not both the lead time and payment terms.
+	Green: matches distance, product, lead time, and payment terms.
+
+IN: map - the map object
+	vendor - the list object in partner_data.json of the current vendor
+	boundsList - the list of coordinates that define the bounds of the map
 */
 function addMarker(map, vendor, boundsList) {
+	//get the color parameter, which was set in renderFilteredVendor
 	var color = vendor.color;
 	var currAddress = getAddress(vendor);
 	if (color === "green"){
@@ -277,6 +282,7 @@ function addMarker(map, vendor, boundsList) {
 	}
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {
+			//add info to the results list and marker to the map
 			addResultToList(vendor);
 			resultList.push(vendor);
 			var location = results[0].geometry.location;
@@ -287,6 +293,7 @@ function addMarker(map, vendor, boundsList) {
 	   			animation: google.maps.Animation.DROP
 			});
 			markersArray.push(marker);
+			//set the content of the info window
 			var contentString = getContentString(vendor);
 			var infowindow = new google.maps.InfoWindow({
 				content: contentString,
@@ -302,15 +309,16 @@ function addMarker(map, vendor, boundsList) {
 			});
 		}
 		else {
-			//alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
-			//console.log("Retrying in 3 seconds");
-			setTimeout(addMarker(map, vendor, boundsList), 5000);
+			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
 		}
 	});
 }
 
 /*
-Popup client profile windows when you click on their map markers.
+Set the content of the info window that pops up with the client's profile info
+when you click on its marker on the map.
+
+IN: vendor - the list object in partner_data.json of the current vendor
 */
 function getContentString(vendor) {
     var capability = String(vendor.productCapabilityIds);
@@ -355,10 +363,17 @@ function getContentString(vendor) {
 	+"	</td>"
 	+"</tr>"
 	+"</div>"
-
 	return contentString;
 }
 
+/*
+Translate the productCapabilityIds into their associated strings.
+Called from getContentString.
+
+IN: ids - a string of the ids in the productCapabilityIds array from
+	the vendor in partner_data.json
+OUT: the translated IDs
+*/
 function translateCapability(ids) {
     ids = ids.replace("1", "Plants");
     ids = ids.replace("2", "Flowers");
@@ -367,35 +382,48 @@ function translateCapability(ids) {
     return ids;
 }
 
+/*
+Redirect to a given client's profile page.
+
+IN: id - the ID of the given client
+*/
 function goToProfile(id) {
 	var newURL = window.location.pathname+"../../clientProfile.html?id="+id;
 	window.location.assign(newURL);
 }
 
+/*
+Fit the map to bounds defined by a set of points.
+
+IN: boundsList - the list of coordinates determining the bounds
+	which has the coordinate of each marker pushed to it.
+*/
 function fitBounds(boundsList) {
 	var bounds = new google.maps.LatLngBounds();
 	for (var i = 0; i < boundsList.length; i++) {
   		bounds.extend(boundsList[i]);
   	}
   	map.fitBounds(bounds);
+  	//in case the zoom is too high when the bounds are small
   	if (map.getZoom()>8) {
   		map.setZoom(8);
   	}
 }
 
 /*
-Renders filtered vendors on page
+Takes the list of vendors and passes them to renderFilteredVendor to be filtered
+by distance.
 
-vendors - the complete JSON list of vendors
-originAddress - a string representing the address of the origin
+IN: vendors - the complete JSON list of vendors
+	clientCoord - the coordinates of the client's address
 */
-function renderVendors(vendors, originCoord, address){
+function renderVendors(vendors, clientCoord, address){
 	var boundsList = [];
 	addClientMarker(address, boundsList);
 	var filteredVendors = [];
 	for (var i = 0; i < vendors.length; i++){
 		vendor = vendors[i];
-		renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors);
+		renderFilteredVendor(clientCoord, vendor, boundsList, filteredVendors);
 	}
 	addClosestVendors(filteredVendors, boundsList);
 }
@@ -484,7 +512,7 @@ function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) 
 		var matchesColor = false;
 
 		if ((color === 'green' && contains(matchesParam, "green")) ||
-			color === 'blue' && contains(matchesParam, 'blue') ||
+			color === 'yellow' && contains(matchesParam, 'yellow') ||
 			color == 'red' && contains(matchesParam, 'red')){
 			matchesColor = true;
 		}
