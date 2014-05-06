@@ -164,15 +164,14 @@ function addClosestVendors(filteredVendors, boundsList) {
     for (; vendorsAdded < vendorsLength; vendorsAdded++) {
     	var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
-<<<<<<< HEAD
-		//noooooo
-		//if (i==vendorsLength-1) {
-		//	addLoadMore();
-		//}
-=======
->>>>>>> 085cf938a801772a2f43b15ea280d43d682050e9
     }
 	filterColors();
+	document.getElementById("load").disabled = true;
+	document.getElementById("load").style.backgroundColor="red";
+	setTimeout(function(){
+		document.getElementById("load").disabled = false;
+		document.getElementById("load").style.backgroundColor="green";
+	}, 11000);
 }
 
 
@@ -190,6 +189,12 @@ function addTenVendors(){
 		addMarker(map, vendor, boundsList);
 	}
 	filterColors();
+	document.getElementById("load").disabled = true;
+	document.getElementById("load").style.backgroundColor="red";
+	setTimeout(function(){
+		document.getElementById("load").disabled = false;
+		document.getElementById("load").style.backgroundColor="green";
+	}, 11000);
 }
 
 
