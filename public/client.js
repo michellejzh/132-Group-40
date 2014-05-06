@@ -203,9 +203,29 @@ function addClosestVendors(filteredVendors, boundsList) {
     for (var i = 0; i < vendorsLength; i++) {
     	var vendor = filteredVendors[i];
 		addMarker(map, vendor, boundsList);
+		//noooooo
+		if (i==vendorsLength-1) {
+			addLoadMore();
+		}
     }
 }
 
+function addLoadMore() {
+	console.log("called load more");
+	var $li = $("<li>", {
+    	class: 'vendorLi',
+    });
+	var $button = $("<button>", {
+    	class: 'loadMoreButton',
+    });
+    $button.attr('onclick', "loadMore()");
+    $li.append($button);
+    $("#" + resultsListID).append($li);
+}
+
+function loadMore() {
+	//TODO make it so 10 more clients are loaded when button clicked
+}
 
 /*
 Adds a marker at the client's location, and a circle around it denoting the
@@ -245,6 +265,7 @@ function addClientMarker(address, boundsList) {
 		}
 	});
 }
+
 
 /*
 Adds a marker of a color determined by which specifications it matches.
@@ -379,6 +400,7 @@ function getContentString(vendor) {
 	return contentString;
 }
 
+
 /*
 Translate the productCapabilityIds into their associated strings.
 Called from getContentString.
@@ -400,7 +422,6 @@ function translateCapability(ids) {
 Filters the markers on the map to display only the specified marker color.
 */
 function filterColors() {
-	console.log("filterColors was called");
 	var productParam = getProductCapability();
 	var leadParam = getLead();
 	var paymentParam = getPayment();
