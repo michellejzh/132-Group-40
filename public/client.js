@@ -450,11 +450,19 @@ function addResultToList(vendor) {
     var address2 = getAddressLine2(vendor);
     var phone = vendor.phone;
     var id = vendor.id;
+    var color = vendor.color;
 
     //create DOM elements
     var $li = $("<li>", {
     	class: 'vendorLi',
     });
+
+    var $vendorColor = $("<div>", {
+    	value: color,
+    	text: "testing"
+    });
+    $vendorColor.css("background-color: color");
+
     var $details1 = $("<div>", {
     	class: 'details1'
     });
@@ -496,6 +504,7 @@ function addResultToList(vendor) {
     $details2.append($profile);
     $details2.append("<br>");
     $details2.append($map);
+    $li.append($vendorColor);
     $li.append($details1);
     $li.append($details2);
     $("#" + resultsListID).append($li);
