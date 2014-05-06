@@ -16,6 +16,7 @@ var markersArray = [];
 var resultList = [];
 
 var vendorsAdded = 0;
+var geoCounter = 0;
 
 //Keeps track of vendors within distance limit
 var filteredVendors = [];
@@ -166,7 +167,6 @@ function addClosestVendors(filteredVendors, boundsList) {
     	var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
     }
-	filterColors();
 	document.getElementById("load").disabled = true;
 	document.getElementById("load").style.backgroundColor="red";
 	setTimeout(function(){
@@ -179,6 +179,8 @@ function addClosestVendors(filteredVendors, boundsList) {
 /* addTenVendors
 adds up to ten more vendors to the map depending on how many vendors are left in filteredVendors
 */
+
+
 function addTenVendors(){
 	var vendorsLength = filteredVendors.length-vendorsAdded;
 	var temp = vendorsAdded + 10
@@ -192,7 +194,6 @@ function addTenVendors(){
 		var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
 	}
-	filterColors();
 	document.getElementById("load").disabled = true;
 	document.getElementById("load").style.backgroundColor="red";
 	setTimeout(function(){
@@ -294,6 +295,10 @@ function addMarker(map, vendor, boundsList) {
 		}
 		else {
 			alert("Tried to add marker, but geocode was not successful for the following reason: " + status);
+		}
+		geoCounter++; //Counts how many times the geocode has been called, want to filter colors every 10 times
+		if (geoCounter%10==0){
+			filterColors();
 		}
 	});
 }
@@ -402,7 +407,6 @@ function filterColors() {
 	var leadParam = getLead();
 	var paymentParam = getPayment();
 	var matchesParam = getMatches();
-	console.log("matchesParam = " + matchesParam);
 
 	for (var i = 0; i < resultList.length; i++) {
 		var productBool = true;
