@@ -15,6 +15,14 @@ var distance = 0;
 var markersArray = [];
 var resultList = [];
 
+var vendorsAdded = 0;
+
+//Keeps track of vendors within distance limit
+var filteredVendors = [];
+
+//Keeps track of vendors on the map for bounds
+var boundsList = [];
+
 //Get the distance specified from the search
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
@@ -81,13 +89,12 @@ IN: vendors - the complete JSON list of vendors
 	clientCoord - the coordinates of the client's address
 */
 function renderVendors(vendors, clientCoord, address){
-	var boundsList = [];
 	addClientMarker(address, boundsList);
-	var filteredVendors = [];
 	for (var i = 0; i < vendors.length; i++){
 		vendor = vendors[i];
 		renderFilteredVendor(clientCoord, vendor, boundsList, filteredVendors);
 	}
+	filteredVendors.sort(compareByDist);
 	addClosestVendors(filteredVendors, boundsList);
 }
 
@@ -101,57 +108,10 @@ vendor - JSON object representing vendor
 function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) {	
 	var distance = calcDistance(originCoord, vendor.lat_long);
     if (filter(distance)){
-    	var vendorProduct = vendor.productCapabilityIds;
-	    var vendorPayment = vendor.paymentTerms.id;
-	    var vendorLead = vendor.leadTime.id;
-
-		//gets the selected search parameters
-		var productParam = getProductCapability();
-		var leadParam = getLead();
-		var paymentParam = getPayment();
-		var matchesParam = getMatches();
-
-		//now check to see whether the vendor matches the parameters
-		// set matches product to true if the length is 0 (since many vendors leave it blank)
-		var matchesProduct = true;
-		for (var i=0; i < productParam.length; i++) {
-			if (!contains(vendorProduct, parseInt(productParam[i]))){
-				matchesProduct = false;
-				break;
-			}
-		}
-
-		var matchesLead = ((vendorLead == leadParam) || (vendorLead == 1) || (leadParam == 1));
-		var matchesPayment = ((vendorPayment == paymentParam) || (vendorPayment == 1) || (paymentParam == 1));
-
-		if (matchesProduct && matchesLead && matchesPayment) {
-			//green
-			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
-			var color = 'green';
-		} else if (matchesProduct) {
-			//yellow
-			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png';
-			var color = 'yellow';
-		} else {
-			//just matches distance - red
-			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
-			var color = 'red';
-		}
-
-		var matchesColor = false;
-
-		if ((color === 'green' && contains(matchesParam, "green")) ||
-			color === 'yellow' && contains(matchesParam, 'yellow') ||
-			color == 'red' && contains(matchesParam, 'red')){
-			matchesColor = true;
-		}
-
-		if (matchesColor) {
-			vendor.color = color;
-			vendor.distance = distance;
-			filteredVendors.push(vendor);
-		}
-    }
+		vendor.color = "green";
+		vendor.distance = distance;
+		filteredVendors.push(vendor);
+	}
 }
 
 /*
@@ -194,17 +154,38 @@ function getMatches() {
 }
 
 
-//TODO comment this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/* addClosestVendors
+adds the ten closest vendors to the map by absolute distance
+*/
 function addClosestVendors(filteredVendors, boundsList) {
-	filteredVendors.sort(compareByDist);
 	//Bound at 10 vendors so that the maximum query limit isn't reached
 	var vendorsLength = (filteredVendors.length < 10) ? filteredVendors.length : 10;
 
-    for (var i = 0; i < vendorsLength; i++) {
-    	var vendor = filteredVendors[i];
+    for (; vendorsAdded < vendorsLength; vendorsAdded++) {
+    	var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
     }
+	filterColors();
 }
+
+
+/* addTenVendors
+adds up to ten more vendors to the map depending on how many vendors are left in filteredVendors
+*/
+function addTenVendors(){
+	var vendorsLength = filteredVendors.length-vendorsAdded;
+	var temp = vendorsAdded + 10
+	if (vendorsLength > 10){
+		vendorsLength = 10;
+	}
+	
+	for (; vendorsAdded < temp; vendorsAdded++){
+		var vendor = filteredVendors[vendorsAdded];
+		addMarker(map, vendor, boundslist);
+	}
+	filterColors();
+}
+	
 
 
 /*
@@ -260,11 +241,11 @@ function addMarker(map, vendor, boundsList) {
 	//get the color parameter, which was set in renderFilteredVendor
 	var color = vendor.color;
 	var currAddress = getAddress(vendor);
-	if (color === "green"){
+	if (color == "green"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
-	} else if (color === "yellow"){
+	} else if (color == "yellow"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png';
-	} else if (color === "red"){
+	} else if (color == "red"){
 		var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
 	}
 	geocoder.geocode( { 'address': currAddress}, function(results, status) {
