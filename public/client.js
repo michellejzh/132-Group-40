@@ -425,11 +425,11 @@ function filterColors() {
 			updateListColor(i, 'green');
 			if (!contains(matchesParam, "green")){
 				markersArray[i].setMap(null);
-				setLiVisibility(i, false, "green");
+				setLiVisibility(i, false, "#00EF3F");
 			}
 			else{
 				markersArray[i].setMap(map);
-				setLiVisibility(i, true, "green");
+				setLiVisibility(i, true, "#00EF3F");
 			}
 		}
 		else if (productBool){
@@ -437,11 +437,11 @@ function filterColors() {
 			updateListColor(i, 'yellow');
 			if (!contains(matchesParam, "yellow")){
 				markersArray[i].setMap(null);
-				setLiVisibility(i, false, "yellow");
+				setLiVisibility(i, false, "#FAFD58");
 			}
 			else{
 				markersArray[i].setMap(map);
-				setLiVisibility(i, true, "yellow");
+				setLiVisibility(i, true, "#FAFD58");
 			}
 		}
 		else{
@@ -449,11 +449,11 @@ function filterColors() {
 			updateListColor(i, 'red');
 			if (!contains(matchesParam, "red")){
 				markersArray[i].setMap(null);
-				setLiVisibility(i, false, "red");
+				setLiVisibility(i, false, "#F47457");
 			}
 			else{
 				markersArray[i].setMap(map);
-				setLiVisibility(i, true, "red");
+				setLiVisibility(i, true, "#F47457");
 			}
 		}
 	}
