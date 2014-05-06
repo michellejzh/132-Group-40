@@ -166,6 +166,10 @@ function addClosestVendors(filteredVendors, boundsList) {
 		addMarker(map, vendor, boundsList);
     }
 	filterColors();
+	document.getElementById("load").disabled = true;
+	setTimeout(function(){
+		document.getElementById("load").disabled = false;
+	}, 11000);
 }
 
 
@@ -183,6 +187,10 @@ function addTenVendors(){
 		addMarker(map, vendor, boundsList);
 	}
 	filterColors();
+	document.getElementById("load").disabled = true;
+	setTimeout(function(){
+		document.getElementById("load").disabled = false;
+	}, 11000);
 }
 
 
