@@ -427,9 +427,11 @@ function filterColors() {
 			updateListColor(i, 'green');
 			if (!contains(matchesParam, "green")){
 				markersArray[i].setMap(null);
+				setLiVisibility(i, false);
 			}
 			else{
 				markersArray[i].setMap(map);
+				setLiVisibility(i, true);
 			}
 		}
 		else if (productBool){
@@ -437,9 +439,11 @@ function filterColors() {
 			updateListColor(i, 'yellow');
 			if (!contains(matchesParam, "yellow")){
 				markersArray[i].setMap(null);
+				setLiVisibility(i, false);
 			}
 			else{
 				markersArray[i].setMap(map);
+				setLiVisibility(i, true);
 			}
 		}
 		else{
@@ -447,16 +451,15 @@ function filterColors() {
 			updateListColor(i, 'red');
 			if (!contains(matchesParam, "red")){
 				markersArray[i].setMap(null);
+				setLiVisibility(i, false);
 			}
 			else{
 				markersArray[i].setMap(map);
+				setLiVisibility(i, true);
 			}
 		}
-
-		
 	}
 }
-
 
 /*
 Adds a vendor to a HTML list
@@ -534,9 +537,20 @@ function addResultToList(vendor) {
 //TODO
 function updateListColor(i, color) {
 	var $list = $('.vendorLi');
-	console.log($list[i]);
 	var vendor = $list;
-	vendor[i].find($("div:first-child")).css("background", color);
+	$(vendor[i].firstChild).css("background", "color");
+}
+
+function setLiVisibility(i, visible) {
+	var $list = $('.vendorLi');
+	var vendor = $list;
+	if (visible) {
+		$(vendor[i]).css("display", "list-item");
+		$(vendor[i].firstChild).css("display", "inline-block");
+	}
+	else {
+		$(vendor[i]).css("display", "none");
+	}
 }
 
 /*
