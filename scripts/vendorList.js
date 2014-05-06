@@ -36,7 +36,7 @@ function getStateFromURL(){
 }
 
 // url to visit vendor profiles
-var newURL = window.location.pathname+"../../clientProfile.html";
+var newURL = window.location.pathname+"../../vendorProfile.html";
 
 /*
 Adds the vendors to the list in the HTML page
