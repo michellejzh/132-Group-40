@@ -94,3 +94,12 @@ button:hover{
 	color:white;
 	font-size: 15px;
 }
+
+table {
+	border-collapse: collapse;
+}
+
+td{
+		padding-left:5px;
+
+}
