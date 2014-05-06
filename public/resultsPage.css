@@ -172,9 +172,12 @@ a:hover {
 	display: inline-block;
 }
 
-#vendorColor{
-	height:50px;
+.vendorColor{
+	height:45px;
 	width:5px;
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-right: 10px;
 	display:inline-block;
 	float:left;
 }

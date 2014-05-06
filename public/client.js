@@ -165,9 +165,9 @@ function addClosestVendors(filteredVendors, boundsList) {
     	var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
 		//noooooo
-		if (i==vendorsLength-1) {
-			addLoadMore();
-		}
+		//if (i==vendorsLength-1) {
+		//	addLoadMore();
+		//}
     }
 	filterColors();
 }
@@ -475,10 +475,10 @@ function addResultToList(vendor) {
     });
 
     var $vendorColor = $("<div>", {
-    	value: color,
-    	text: "testing"
+    	class: "vendorColor",
+    	value: color
     });
-    $vendorColor.css("background-color: color");
+    $vendorColor.css("background", color);
 
     var $details1 = $("<div>", {
     	class: 'details1'
