@@ -44,6 +44,16 @@
 
 }
 
+.address{
+		word-wrap:break-word;
+
+}
+
+.phone{
+		word-wrap:break-word;
+
+}
+
 .details2 {
 	float: right;
 	margin-right: 7px;
