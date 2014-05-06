@@ -420,18 +420,16 @@ function filterColors() {
 		if (resultList[i].paymentTerms.id != paymentParam && paymentParam!=1){
 			paymentBool = false;
 		}
-		console.log("RESULT LIST: ");
-		console.log(resultList);
 		if (productBool && leadBool && paymentBool){
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
 			updateListColor(i, 'green');
 			if (!contains(matchesParam, "green")){
 				markersArray[i].setMap(null);
-				setLiVisibility(i, false);
+				setLiVisibility(i, false, "green");
 			}
 			else{
 				markersArray[i].setMap(map);
-				setLiVisibility(i, true);
+				setLiVisibility(i, true, "green");
 			}
 		}
 		else if (productBool){
@@ -439,11 +437,11 @@ function filterColors() {
 			updateListColor(i, 'yellow');
 			if (!contains(matchesParam, "yellow")){
 				markersArray[i].setMap(null);
-				setLiVisibility(i, false);
+				setLiVisibility(i, false, "yellow");
 			}
 			else{
 				markersArray[i].setMap(map);
-				setLiVisibility(i, true);
+				setLiVisibility(i, true, "yellow");
 			}
 		}
 		else{
@@ -451,11 +449,11 @@ function filterColors() {
 			updateListColor(i, 'red');
 			if (!contains(matchesParam, "red")){
 				markersArray[i].setMap(null);
-				setLiVisibility(i, false);
+				setLiVisibility(i, false, "red");
 			}
 			else{
 				markersArray[i].setMap(map);
-				setLiVisibility(i, true);
+				setLiVisibility(i, true, "red");
 			}
 		}
 	}
@@ -538,15 +536,15 @@ function addResultToList(vendor) {
 function updateListColor(i, color) {
 	var $list = $('.vendorLi');
 	var vendor = $list;
-	$(vendor[i].firstChild).css("background", "color");
+	$(vendor[i].firstChild).css("background", color);
 }
 
-function setLiVisibility(i, visible) {
+function setLiVisibility(i, visible, color) {
 	var $list = $('.vendorLi');
 	var vendor = $list;
 	if (visible) {
 		$(vendor[i]).css("display", "list-item");
-		$(vendor[i].firstChild).css("display", "inline-block");
+		$(vendor[i].firstChild).css("background", color);
 	}
 	else {
 		$(vendor[i]).css("display", "none");
