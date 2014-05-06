@@ -417,10 +417,11 @@ function filterColors() {
 		if (resultList[i].paymentTerms.id != paymentParam && paymentParam!=1){
 			paymentBool = false;
 		}
-		
+		console.log("RESULT LIST: ");
+		console.log(resultList);
 		if (productBool && leadBool && paymentBool){
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
-			updateListColor('green');
+			updateListColor(i, 'green');
 			if (!contains(matchesParam, "green")){
 				markersArray[i].setMap(null);
 			}
@@ -430,7 +431,7 @@ function filterColors() {
 		}
 		else if (productBool){
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png');
-			updateListColor('yellow');
+			updateListColor(i, 'yellow');
 			if (!contains(matchesParam, "yellow")){
 				markersArray[i].setMap(null);
 			}
@@ -440,7 +441,7 @@ function filterColors() {
 		}
 		else{
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png');	
-			updateListColor('red');
+			updateListColor(i, 'red');
 			if (!contains(matchesParam, "red")){
 				markersArray[i].setMap(null);
 			}
@@ -528,12 +529,11 @@ function addResultToList(vendor) {
 
 
 //TODO
-function updateListColor(color) {
+function updateListColor(i, color) {
 	var $list = $('.vendorLi');
-	//console.log($list);
-	$list.each(function() {
-		$(this).find(".vendorColor").css("background", color);
-	});	
+	console.log($list[i]);
+	var vendor = $list;
+	vendor[i].find($("div:first-child")).css("background", color);
 }
 
 /*
