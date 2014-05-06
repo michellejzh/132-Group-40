@@ -164,6 +164,13 @@ function addClosestVendors(filteredVendors, boundsList) {
     for (; vendorsAdded < vendorsLength; vendorsAdded++) {
     	var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
+<<<<<<< HEAD
+		//noooooo
+		//if (i==vendorsLength-1) {
+		//	addLoadMore();
+		//}
+=======
+>>>>>>> 085cf938a801772a2f43b15ea280d43d682050e9
     }
 	filterColors();
 }
@@ -457,10 +464,10 @@ function addResultToList(vendor) {
     });
 
     var $vendorColor = $("<div>", {
-    	value: color,
-    	text: "testing"
+    	class: "vendorColor",
+    	value: color
     });
-    $vendorColor.css("background-color: color");
+    $vendorColor.css("background", color);
 
     var $details1 = $("<div>", {
     	class: 'details1'
