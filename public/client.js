@@ -420,6 +420,7 @@ function filterColors() {
 		
 		if (productBool && leadBool && paymentBool){
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
+			updateListColor('green');
 			if (!contains(matchesParam, "green")){
 				markersArray[i].setMap(null);
 			}
@@ -429,6 +430,7 @@ function filterColors() {
 		}
 		else if (productBool){
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png');
+			updateListColor('yellow');
 			if (!contains(matchesParam, "yellow")){
 				markersArray[i].setMap(null);
 			}
@@ -438,6 +440,7 @@ function filterColors() {
 		}
 		else{
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png');	
+			updateListColor('red');
 			if (!contains(matchesParam, "red")){
 				markersArray[i].setMap(null);
 			}
@@ -467,6 +470,7 @@ function addResultToList(vendor) {
     //create DOM elements
     var $li = $("<li>", {
     	class: 'vendorLi',
+    	value: id
     });
 
     var $vendorColor = $("<div>", {
@@ -520,6 +524,16 @@ function addResultToList(vendor) {
     $li.append($details1);
     $li.append($details2);
     $("#" + resultsListID).append($li);
+}
+
+
+//TODO
+function updateListColor(color) {
+	var $list = $('.vendorLi');
+	//console.log($list);
+	$list.each(function() {
+		$(this).find(".vendorColor").css("background", color);
+	});	
 }
 
 /*
