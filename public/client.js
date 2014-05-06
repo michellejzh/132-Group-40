@@ -26,6 +26,7 @@ var boundsList = [];
 //Get the distance specified from the search
 $(document).ready(function(){
 	distance = parseInt(getParam('distance'));
+	document.getElementById("searchAddress").innerHTML = "You searched for" + getAddressFromURL();
 })
 
 /*
