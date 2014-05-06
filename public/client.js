@@ -164,10 +164,13 @@ function addClosestVendors(filteredVendors, boundsList) {
     for (; vendorsAdded < vendorsLength; vendorsAdded++) {
     	var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
+<<<<<<< HEAD
 		//noooooo
 		//if (i==vendorsLength-1) {
 		//	addLoadMore();
 		//}
+=======
+>>>>>>> 085cf938a801772a2f43b15ea280d43d682050e9
     }
 	filterColors();
 }
@@ -182,27 +185,13 @@ function addTenVendors(){
 	if (vendorsLength > 10){
 		vendorsLength = 10;
 	}
-	
 	for (; vendorsAdded < temp; vendorsAdded++){
 		var vendor = filteredVendors[vendorsAdded];
-		addMarker(map, vendor, boundslist);
+		addMarker(map, vendor, boundsList);
 	}
 	filterColors();
 }
-	
 
-function addLoadMore() {
-	console.log("called load more");
-	var $li = $("<li>", {
-    	class: 'vendorLi',
-    });
-	var $button = $("<button>", {
-    	class: 'loadMoreButton',
-    });
-    $button.attr('onclick', "loadMore()");
-    $li.append($button);
-    $("#" + resultsListID).append($li);
-}
 
 /*
 Adds a marker at the client's location, and a circle around it denoting the
@@ -591,6 +580,7 @@ a, b - vendors
 function compareByDist(a, b){
 	if (a.distance < b.distance) return -1;
 	if (a.distance > b.distance) return 1;
+
 	return 0;
 }
 
