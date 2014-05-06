@@ -28,6 +28,8 @@
 }
 
 #info-table {
+	font-weight: normal;
+	font-size: 11pt;
 	height: 120px;
 	width: 300px;
 	border: 1px solid #2F3237;
@@ -36,7 +38,7 @@
 }
 
 td{
-		padding-left:10px;
+	padding-left:10px;
 
 }
 
