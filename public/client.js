@@ -226,10 +226,10 @@ function addResultToList(vendor) {
 }
 
 /*
-Adds a marker on the google map at the given address. 
+Adds a marker at the client's location, and a circle around it denoting the
+bounds in which clients are considered.
 currAddress - a string representing an address
 */
-
 function addClientMarker(address, boundsList) {
 	geocoder.geocode( { 'address': address}, function(results, status) {
 		if (status == google.maps.GeocoderStatus.OK) {	  
