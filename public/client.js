@@ -420,42 +420,46 @@ function filterColors() {
 		if (resultList[i].paymentTerms.id != paymentParam && paymentParam!=1){
 			paymentBool = false;
 		}
-		
+		console.log("RESULT LIST: ");
+		console.log(resultList);
 		if (productBool && leadBool && paymentBool){
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
-			updateListColor('green');
+			updateListColor(i, 'green');
 			if (!contains(matchesParam, "green")){
 				markersArray[i].setMap(null);
+				setLiVisibility(i, false);
 			}
 			else{
 				markersArray[i].setMap(map);
+				setLiVisibility(i, true);
 			}
 		}
 		else if (productBool){
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png');
-			updateListColor('yellow');
+			updateListColor(i, 'yellow');
 			if (!contains(matchesParam, "yellow")){
 				markersArray[i].setMap(null);
+				setLiVisibility(i, false);
 			}
 			else{
 				markersArray[i].setMap(map);
+				setLiVisibility(i, true);
 			}
 		}
 		else{
 			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png');	
-			updateListColor('red');
+			updateListColor(i, 'red');
 			if (!contains(matchesParam, "red")){
 				markersArray[i].setMap(null);
+				setLiVisibility(i, false);
 			}
 			else{
 				markersArray[i].setMap(map);
+				setLiVisibility(i, true);
 			}
 		}
-
-		
 	}
 }
-
 
 /*
 Adds a vendor to a HTML list
@@ -531,12 +535,22 @@ function addResultToList(vendor) {
 
 
 //TODO
-function updateListColor(color) {
+function updateListColor(i, color) {
 	var $list = $('.vendorLi');
-	//console.log($list);
-	$list.each(function() {
-		$(this).find(".vendorColor").css("background", color);
-	});	
+	var vendor = $list;
+	$(vendor[i].firstChild).css("background", "color");
+}
+
+function setLiVisibility(i, visible) {
+	var $list = $('.vendorLi');
+	var vendor = $list;
+	if (visible) {
+		$(vendor[i]).css("display", "list-item");
+		$(vendor[i].firstChild).css("display", "inline-block");
+	}
+	else {
+		$(vendor[i]).css("display", "none");
+	}
 }
 
 /*
