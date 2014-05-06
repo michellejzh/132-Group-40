@@ -168,7 +168,7 @@ function addClosestVendors(filteredVendors, boundsList) {
 		addMarker(map, vendor, boundsList);
     }
 	document.getElementById("load").onclick = function(){waitMessage();};
-	document.getElementById("load").style.backgroundColor="red";
+	document.getElementById("load").style.backgroundColor="#990000";
 	setTimeout(function(){
 		document.getElementById("load").onclick = function(){addTenVendors();};
 		document.getElementById("load").style.backgroundColor="green";
@@ -194,7 +194,7 @@ function addTenVendors(){
 		addMarker(map, vendor, boundsList);
 	}
 	document.getElementById("load").onclick = function(){waitMessage();};
-	document.getElementById("load").style.backgroundColor="red";
+	document.getElementById("load").style.backgroundColor="#990000";
 	setTimeout(function(){
 		document.getElementById("load").style.backgroundColor="green";
 		document.getElementById("load").onclick = function(){addTenVendors();};
