@@ -1,6 +1,7 @@
-/*
+/* ==============================
 Javascript for searchResults.html
-*/
+================================= */
+
 
 //ID for the map canvas
 var mapID = "map-canvas";
@@ -20,8 +21,153 @@ $(document).ready(function(){
 })
 
 /*
+Gets the parameter of the URL as a string.
+
+IN: name - the string representing the name of the parameter you want to retrieve
+*/
+function getParam(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}
+
+/*
+Returns a string of the address by parsing the URL parameters.
+*/
+function getAddressFromURL(){
+	var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
+	return address.replace(new RegExp("\\+", 'g'), " ")
+}
+
+
+/*
+Initializes the map.
+*/
+function initializeMap() {
+	//paints map
+	var mapOptions = {
+		center: new google.maps.LatLng(40.7078, -74.0119),
+		zoom: 7
+	};
+	map = new google.maps.Map($('#' + mapID)[0], mapOptions);
+	//deal with applicable vendors
+	loadVendors(map);
+}
+google.maps.event.addDomListener(window, 'load', initializeMap);
+
+
+/*
+Gets a JSON object of vendors from the server
+*/
+function loadVendors(map){
+	var address = getAddressFromURL();
+	$.ajax({
+		url:"http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&sensor=false",
+		type: "POST",
+		success:function(res){
+			//Display the specified distance from client.
+			var lat = res.results[0].geometry.location.lat;
+		    var lng = res.results[0].geometry.location.lng;
+			renderVendors(partner_data, [lat, lng], address);
+		}
+	});
+}
+
+
+/*
+Takes the list of vendors and passes them to renderFilteredVendor to be filtered
+by distance.
+
+IN: vendors - the complete JSON list of vendors
+	clientCoord - the coordinates of the client's address
+*/
+function renderVendors(vendors, clientCoord, address){
+	var boundsList = [];
+	addClientMarker(address, boundsList);
+	var filteredVendors = [];
+	for (var i = 0; i < vendors.length; i++){
+		vendor = vendors[i];
+		renderFilteredVendor(clientCoord, vendor, boundsList, filteredVendors);
+	}
+	addClosestVendors(filteredVendors, boundsList);
+}
+
+
+/*
+Renders vendor if vendor is within distance radius.
+
+clientAdress - the client's address as a string
+vendor - JSON object representing vendor
+*/
+function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) {	
+	var distance = calcDistance(originCoord, vendor.lat_long);
+    if (filter(distance)){
+    	var vendorProduct = vendor.productCapabilityIds;
+	    var vendorPayment = vendor.paymentTerms.id;
+	    var vendorLead = vendor.leadTime.id;
+
+		//gets the selected search parameters
+		var productParam = getProductCapability();
+		var leadParam = getLead();
+		var paymentParam = getPayment();
+		var matchesParam = getMatches();
+
+		//now check to see whether the vendor matches the parameters
+		// set matches product to true if the length is 0 (since many vendors leave it blank)
+		var matchesProduct = true;
+		for (var i=0; i < productParam.length; i++) {
+			if (!contains(vendorProduct, parseInt(productParam[i]))){
+				matchesProduct = false;
+				break;
+			}
+		}
+
+		var matchesLead = ((vendorLead == leadParam) || (vendorLead == 1) || (leadParam == 1));
+		var matchesPayment = ((vendorPayment == paymentParam) || (vendorPayment == 1) || (paymentParam == 1));
+
+		if (matchesProduct && matchesLead && matchesPayment) {
+			//green
+			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
+			var color = 'green';
+		} else if (matchesProduct) {
+			//yellow
+			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png';
+			var color = 'yellow';
+		} else {
+			//just matches distance - red
+			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
+			var color = 'red';
+		}
+
+		var matchesColor = false;
+
+		if ((color === 'green' && contains(matchesParam, "green")) ||
+			color === 'yellow' && contains(matchesParam, 'yellow') ||
+			color == 'red' && contains(matchesParam, 'red')){
+			matchesColor = true;
+		}
+
+		if (matchesColor) {
+			vendor.color = color;
+			vendor.distance = distance;
+			filteredVendors.push(vendor);
+		}
+    }
+}
+
+/*
+Returns true if the vendor passes the filter/matches the user's query. 
+Returns false otherwise
+
+vendorDistance - distance between origin and vendor
+*/
+function filter(vendorDistance){
+	return vendorDistance < distance;
+}
+
+/*
 Functions to get the specifications from "Filter Results"
 */
+
 //Product capability
 function getProductCapability() {
 	var selected = [];
@@ -47,177 +193,19 @@ function getMatches() {
 	return selected;
 }
 
-/*
 
-*/
-function filterColors() {
-	var productParam = getProductCapability();
-	var leadParam = getLead();
-	var paymentParam = getPayment();
-	var matchesParam = getMatches();
-	console.log("matchesParam = " + matchesParam);
+//TODO comment this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+function addClosestVendors(filteredVendors, boundsList) {
+	filteredVendors.sort(compareByDist);
+	//Bound at 10 vendors so that the maximum query limit isn't reached
+	var vendorsLength = (filteredVendors.length < 10) ? filteredVendors.length : 10;
 
-	for (var i = 0; i < resultList.length; i++) {
-		var productBool = true;
-		var leadBool = true;
-		var paymentBool = true;
-
-		for (var k = 0; k < productParam.length; k++) {
-			if (!contains(resultList[i].productCapabilityIds, parseInt(productParam[k]))){
-				productBool = false;
-			}
-		}
-		if (resultList[i].leadTime.id != leadParam && leadParam!=1){
-			leadBool = false;
-		}
-		if (resultList[i].paymentTerms.id != paymentParam && paymentParam!=1){
-			paymentBool = false;
-		}
-		
-		if (productBool && leadBool && paymentBool){
-			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
-			if (!contains(matchesParam, "green")){
-				markersArray[i].setMap(null);
-			}
-			else{
-				markersArray[i].setMap(map);
-			}
-		}
-		else if (productBool){
-			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png');
-			if (!contains(matchesParam, "yellow")){
-				markersArray[i].setMap(null);
-			}
-			else{
-				markersArray[i].setMap(map);
-			}
-		}
-		else{
-			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png');	
-			if (!contains(matchesParam, "red")){
-				markersArray[i].setMap(null);
-			}
-			else{
-				markersArray[i].setMap(map);
-			}
-		}
-
-		
-	}
-}
-	
-/*
-Gets the parameter of the URL as a string
-
-name - the string representing the name of the parameter you want to retrieve
-*/
-function getParam(name){
-   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-      return decodeURIComponent(name[1]);
+    for (var i = 0; i < vendorsLength; i++) {
+    	var vendor = filteredVendors[i];
+		addMarker(map, vendor, boundsList);
+    }
 }
 
-/*
-Returns a string of the address by parsing the URL parameters.
-*/
-function getAddressFromURL(){
-	var address = getParam('addressLine1') + " " + getParam('addressLine2') + ", " + getParam('city') + ", " + getParam('state') + " " + getParam("zipcode");
-	return address.replace(new RegExp("\\+", 'g'), " ")
-}
-
-/*
-initializes the map
-*/
-function initializeMap() {
-	//paints map
-	var mapOptions = {
-		center: new google.maps.LatLng(40.7078, -74.0119),
-		zoom: 7
-	};
-	map = new google.maps.Map($('#' + mapID)[0], mapOptions);
-	//deal with applicable vendors
-	loadVendors(map);
-}
-
-google.maps.event.addDomListener(window, 'load', initializeMap);
-
-/*
-Gets a JSON object of vendors from the server
-*/
-function loadVendors(map){
-	var address = getAddressFromURL();
-	$.ajax({
-		url:"http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&sensor=false",
-		type: "POST",
-		success:function(res){
-			//Display the specified distance from client.
-			var lat = res.results[0].geometry.location.lat;
-		    var lng = res.results[0].geometry.location.lng;
-			renderVendors(partner_data, [lat, lng], address);
-		}
-	});
-}
-
-/*
-Adds a vendor to a HTML list
-
-data - a JSON of a single vendor
-*/
-function addResultToList(vendor) {
-    var vendorName = vendor.name;
-    var address1 = vendor.addressLine1;
-    var address2 = getAddressLine2(vendor);
-    var phone = vendor.phone;
-    var id = vendor.id;
-
-    //create DOM elements
-    var $li = $("<li>", {
-    	class: 'vendorLi',
-    });
-    var $details1 = $("<div>", {
-    	class: 'details1'
-    });
-    var $details2 = $("<div>", {
-		class: 'details2'
-    });
-    var $name = $("<div>", {
-    	class: 'name',
-    	text: vendorName
-    });
-    var $address1 = $("<div>", {
-    	class: 'address',
-    	text: address1
-    });
-    var $address2 = $("<div>", {
-    	class: 'address',
-    	text: address2
-    });
-    var $phone = $("<div>", {
-    	class: 'phone',
-    	text: phone
-    });
-    var $profile = $("<button>", {
-    	class: 'profile',
-    	text: "Full profile"
-    });
-    var $map = $("<button>", {
-    	class: 'map',
-    	text: "Center map"
-    });
-    var newURL = window.location.pathname+"../../clientProfile.html";
-    $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
-    $map.attr('onclick', "document.vendorAddress='"+address1+" "+address2+"'; moveMapCenter();");
-    // add DOM elements to page
-    $details1.append($name);
-    $details1.append($address1);
-    $details1.append($address2);
-    $details1.append($phone);
-    $details2.append($profile);
-    $details2.append("<br>");
-    $details2.append($map);
-    $li.append($details1);
-    $li.append($details2);
-    $("#" + resultsListID).append($li);
-}
 
 /*
 Adds a marker at the client's location, and a circle around it denoting the
@@ -314,6 +302,32 @@ function addMarker(map, vendor, boundsList) {
 }
 
 /*
+Moves the map to the center of the address clicked
+*/
+function moveMapCenter() {
+	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
+		if (status == google.maps.GeocoderStatus.OK) {
+			map.setCenter(results[0].geometry.location);
+			map.setZoom(10);
+		} 
+		else {
+			alert("Geocode was not successful for the following reason: " + status);
+		}
+	});
+}
+
+/*
+Given a JSON object of a vendor, returns the vendor's address as a string
+*/
+function getAddress(vendor){
+	return vendor.addressLine1 + ", " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
+}
+
+function getAddressLine2(vendor){
+	return vendor.city + ", " + vendor.state + " " + vendor.zip;
+}
+
+/*
 Set the content of the info window that pops up with the client's profile info
 when you click on its marker on the map.
 
@@ -381,6 +395,130 @@ function translateCapability(ids) {
     return ids;
 }
 
+
+/*
+Filters the markers on the map to display only the specified marker color.
+*/
+function filterColors() {
+	console.log("filterColors was called");
+	var productParam = getProductCapability();
+	var leadParam = getLead();
+	var paymentParam = getPayment();
+	var matchesParam = getMatches();
+	console.log("matchesParam = " + matchesParam);
+
+	for (var i = 0; i < resultList.length; i++) {
+		var productBool = true;
+		var leadBool = true;
+		var paymentBool = true;
+
+		for (var k = 0; k < productParam.length; k++) {
+			if (!contains(resultList[i].productCapabilityIds, parseInt(productParam[k]))){
+				productBool = false;
+			}
+		}
+		if (resultList[i].leadTime.id != leadParam && leadParam!=1){
+			leadBool = false;
+		}
+		if (resultList[i].paymentTerms.id != paymentParam && paymentParam!=1){
+			paymentBool = false;
+		}
+		
+		if (productBool && leadBool && paymentBool){
+			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png');
+			if (!contains(matchesParam, "green")){
+				markersArray[i].setMap(null);
+			}
+			else{
+				markersArray[i].setMap(map);
+			}
+		}
+		else if (productBool){
+			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png');
+			if (!contains(matchesParam, "yellow")){
+				markersArray[i].setMap(null);
+			}
+			else{
+				markersArray[i].setMap(map);
+			}
+		}
+		else{
+			markersArray[i].setIcon('http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png');	
+			if (!contains(matchesParam, "red")){
+				markersArray[i].setMap(null);
+			}
+			else{
+				markersArray[i].setMap(map);
+			}
+		}
+
+		
+	}
+}
+
+
+/*
+Adds a vendor to a HTML list
+
+data - a JSON of a single vendor
+*/
+function addResultToList(vendor) {
+    var vendorName = vendor.name;
+    var address1 = vendor.addressLine1;
+    var address2 = getAddressLine2(vendor);
+    var phone = vendor.phone;
+    var id = vendor.id;
+
+    //create DOM elements
+    var $li = $("<li>", {
+    	class: 'vendorLi',
+    });
+    var $details1 = $("<div>", {
+    	class: 'details1'
+    });
+    var $details2 = $("<div>", {
+		class: 'details2'
+    });
+    var $name = $("<div>", {
+    	class: 'name',
+    	text: vendorName
+    });
+    var $address1 = $("<div>", {
+    	class: 'address',
+    	text: address1
+    });
+    var $address2 = $("<div>", {
+    	class: 'address',
+    	text: address2
+    });
+    var $phone = $("<div>", {
+    	class: 'phone',
+    	text: phone
+    });
+    var $profile = $("<button>", {
+    	class: 'profile',
+    	text: "Full profile"
+    });
+    var $map = $("<button>", {
+    	class: 'map',
+    	text: "Center map"
+    });
+    var newURL = window.location.pathname+"../../clientProfile.html";
+    $profile.attr('onclick', "window.location.assign('"+newURL+"?id="+id+"'); loadProfile()");
+    $map.attr('onclick', "document.vendorAddress='"+address1+" "+address2+"'; moveMapCenter();");
+    // add DOM elements to page
+    $details1.append($name);
+    $details1.append($address1);
+    $details1.append($address2);
+    $details1.append($phone);
+    $details2.append($profile);
+    $details2.append("<br>");
+    $details2.append($map);
+    $li.append($details1);
+    $li.append($details2);
+    $("#" + resultsListID).append($li);
+}
+
 /*
 Redirect to a given client's profile page.
 
@@ -409,23 +547,6 @@ function fitBounds(boundsList) {
   	}
 }
 
-/*
-Takes the list of vendors and passes them to renderFilteredVendor to be filtered
-by distance.
-
-IN: vendors - the complete JSON list of vendors
-	clientCoord - the coordinates of the client's address
-*/
-function renderVendors(vendors, clientCoord, address){
-	var boundsList = [];
-	addClientMarker(address, boundsList);
-	var filteredVendors = [];
-	for (var i = 0; i < vendors.length; i++){
-		vendor = vendors[i];
-		renderFilteredVendor(clientCoord, vendor, boundsList, filteredVendors);
-	}
-	addClosestVendors(filteredVendors, boundsList);
-}
 
 /*
 Calculates the distance (in miles) between 2 longitude/latitude points
@@ -447,81 +568,11 @@ function calcDistance(coord1, coord2){
 	return dist;
 }
 
-/*
-Converts from degrees to radians
-*/
-function deg2rad(deg) {
-  return deg * (Math.PI/180);
-}
-
 function contains(list, item){
 	for (var i = 0; i < list.length; i++){
 		if (list[i] == item) return true;
 	}
 	return false;
-}
-
-/*
-Renders vendor if vendor is within distance radius.
-
-clientAdress - the client's address as a string
-vendor - JSON object representing vendor
-*/
-
-function renderFilteredVendor(originCoord, vendor, boundsList, filteredVendors) {	
-	var distance = calcDistance(originCoord, vendor.lat_long);
-    if (filter(distance)){
-    	var vendorProduct = vendor.productCapabilityIds;
-	    var vendorPayment = vendor.paymentTerms.id;
-	    var vendorLead = vendor.leadTime.id;
-
-		//gets the selected search parameters
-		var productParam = getProductCapability();
-		var leadParam = getLead();
-		var paymentParam = getPayment();
-		var matchesParam = getMatches();
-
-		//now check to see whether the vendor matches the parameters
-		// set matches product to true if the length is 0 (since many vendors leave it blank)
-		var matchesProduct = true;
-		for (var i=0; i < productParam.length; i++) {
-			if (!contains(vendorProduct, parseInt(productParam[i]))){
-				matchesProduct = false;
-				break;
-			}
-		}
-
-		var matchesLead = ((vendorLead == leadParam) || (vendorLead == 1) || (leadParam == 1));
-		var matchesPayment = ((vendorPayment == paymentParam) || (vendorPayment == 1) || (paymentParam == 1));
-
-		if (matchesProduct && matchesLead && matchesPayment) {
-			//green
-			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png';
-			var color = 'green';
-		} else if (matchesProduct) {
-			//yellow
-			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png';
-			var color = 'yellow';
-		} else {
-			//just matches distance - red
-			var iconColor='http://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png';
-			var color = 'red';
-		}
-
-		var matchesColor = false;
-
-		if ((color === 'green' && contains(matchesParam, "green")) ||
-			color === 'yellow' && contains(matchesParam, 'yellow') ||
-			color == 'red' && contains(matchesParam, 'red')){
-			matchesColor = true;
-		}
-
-		if (matchesColor) {
-			vendor.color = color;
-			vendor.distance = distance;
-			filteredVendors.push(vendor);
-		}
-    }
 }
 
 /*
@@ -535,52 +586,4 @@ function compareByDist(a, b){
 	return 0;
 }
 
-function addClosestVendors(filteredVendors, boundsList) {
-	filteredVendors.sort(compareByDist);
 
-	/*it only allows you to drop 11 markers at a time before it gets angry
-	 (so drop 10 + the client marker)*/
-	var vendorsLength = (filteredVendors.length < 10) ? filteredVendors.length : 10;
-
-    for (var i = 0; i < vendorsLength; i++) {
-    	var vendor = filteredVendors[i];
-		addMarker(map, vendor, boundsList);
-    }
-}
-
-
-/*
-Returns true if the vendor passes the filter/matches the user's query. 
-Returns false otherwise
-
-vendorDistance - distance between origin and vendor
-*/
-function filter(vendorDistance){
-	return vendorDistance < distance;
-}
-
-/*
-Moves the map to the center of the address clicked
-*/
-function moveMapCenter() {
-	geocoder.geocode( { 'address': document.vendorAddress}, function(results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
-			map.setCenter(results[0].geometry.location);
-			map.setZoom(10);
-		} 
-		else {
-			alert("Geocode was not successful for the following reason: " + status);
-		}
-	});
-}
-
-/*
-Given a JSON object of a vendor, returns the vendor's address as a string
-*/
-function getAddress(vendor){
-	return vendor.addressLine1 + ", " + vendor.addressLine2 + ", " + vendor.city + ", " + vendor.state + " " + vendor.zip;
-}
-
-function getAddressLine2(vendor){
-	return vendor.city + ", " + vendor.state + " " + vendor.zip;
-}
