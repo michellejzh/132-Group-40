@@ -208,8 +208,8 @@ function waitMessage() {
 	console.log("called waitMessage");
 	document.getElementById("wait").style.display="inline-block";
 	setTimeout(function(){
-		$("#wait").fadeOut(1000);
-	}, 3000);
+		$("#wait").fadeOut(350);
+	}, 2000);
 }
 /*
 Adds a marker at the client's location, and a circle around it denoting the
