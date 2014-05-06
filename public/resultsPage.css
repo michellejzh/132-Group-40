@@ -69,13 +69,6 @@ button {
 	margin-right: 5px;
 }
 
-#info1 {
-	width: 160px;
-}
-
-#info2 {
-	width: 140px;
-}
 
 .vendorLi{
 	height: 60px;
@@ -178,3 +171,9 @@ a:hover {
 	background-color: #F47457;
 	display: inline-block;
 }
+/*
+#vendorColor{
+	height:50px;
+	display:inline-block;
+	float:left;
+}*/
