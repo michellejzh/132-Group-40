@@ -164,10 +164,6 @@ function addClosestVendors(filteredVendors, boundsList) {
     for (; vendorsAdded < vendorsLength; vendorsAdded++) {
     	var vendor = filteredVendors[vendorsAdded];
 		addMarker(map, vendor, boundsList);
-		//noooooo
-		if (i==vendorsLength-1) {
-			addLoadMore();
-		}
     }
 	filterColors();
 }
@@ -185,24 +181,11 @@ function addTenVendors(){
 	
 	for (; vendorsAdded < temp; vendorsAdded++){
 		var vendor = filteredVendors[vendorsAdded];
-		addMarker(map, vendor, boundslist);
+		addMarker(map, vendor, boundsList);
 	}
 	filterColors();
 }
-	
-
-function addLoadMore() {
-	console.log("called load more");
-	var $li = $("<li>", {
-    	class: 'vendorLi',
-    });
-	var $button = $("<button>", {
-    	class: 'loadMoreButton',
-    });
-    $button.attr('onclick', "loadMore()");
-    $li.append($button);
-    $("#" + resultsListID).append($li);
-}
+1
 
 /*
 Adds a marker at the client's location, and a circle around it denoting the
