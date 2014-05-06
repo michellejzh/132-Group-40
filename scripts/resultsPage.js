@@ -534,13 +534,14 @@ function addResultToList(vendor) {
 }
 
 
-//TODO
+//Updates the color of the bar by each list item corresponding to the marker color.
 function updateListColor(i, color) {
 	var $list = $('.vendorLi');
 	var vendor = $list;
 	$(vendor[i].firstChild).css("background", color);
 }
 
+//Sets the visibility of the list items.
 function setLiVisibility(i, visible, color) {
 	var $list = $('.vendorLi');
 	var vendor = $list;
