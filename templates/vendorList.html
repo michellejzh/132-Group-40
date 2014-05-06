@@ -9,7 +9,6 @@
 		<script type="text/javascript" src="../scripts/vendorList.js"></script>
 		<link rel='stylesheet' href='../styles/allPages.css' type='text/css'/>
 		<link rel="stylesheet" type="text/css" href="../styles/vendorList.css" />
-
 	</head>
 
 	<body>
@@ -17,7 +16,7 @@
 			<ul id ='Items'>
 			<li id='Company_Name'><a href='searchPage.html'>COMPANY</a></li>
 			<li id='search'><button id="navButton" onclick='window.location.href="searchPage.html"'>New Search</a></li> <br><br>
-			<li id='Vendor_list'><button id="navButton" onclick='window.location.href="clientList.html"'>Vendors List</a></li>
+			<li id='Vendor_list'><button id="navButton" onclick='window.location.href="vendorList.html"'>Vendors List</a></li>
 			</ul>
 		</div> 
 		<div id="main">
@@ -26,13 +25,13 @@
 			<br>
 				<div id='A'>
 					<div id='Search'>
-						<form id="searchByName" action="clientList.html" method="get">
+						<form id="searchByName" action="vendorList.html" method="get">
 							<div id='submit'>
 								Search by name: <input type='text' name='name' >
 								<input id="searchsubmit" type='submit' value='Search'>
 							</div>
 						</form>
-						<form id="searchByState" action="clientList.html" method="get">
+						<form id="searchByState" action="vendorList.html" method="get">
 							<div id='submit'>
 								Search by state:  <input type='text' name='state' >
 								<input id="searchsubmit" type='submit' value='Search'>
